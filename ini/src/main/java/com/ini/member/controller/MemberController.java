@@ -26,7 +26,7 @@ public class MemberController {
 		
 		model.addAttribute("members" ,memberVO);
 		
-		return "test";
+		return "/member/test";
 		
 	}
 	
