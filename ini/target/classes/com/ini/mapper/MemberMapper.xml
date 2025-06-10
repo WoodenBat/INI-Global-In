@@ -9,4 +9,12 @@
 		select * from ini_user
 	</select>
 
+	<select id="findFollowById" resultType="com.ini.member.vo.MemberFollowDTO">
+		select * from user_follow where follower_id = #{user_id}
+	</select>
+
+	<select id="findMemberById" resultType="com.ini.member.vo.MemberDTO">
+		select * from ini_user where user_id = #{user_id}
+	</select>
+
 </mapper>

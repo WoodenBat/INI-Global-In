@@ -42,6 +42,6 @@ body {
 </style>
 <div id="header">
 	<div id="logo_div">
-		<p id="logo">INI
+		<p id="logo">INI</p>
 	</div>
 </div>

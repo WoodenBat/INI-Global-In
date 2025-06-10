@@ -30,4 +30,13 @@ public class MemberController {
 		
 	}
 	
+	@GetMapping("myPageTest")
+	public String myPageTest(Model model) {
+		
+		model.addAttribute("member_follow", memberservice.findFollowById("test"));
+		model.addAttribute("member_info", memberservice.findMemberById("test"));
+		
+		return "/member/myPageTest";
+	}
+	
 }

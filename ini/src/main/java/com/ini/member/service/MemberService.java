@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.ini.member.mapper.MemberMapper;
 import com.ini.member.vo.MemberDTO;
+import com.ini.member.vo.MemberFollowDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -21,4 +22,15 @@ public class MemberService {
 		
 	}
 	
+	public MemberFollowDTO findFollowById(String user_id) {
+		
+		return membermapper.findFollowById(user_id);
+		
+	}
+	
+	public MemberDTO findMemberById(String user_id) {
+		
+		return membermapper.findMemberById(user_id);
+		
+	}
 }
