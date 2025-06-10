@@ -1,14 +1,20 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<style type="text/css">
+#main {
+	width: 1440px;
+	height: 100%;
+	background-color: green;
+	margin: auto;
+}
+</style>
+<%@include file="../header.jsp"%>
 <body>
-	<h1>Test</h1>
-	<p>${members.user_id}
-	<p>${members}
+	<div id="main">
+		<p>${members.user_id}
+		<p>${members}
+	</div>
 </body>
+<%@include file="../footer.jsp"%>
 </html>
