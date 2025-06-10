@@ -8,5 +8,7 @@
 </head>
 <body>
 	<h1>Test</h1>
+	<p>${members.user_id}
+	<p>${members}
 </body>
 </html>

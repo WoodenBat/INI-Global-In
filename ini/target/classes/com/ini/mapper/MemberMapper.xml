@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ini.member.mapper.MemberMapper">
+
+	<select id="findAllMember" resultType="com.ini.member.vo.MemberVO">
+		select * from ini_user
+	</select>
+
+</mapper>
