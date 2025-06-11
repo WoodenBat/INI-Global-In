@@ -3,25 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
-<link rel="stylesheet" th:href="@{/css/myPage.css}"/>
+<link rel="stylesheet" th:href="@{/css/myPage.css}" />
 </head>
 <body>
 
-	<div class="profile_container">
-		<img class="profile_image" alt="프로필 사진"
-			src="https://cdn-icons-png.flaticon.com/512/12225/12225773.png">
-	</div>
+	<div class="profile_wrapper">
 
-	<div class="profile_update_button_container">
-		<span class="profile_update_button">내 정보 수정</span>
-	</div>
+		<div class="profile_container">
+			<img class="profile_image" alt="프로필 사진"
+				src="https://cdn-icons-png.flaticon.com/512/12225/12225773.png">
+		</div>
 
-	<div class="profile_nickname_container">
-		<p class="profile_nickname" th:text="${member_info.user_nickname}"></p>
-	</div>
+		<div class="profile_update_button_container">
+			<span class="profile_update_button">내 정보 수정</span>
+		</div>
 
-	<div class="profile_email_container">
-		<p class="profile_email" th:text="${member_info.user_email}"></p>
+		<div class="profile_nickname_container">
+			<p class="profile_nickname" th:text="${member_info.user_nickname}"></p>
+		</div>
+
+		<div class="profile_email_container">
+			<p class="profile_email" th:text="${member_info.user_email}"></p>
+		</div>
+		
 	</div>
 
 
