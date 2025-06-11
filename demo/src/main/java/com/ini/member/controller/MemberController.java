@@ -30,13 +30,17 @@ public class MemberController {
 		
 	}
 	
-	@GetMapping("myPageTest")
+	@GetMapping("myPage")
 	public String myPageTest(Model model) {
 		
-		model.addAttribute("member_follow", memberservice.findFollowById("test"));
 		model.addAttribute("member_info", memberservice.findMemberById("test"));
+		model.addAttribute("member_follow", memberservice.findFollowById("test"));
+		model.addAttribute("member_board", memberservice.findBoardById("test"));
+		model.addAttribute("member_like", memberservice.findLikeById("test"));
+		model.addAttribute("member_reply", memberservice.findReplyById("test"));
+		model.addAttribute("member_favorite", memberservice.findFavoriteById("test"));
 		
-		return "/member/myPageTest";
+		return "/member/MemberMyPage";
 	}
 	
 }
