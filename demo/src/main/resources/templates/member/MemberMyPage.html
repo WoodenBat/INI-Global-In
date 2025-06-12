@@ -28,30 +28,41 @@
 	</div>
 
 	<div class="board_wrapper">
-
+	
 		<div class="myBoard_wrapper">
-			<div class="myBoard_title_container">
-				<span class="myBoard_title">게시글</span>
+		
+			<div class="myBoard_text_container">
+				<span class="myBoard_text">게시글</span>
 			</div>
+			
 			<div class="myBoard_content_wrapper">
-
+			
 				<div class="myBoard_content_title_container">
 					<span class="myBoard_content_title">내가 쓴 게시글 목록</span>
 				</div>
 
 				<div class="myBoard_content_container" th:each="mb, stat : ${member_board}">
+					
 					<div class="myBoard_content">
+						
 						<div class="myBoard_user_nickname_container">
 							<span class="myBoard_user_nickname" th:text="${mb.user_id}"></span>
 						</div>
+						
 						<div class="myBoard_category_container">
 							<span class="myBoard_category" th:text="${mb.board_category}"></span>
-
 						</div>
+					
+						<div class="myBoard_title_container">
+							<span class="myBoard_title" th:text="${mb.board_title}"></span>
+						</div>
+					
 					</div>
+				
 				</div>
-
+			
 			</div>
+		
 		</div>
 
 	</div>

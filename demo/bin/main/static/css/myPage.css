@@ -83,7 +83,7 @@ body {
 	margin-top: 50px;
 }
 
-.myBoard_title_container {
+.myBoard_text_container {
 	align-self: flex-start;
 	display: flex;
 	justify-content: center;
@@ -96,7 +96,7 @@ body {
 	display: flex;
 }
 
-.myBoard_title {
+.myBoard_text {
 	font-size: 50px;
 	width: 113px;
 	height: 45px;
@@ -107,7 +107,8 @@ body {
 }
 
 .myBoard_content_wrapper {
-	align-self: flex-start; display : flex;
+	align-self: flex-start;
+	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 1324px;
@@ -167,9 +168,21 @@ body {
 	height: 32px;
 	border-radius: 20px;
 	margin-left: 14px;
+	background-color: #C06DFF4D;
+	padding: 0 18px;
 }
 
 .myBoard_category {
 	font-size: 30px;
 	font-family: 'OwnglyphPDH', sans-serif;
+}
+
+.myBoard_title_container {
+	flex-grow: 1; /* 나머지 영역 차지 */
+	display: flex;
+	justify-content: center; /* 가운데 정렬 */
+}
+
+.myBoard_title {
+	
 }
