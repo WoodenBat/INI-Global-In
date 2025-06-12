@@ -10,8 +10,7 @@
 	<div class="profile_wrapper">
 
 		<div class="profile_container">
-			<img class="profile_image" alt="프로필 사진"
-				src="https://cdn-icons-png.flaticon.com/512/12225/12225773.png">
+			<img class="profile_image" alt="프로필 사진" th:src="@{${member_info.user_profile_img}}">
 		</div>
 
 		<div class="profile_update_button_container">
@@ -25,10 +24,37 @@
 		<div class="profile_email_container">
 			<p class="profile_email" th:text="${member_info.user_email}"></p>
 		</div>
-		
+
 	</div>
 
+	<div class="board_wrapper">
 
+		<div class="myBoard_wrapper">
+			<div class="myBoard_title_container">
+				<span class="myBoard_title">게시글</span>
+			</div>
+			<div class="myBoard_content_wrapper">
+
+				<div class="myBoard_content_title_container">
+					<span class="myBoard_content_title">내가 쓴 게시글 목록</span>
+				</div>
+
+				<div class="myBoard_content_container" th:each="mb, stat : ${member_board}">
+					<div class="myBoard_content">
+						<div class="myBoard_user_nickname_container">
+							<span class="myBoard_user_nickname" th:text="${mb.user_id}"></span>
+						</div>
+						<div class="myBoard_category_container">
+							<span class="myBoard_category" th:text="${mb.board_category}"></span>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
 	<h3>내가 쓴글</h3>
 
 	<table>

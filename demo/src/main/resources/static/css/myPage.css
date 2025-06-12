@@ -1,5 +1,18 @@
 @charset "UTF-8";
 
+body {
+	max-width: 1440px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+@font-face {
+	font-family: 'OwnglyphPDH';
+	src: url('/fonts/온글잎 박다현체.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 .profile_container {
 	display: flex;
 	justify-content: center;
@@ -20,9 +33,10 @@
 
 .profile_update_button {
 	font-size: 24px;
-	width: 102px;
+	width: 130px;
 	height: 24px;
 	text-align: center;
+	font-family: 'OwnglyphPDH', sans-serif;
 }
 
 .profile_nickname_container {
@@ -43,14 +57,16 @@
 	height: 45px;
 	text-align: center;
 	margin: 0 !important;
+	font-family: 'OwnglyphPDH', sans-serif;
 }
 
 .profile_email {
 	font-size: 40px;
-	width: 341px;
+	width: 400px;
 	height: 38px;
 	text-align: center;
 	margin: 0 !important;
+	font-family: 'OwnglyphPDH', sans-serif;
 }
 
 .profile_wrapper {
@@ -58,4 +74,102 @@
 	flex-direction: column;
 	align-items: center;
 	margin-top: 97px;
+}
+
+.myBoard_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px;
+}
+
+.myBoard_title_container {
+	align-self: flex-start;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #ACFB807F;
+	width: 194px;
+	height: 70px;
+	border-radius: 30px;
+	position: static;
+	display: flex;
+}
+
+.myBoard_title {
+	font-size: 50px;
+	width: 113px;
+	height: 45px;
+	text-align: center;
+	margin: 0;
+	font-family: 'OwnglyphPDH', sans-serif;
+	line-height: 1;
+}
+
+.myBoard_content_wrapper {
+	align-self: flex-start; display : flex;
+	flex-direction: column;
+	align-items: center;
+	width: 1324px;
+	height: 238px;
+	background-color: #F8F2DEB3;
+	border-radius: 70px;
+	display: flex;
+}
+
+.myBoard_content_title_container {
+	align-self: flex-start;
+	width: 311px;
+	height: 52px;
+	justify-content: center;
+	margin-top: 30px;
+	margin-left: 33px;
+}
+
+.myBoard_content_title {
+	font-size: 50px;
+	font-family: 'OwnglyphPDH', sans-serif;
+}
+
+.myBoard_content_container {
+	align-self: flex-start;
+	width: 1259px;
+	height: 63px;
+	display: flex;
+	flex-direction: row;
+	background-color: #D9D9D94D;
+	margin-top: 27px;
+	margin-left: 43px;
+}
+
+.board_wrapper {
+	margin: 0 63px;
+}
+
+.myBoard_content {
+	display: flex;
+	align-items: center;
+}
+
+.myBoard_user_nickname_container {
+	width: 67px;
+	height: 32px;
+	margin-left: 32px;
+}
+
+.myBoard_user_nickname {
+	font-size: 30px;
+	font-family: 'OwnglyphPDH', sans-serif;
+}
+
+.myBoard_category_container {
+	width: 165px;
+	height: 32px;
+	border-radius: 20px;
+	margin-left: 14px;
+}
+
+.myBoard_category {
+	font-size: 30px;
+	font-family: 'OwnglyphPDH', sans-serif;
 }
