@@ -13,6 +13,7 @@
 		select * from ini_user where user_id = #{user_id}
 	</select>
 	
+	
 	<select id="findFollowById" resultType="com.ini.member.vo.MemberFollowDTO">
 		select * from user_follow where follower_id = #{user_id}
 	</select>
@@ -32,5 +33,10 @@
 	<select id="findFavoriteById" resultType="com.ini.member.vo.MemberFavoriteDTO">
 		select * from user_favorite where user_id = #{user_id}
 	</select>
+	<update id="updateProfileImage">
+    UPDATE INI_USER
+    SET USER_PROFILE_IMG = #{profileImage}
+    WHERE user_id = #{userId}
+</update>
 	
 </mapper>

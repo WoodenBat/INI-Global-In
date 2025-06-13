@@ -6,10 +6,21 @@
 }
 
 .profile_image {
+	cursor: pointer;
 	width: 206px;
 	height: 206px;
 	border-radius: 50%;
 	object-fit: cover;
+}
+
+.image-link {
+	display: inline-block;
+	cursor: default;
+	display: inline-block;
+}
+
+.image-link img {
+	cursor: pointer;
 }
 
 .profile_update_button_container {
@@ -23,6 +34,8 @@
 	width: 102px;
 	height: 24px;
 	text-align: center;
+	white-space: nowrap;
+	display: inline-block;
 }
 
 .profile_nickname_container {

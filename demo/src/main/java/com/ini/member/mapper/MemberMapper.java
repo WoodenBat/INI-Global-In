@@ -3,6 +3,7 @@ package com.ini.member.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ini.board.vo.BoardDTO;
 import com.ini.board.vo.BoardLikeDTO;
@@ -27,6 +28,6 @@ public interface MemberMapper {
 	public List<BoardReplyDTO> findReplyById(String user_id);
 	
 	public List<MemberFavoriteDTO> findFavoriteById(String user_id);
-	
+	void updateProfileImage(@Param("userId") String userId, @Param("profileImage") String profileImage);
 	
 }
