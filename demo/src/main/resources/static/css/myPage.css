@@ -114,7 +114,7 @@ body {
 	width: 1324px;
 	height: 238px;
 	background-color: #F8F2DEB3;
-	border-radius: 70px;
+	border-radius: 50px;
 	display: flex;
 }
 
@@ -148,7 +148,8 @@ body {
 }
 
 .myBoard_content {
-	display: flex;
+	display: grid;
+	grid-template-columns: 150px 350px 300px 100px 100px 100px; /* 원하는 고정 너비 */
 	align-items: center;
 }
 
@@ -164,12 +165,13 @@ body {
 }
 
 .myBoard_category_container {
-	width: 165px;
+	width: fit-content;
 	height: 32px;
 	border-radius: 20px;
 	margin-left: 14px;
 	background-color: #C06DFF4D;
 	padding: 0 18px;
+	white-space: nowrap;
 }
 
 .myBoard_category {
@@ -178,11 +180,21 @@ body {
 }
 
 .myBoard_title_container {
-	flex-grow: 1; /* 나머지 영역 차지 */
+	width: fit-content;
 	display: flex;
-	justify-content: center; /* 가운데 정렬 */
+	justify-content: center;
+	white-space: nowrap;
 }
 
 .myBoard_title {
-	
+	font-size: 30px;
+	font-family: 'OwnglyphPDH', sans-serif;
+}
+
+.myBoard_views_icon {
+	position: relative;
+	width: 64px;
+	height: 64px;
+	margin: -20px;
+	object-fit: cover;
 }

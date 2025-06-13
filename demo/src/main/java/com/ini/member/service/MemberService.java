@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.ini.board.vo.BoardDTO;
 import com.ini.board.vo.BoardLikeDTO;
 import com.ini.board.vo.BoardReplyDTO;
+import com.ini.board.vo.BoardWithLikeReplyDTO;
 import com.ini.member.mapper.MemberMapper;
 import com.ini.member.vo.MemberDTO;
 import com.ini.member.vo.MemberFavoriteDTO;
@@ -61,6 +62,30 @@ public class MemberService {
 	public List<MemberFavoriteDTO> findFavoriteById(String user_id) {
 		
 		return membermapper.findFavoriteById(user_id);
+		
+	}
+	
+	public List<BoardWithLikeReplyDTO> findBoardLikeReplyById(String user_id) {
+		
+		return membermapper.findBoardLikeReplyById(user_id);
+		
+	}
+	
+	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByLikeId(String user_id) {
+		
+		return membermapper.findBoardLikeReplyByLikeId(user_id);
+		
+	}
+	
+	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByReplyId(String user_id) {
+		
+		return membermapper.findBoardLikeReplyByLikeId(user_id);
+		
+	}
+	
+	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByFavoriteId(String user_id) {
+		
+		return membermapper.findBoardLikeReplyByLikeId(user_id);
 		
 	}
 	
