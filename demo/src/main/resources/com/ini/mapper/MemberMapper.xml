@@ -15,7 +15,7 @@
     resultType="com.ini.member.vo.MemberDTO">
     select user_id, user_password, user_nickname, user_email, user_phone_number, user_profile_img
     from ini_user
-    where user_id = #{user_id, jdbcType=VARCHAR}
+    where user_id = #{user_id}
   </select>
 
   <select id="findFollowById"
