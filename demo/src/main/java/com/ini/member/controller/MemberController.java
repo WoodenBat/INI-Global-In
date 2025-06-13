@@ -42,7 +42,7 @@ public class MemberController {
         return "member/MemberProfileUpdate";  // 뷰 이름
     }
 
-    // URL: /member/myPage
+// URL: /member/myPage
     @GetMapping("myPage")
     public String myPageTest(Model model, Principal principal) {
 //        if (principal == null) {
@@ -63,7 +63,7 @@ public class MemberController {
     // URL: /member/profile-image (POST)
     @PostMapping("memberProfileUpdate")
     public String uploadProfileImage(@RequestParam("profileImage") MultipartFile file, Principal principal)
-            throws IOException {
+        throws IOException {
         String userId = "test";
         if (file.isEmpty()) return "redirect:/member/myPage?error=emptyFile";
 
@@ -86,5 +86,7 @@ public class MemberController {
 
         memberService.updateProfileImage(userId, newFileName);
         return "redirect:/member/myPage";
+        
+        
     }
 }

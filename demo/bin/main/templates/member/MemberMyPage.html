@@ -10,12 +10,15 @@
 
 	<div class="profile_wrapper">
 		<div class="profile_container">
-			<a th:href="@{/member/memberProfileUpdateForm}" class="image-link"> <img class="profile_image"
+			<a th:href="@{/member/memberProfileUpdateForm}" class="image-link"> 
+			<img class="profile_image"
 				th:src="@{${member_info.user_profile_img != null} ? 
 			'/images/profile/' + ${member_info.user_profile_img} : 
 			'/images/default-profile.png'}" /></a>
 		</div>
-
+		
+	
+	
 		<div class="profile_update_button_container">
 			<span class="profile_update_button">내 정보 수정</span>
 		</div>
@@ -49,7 +52,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="mb, stat : ${member_board}">
+			<tr th:each="mb,
+			 stat : ${member_board}">
 				<td th:text="${stat.index + 1}"></td>
 				<td th:text="${mb.board_id}"></td>
 				<td th:text="${mb.board_title}"></td>
