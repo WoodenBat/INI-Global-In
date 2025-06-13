@@ -65,6 +65,7 @@ public class MemberController {
     public String uploadProfileImage(@RequestParam("profileImage") MultipartFile file, Principal principal)
         throws IOException {
         String userId = "test";
+        
         if (file.isEmpty()) return "redirect:/member/myPage?error=emptyFile";
 
         String originalFilename = file.getOriginalFilename();
