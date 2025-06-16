@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 arguments=
 =======
 <<<<<<< HEAD
@@ -37,3 +38,18 @@ show.console.view=false
 show.executions.view=false
 >>>>>>> refs/heads/temp_ayeon
 >>>>>>> refs/remotes/origin/master
+=======
+arguments=
+auto.sync=false
+build.scans.enabled=false
+connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
+connection.project.dir=
+eclipse.preferences.version=1
+gradle.user.home=
+java.home=
+jvm.arguments=
+offline.mode=false
+override.workspace.settings=false
+show.console.view=false
+show.executions.view=false
+>>>>>>> refs/remotes/origin/hyeokjoon

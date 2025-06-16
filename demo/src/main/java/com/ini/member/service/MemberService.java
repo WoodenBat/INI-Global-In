@@ -108,4 +108,8 @@ public class MemberService {
 		return membermapper.findByNickname(nickname);
 	}
 
+	public int insertOAuthUser(MemberDTO memberDTO) {
+        return memberMapper.insertOAuthUser(memberDTO);
+    }
+	
 }
