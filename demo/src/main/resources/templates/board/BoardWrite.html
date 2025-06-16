@@ -13,16 +13,13 @@
         
         <label>말머리:</label><br>
         <select th:field="*{board_tag}">
-            <option value="정보">정보</option>
-            <option value="리뷰">리뷰</option>
-            <option value="기타">기타</option>
+            <option th:each="t : ${tagList}" th:value="${t.tagName}" th:text="${t.tagName}"></option>
+           
         </select><br><br>
         
         <label>카테고리:</label><br>
         <select th:field="*{board_category}">
-            <option value="일반">일반</option>
-            <option value="공지">공지</option>
-            <option value="질문">질문</option>
+            <option th:each="c : ${categoryList}" th:value="${c.categoryName}" th:text="${c.categoryName}"></option>
         </select><br><br>
         
         <label>내용:</label><br>

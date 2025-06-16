@@ -6,18 +6,29 @@
 <mapper namespace="com.ini.board.mapper.BoardMapper">
 
 <select id = "getAllBoardCategoriesKr" resultType="com.ini.board.vo.BoardCategoryVO">
-	SELECT BOARD_CATEGORY AS categoryName FROM BOARD_CATEGORY
+	SELECT BOARD_CATEGORY AS "categoryName" FROM BOARD_CATEGORY
 </select>
 
 <select id = "getAllBoardCategoriesJp" resultType="com.ini.board.vo.BoardCategoryVO">
-	SELECT BOARD_CATEGORY_JP AS categoryName FROM BOARD_CATEGORY
+	SELECT BOARD_CATEGORY_JP AS "categoryName" FROM BOARD_CATEGORY
 </select>
 	
 <select id = "getAllBoardTagsKr" resultType="com.ini.board.vo.BoardTagVO">
-	SELECT BOARD_TAG AS tagName FROM BOARD_TAG
+	SELECT BOARD_TAG AS "tagName" FROM BOARD_TAG
 </select>
 
 <select id = "getAllBoardTagsJp" resultType="com.ini.board.vo.BoardTagVO">
-	SELECT BOARD_TAG_JP AS tagName FROM BOARD_TAG
+	SELECT BOARD_TAG_JP AS "tagName" FROM BOARD_TAG
 </select>
+
+<insert id="insertBoard" parameterType="com.ini.board.vo.BoardDTO">
+	INSERT INTO INI_BOARD (
+		BOARD_ID,
+		BOARD_TITLE, BOARD_CONTENT, USER_ID, BOARD_VIEWS, BOARD_CATEGORY, BOARD_WRITE_DATE, BOARD_UPDATE_DATE, BOARD_TAG
+	) VALUES (
+		BOARD_SEQ.NEXTVAL,
+		#{board_title}, #{board_content}, #{user_id},
+		0, #{board_category}, SYSDATE, SYSDATE, #{board_tag}
+	)
+</insert>
 </mapper>
