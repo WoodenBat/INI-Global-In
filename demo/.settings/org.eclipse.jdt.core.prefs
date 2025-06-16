@@ -1,5 +1,8 @@
 eclipse.preferences.version=1
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=17
 org.eclipse.jdt.core.compiler.compliance=17
+<<<<<<< HEAD
 org.eclipse.jdt.core.compiler.processAnnotations=enabled
+=======
+>>>>>>> refs/heads/temp_ayeon
 org.eclipse.jdt.core.compiler.source=17

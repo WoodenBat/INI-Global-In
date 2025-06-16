@@ -9,6 +9,7 @@
 		select * from ini_user
 	</select>
 
+<<<<<<< HEAD
 	<select id="findMemberById" resultType="com.ini.member.vo.MemberDTO">
 		select * from ini_user where user_id = #{user_id}
 	</select>
@@ -137,5 +138,33 @@
 		b.board_write_date
 		order by b.board_write_date asc
 	</select>
+=======
+	<select id="findFollowById" resultType="com.ini.member.vo.MemberFollowDTO">
+		select * from user_follow where follower_id = #{user_id}
+	</select>
+
+	<select id="findMemberById" resultType="com.ini.member.vo.MemberDTO">
+		select * from ini_user where user_id = #{user_id}
+	</select>
+	
+	
+	<insert id="insertMember" parameterType="com.ini.member.vo.MemberDTO">
+        INSERT INTO INI_USER (
+            USER_ID, USER_PASSWORD, USER_NICKNAME, USER_EMAIL, USER_PHONE_NUMBER, USER_PROFILE_IMG
+        ) VALUES (
+            #{user_id}, #{user_password}, #{user_nickname}, #{user_email}, #{user_phone_number}, #{user_profile_img_path}
+        )
+    </insert>
+	
+	<!-- 닉네임 중복 확인 -->
+	<select id="findByNickname" parameterType="String" resultType="com.ini.member.vo.MemberDTO">
+    SELECT * FROM INI_USER WHERE USER_NICKNAME = #{nickname}
+	</select>
+	
+	<select id="findByEmail" parameterType="String" resultType="com.ini.member.vo.MemberDTO">
+    SELECT * FROM INI_USER WHERE USER_EMAIL = #{email}
+</select>
+	
+>>>>>>> refs/heads/temp_ayeon
 
 </mapper>
