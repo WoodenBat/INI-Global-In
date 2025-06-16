@@ -1,0 +1,6 @@
+/demo/bin/
+demo/build/
+demo/.classpath
+demo/.project
+demo/.settings/
+demo/*.class
