@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${board.board_title}">게시글 보기</title>
+</head>
+<body>
+
+<h1 th:text="${board.board_title}">제목</h1>
+
+<div>
+    <p><strong>말머리:</strong> <span th:text="${board.tag_name}"></span></p>
+    <p><strong>카테고리:</strong> <span th:text="${board.category_name}"></span></p>
+    <p><strong>작성자:</strong> <span th:text="${board.user_nickname}"></span></p>
+    <p><strong>작성일:</strong> <span th:text="${#dates.format(board.board_write_date, 'yyyy-MM-dd HH:mm')}"></span></p>
+    <p><strong>조회수:</strong> <span th:text="${board.board_views}"></span></p>
+</div>
+
+<hr>
+
+<!-- 게시글 본문 -->
+<div th:utext="${board.board_content}">본문</div>
+
+<!-- 첨부 이미지 표시 -->
+<div>
+    <h3>첨부 이미지</h3>
+    <div th:each="img : ${imageList}">
+        <img th:src="@{'/upload/' + ${img}}" style="max-width: 300px; display:block; margin-bottom: 10px;" />
+    </div>
+</div>
+
+<hr>
+
+<!-- 하단 버튼 영역 -->
+<div>
+    <a th:href="@{/board/list}">목록</a>
+    <a th:href="@{'/board/edit/' + ${board.board_id}}">수정</a>
+    <form th:action="@{'/board/delete/' + ${board.board_id}}" method="post" style="display:inline;">
+        <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
+    </form>
+</div>
+
+<!-- 좋아요 버튼 -->
+<div style="margin-top: 20px;">
+    <button id="likeBtn" th:data-board-id="${board.board_id}">
+        <span id="likeIcon" th:text="${liked} ? '❤️' : '🤍'">🤍</span>
+        <span id="likeCount" th:text="${board.likeCount}">0</span>
+    </button>
+</div>
+
+<!-- JavaScript -->
+<script>
+document.getElementById("likeBtn").addEventListener("click", function () {
+    const boardId = this.dataset.boardId;
+
+    fetch(`/board/like/${boardId}`, {
+        method: "POST"
+    })
+    .then(response => response.json())
+    .then(data => {
+        const likeIcon = document.getElementById("likeIcon");
+        const likeCount = document.getElementById("likeCount");
+
+        likeCount.textContent = data.likeCount;
+        likeIcon.textContent = data.liked ? "❤️" : "🤍";
+    })
+    .catch(() => alert("로그인이 필요합니다."));
+});
+</script>
+
+</body>
+</html>
