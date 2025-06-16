@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ini.member.mapper.MemberMapper">
+
+	<select id="findAllMember" resultType="com.ini.member.vo.MemberDTO">
+		select * from ini_user
+	</select>
+
+	<select id="findMemberById" resultType="com.ini.member.vo.MemberDTO">
+		select * from ini_user where user_id = #{user_id}
+	</select>
+
+	<select id="findFollowById" resultType="com.ini.member.vo.MemberFollowDTO">
+		select * from user_follow where follower_id = #{user_id}
+	</select>
+
+	<select id="findBoardById" resultType="com.ini.board.vo.BoardDTO">
+		select * from ini_board where user_id = #{user_id}
+	</select>
+
+	<select id="findLikeById" resultType="com.ini.board.vo.BoardLikeDTO">
+		select * from board_like where user_id = #{user_id}
+	</select>
+
+	<select id="findReplyById" resultType="com.ini.board.vo.BoardReplyDTO">
+		select * from board_reply where reply_writer = #{user_id}
+	</select>
+
+	<select id="findFavoriteById" resultType="com.ini.member.vo.MemberFavoriteDTO">
+		select * from user_favorite where user_id = #{user_id}
+	</select>
+
+	<select id="findBoardLikeReplyById" resultType="com.ini.board.vo.BoardWithLikeReplyDTO">
+		select b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		,
+		b.board_category
+		, b.board_tag
+		, count(distinct bl.board_id) as board_like_cnt
+		, count(distinct br.board_id) as board_reply_cnt
+		from ini_board b
+		left join board_like bl on b.board_id = bl.board_id
+		left join board_reply br on b.board_id = br.board_id
+		where
+		b.user_id = 'test'
+		group by b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		, b.board_category
+		, b.board_tag
+		,
+		b.board_write_date
+		order by b.board_write_date asc
+	</select>
+
+	<select id="findBoardLikeReplyByLikeId" resultType="com.ini.board.vo.BoardWithLikeReplyDTO">
+		select b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		,
+		b.board_category
+		, b.board_tag
+		, count(distinct bl.board_id) as board_like_cnt
+		, count(distinct br.board_id) as board_reply_cnt
+		from ini_board b
+		left join board_like bl on b.board_id = bl.board_id
+		left join board_reply br on b.board_id = br.board_id
+		where
+		bl.user_id = 'test' and BL.LIKE_STATUS = 1
+		group by b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		, b.board_category
+		,
+		b.board_tag
+		, b.board_write_date
+		order by b.board_write_date asc
+	</select>
+
+	<select id="findBoardLikeReplyByReplyId" resultType="com.ini.board.vo.BoardWithLikeReplyDTO">
+		select b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		,
+		b.board_category
+		, b.board_tag
+		, count(distinct bl.board_id) as board_like_cnt
+		, count(distinct br.board_id) as board_reply_cnt
+		from ini_board b
+		left join board_like bl on b.board_id = bl.board_id
+		left join board_reply br on b.board_id = br.board_id
+		where
+		br.reply_writer = 'test'
+		group by b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		, b.board_category
+		, b.board_tag
+		,
+		b.board_write_date
+		order by b.board_write_date asc
+	</select>
+
+	<select id="findBoardLikeReplyByFavoriteId" resultType="com.ini.board.vo.BoardWithLikeReplyDTO">
+		select b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		,
+		b.board_category
+		, b.board_tag
+		, count(distinct bl.board_id) as board_like_cnt
+		, count(distinct br.board_id) as board_reply_cnt
+		from ini_board b
+		left join board_like bl on b.board_id = bl.board_id
+		left join board_reply br on b.board_id = br.board_id
+		where
+		b.board_id = (select board_id from user_favorite where user_id = 'test')
+		group by b.board_id
+		, b.board_title
+		, b.user_id
+		,
+		b.board_views
+		, b.board_category
+		, b.board_tag
+		,
+		b.board_write_date
+		order by b.board_write_date asc
+	</select>
+
+</mapper>
