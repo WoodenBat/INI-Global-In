@@ -1,17 +1,4 @@
-<<<<<<< HEAD
 /demo/bin/
 demo/build/
-demo/.classpath
-demo/.project
-demo/.settings/
 demo/*.class
 demo/*.env
-=======
-/demo/bin/
-demo/build/
-demo/.classpath
-demo/.project
-demo/.settings/
-demo/*.class
-demo/*.env
->>>>>>> refs/remotes/origin/hyeokjoon
