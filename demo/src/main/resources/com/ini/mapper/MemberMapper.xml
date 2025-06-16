@@ -156,18 +156,4 @@
 		SELECT * FROM INI_USER WHERE USER_EMAIL = #{email}
 	</select>
 
-	<insert id="insertOAuthUser"
-    parameterType="com.ini.member.vo.MemberDTO">
-    INSERT INTO ini_user (user_id, user_password, user_nickname, user_email,
-    user_phone_number, user_profile_img)
-    VALUES (
-      #{user_id, jdbcType=VARCHAR},
-      #{user_password, jdbcType=VARCHAR},
-      #{user_nickname, jdbcType=VARCHAR},
-      #{user_email, jdbcType=VARCHAR},
-      #{user_phone_number, jdbcType=VARCHAR},
-      #{user_profile_img, jdbcType=BLOB}
-    )
-  	</insert>
-
 </mapper>

@@ -44,6 +44,4 @@ public interface MemberMapper {
 
 	public int insertMember(MemberDTO member);
 
-    public int insertOAuthUser(MemberDTO memberDTO);
-
 }

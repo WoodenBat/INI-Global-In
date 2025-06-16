@@ -40,7 +40,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             member.setUser_nickname(nickname);
             member.setUser_password("GOOGLE_USER");  // OAuth 유저는 비밀번호 임시로 지정
 
-            memberMapper.insertOAuthUser(member); // 반드시 매퍼 XML에 insertOAuthUser 쿼리 구현 필요
+            memberMapper.insertMember(member); // 반드시 매퍼 XML에 insertOAuthUser 쿼리 구현 필요
         }
 
         return new DefaultOAuth2User(

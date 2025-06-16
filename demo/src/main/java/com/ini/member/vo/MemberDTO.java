@@ -1,6 +1,5 @@
 package com.ini.member.vo;
 
-<<<<<<< HEAD
 import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,18 +31,4 @@ public class MemberDTO {
 
     // DB에 저장할 이미지 경로 (문자열)
     private String user_profile_img_path;
-=======
-import lombok.Data;
-
-@Data
-public class MemberDTO {
-
-	private String user_id;
-	private String user_password;
-	private String user_nickname;
-	private String user_email;
-	private String user_phone_number;
-	private String user_profile_img;
-	
->>>>>>> refs/remotes/origin/hyeokjoon
 }

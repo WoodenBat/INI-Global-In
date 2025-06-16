@@ -14,8 +14,6 @@ import com.ini.member.vo.MemberFavoriteDTO;
 import com.ini.member.vo.MemberFollowDTO;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 
 @Service
 @AllArgsConstructor
@@ -23,7 +21,7 @@ public class MemberService {
 
 	private final MemberMapper membermapper;
 
-	public MemberDTO findAllMember() {
+	public List<MemberDTO> findAllMember() {
 
 		return membermapper.findAllMember();
 
@@ -108,8 +106,4 @@ public class MemberService {
 		return membermapper.findByNickname(nickname);
 	}
 
-	public int insertOAuthUser(MemberDTO memberDTO) {
-        return memberMapper.insertOAuthUser(memberDTO);
-    }
-	
 }

@@ -1,12 +1,10 @@
 package com.ini.member.controller;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
-import java.util.List;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,11 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ini.member.service.MemberService;
 import com.ini.member.mapper.MemberMapper;
 import com.ini.member.vo.MemberDTO;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.log4j.Log4j;
-import lombok.extern.log4j.Log4j2;
 
 @Controller
 @RequestMapping("/member/*")
