@@ -122,7 +122,7 @@ public class MemberController {
 		}
 	}
 
-	@GetMapping("checkNickname")
+	@GetMapping("checkNickname") 
 	@ResponseBody
 	public Map<String, Boolean> checkNickname(@RequestParam("user_nickname") String nickname) {
 		MemberDTO found = memberMapper.findByNickname(nickname);

@@ -97,7 +97,7 @@ public class MemberService {
 		int result = membermapper.insertMember(user);
 		return result > 0;
 	}
-
+ 
 	public MemberDTO findByEmail(String email) {
 		return membermapper.findByEmail(email);
 	}

@@ -43,7 +43,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             memberMapper.insertMember(member); // 반드시 매퍼 XML에 insertOAuthUser 쿼리 구현 필요
         }
 
-        return new DefaultOAuth2User(
+        return new DefaultOAuth2User( 
                 Collections.singleton(() -> "ROLE_USER"),
                 attributes,
                 "email"  // 사용자 식별 키
