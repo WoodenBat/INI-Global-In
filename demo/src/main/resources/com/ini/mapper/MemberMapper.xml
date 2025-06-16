@@ -138,4 +138,22 @@
 		order by b.board_write_date asc
 	</select>
 
+
+	<insert id="insertMember" parameterType="com.ini.member.vo.MemberDTO">
+		INSERT INTO INI_USER (
+		USER_ID, USER_PASSWORD, USER_NICKNAME, USER_EMAIL, USER_PHONE_NUMBER, USER_PROFILE_IMG
+		) VALUES (
+		#{user_id, jdbcType=VARCHAR}, #{user_password, jdbcType=VARCHAR}, #{user_nickname, jdbcType=VARCHAR}, #{user_email, jdbcType=VARCHAR}, #{user_phone_number, jdbcType=VARCHAR}, #{user_profile_img_path, jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<!-- 닉네임 중복 확인 -->
+	<select id="findByNickname" parameterType="String" resultType="com.ini.member.vo.MemberDTO">
+		SELECT * FROM INI_USER WHERE USER_NICKNAME = #{nickname}
+	</select>
+
+	<select id="findByEmail" parameterType="String" resultType="com.ini.member.vo.MemberDTO">
+		SELECT * FROM INI_USER WHERE USER_EMAIL = #{email}
+	</select>
+
 </mapper>
