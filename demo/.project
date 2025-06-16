@@ -25,6 +25,7 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
 	</natures>
+<<<<<<< HEAD
 	<filteredResources>
 		<filter>
 			<id>1749780316174</id>
@@ -36,4 +37,6 @@
 			</matcher>
 		</filter>
 	</filteredResources>
+=======
+>>>>>>> refs/heads/temp_ayeon
 </projectDescription>

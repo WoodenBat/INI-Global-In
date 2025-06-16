@@ -2,7 +2,10 @@
 /build/
 /.gradle/
 /.settings/
+<<<<<<< HEAD
 .project
 .classpath
 .settings/org.eclipse.buildship.core.prefs
+=======
+>>>>>>> refs/remotes/origin/master
 *.class

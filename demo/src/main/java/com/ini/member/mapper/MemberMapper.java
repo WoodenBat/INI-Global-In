@@ -17,6 +17,8 @@ public interface MemberMapper {
 
 	public MemberDTO findAllMember();
 	
+	public MemberFollowDTO findFollowById(String user_id);
+	
 	public MemberDTO findMemberById(String user_id);
 	
 	public List<MemberFollowDTO> findFollowById(String user_id);
@@ -36,5 +38,12 @@ public interface MemberMapper {
 	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByReplyId(String user_id);
 	
 	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByFavoriteId(String user_id);
+	
+	MemberDTO findByEmail(String email);
+	
+	MemberDTO findByNickname(@Param("nickname") String nickname);
+
+
+	int insertMember(MemberDTO member); 
 	
 }
