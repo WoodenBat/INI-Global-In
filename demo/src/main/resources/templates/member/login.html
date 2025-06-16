@@ -4,15 +4,16 @@
 <meta charset="UTF-8" />
 <title>Login Page</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap');
+@import
+	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap')
+	;
 
 body {
 	margin: 0;
 	font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif;
 	background-color: #ffffff;
 }
-	
-/* 상단 바 */
+
 .navbar {
 	background-color: #a42c2c;
 	color: white;
@@ -72,7 +73,7 @@ body {
 }
 
 .form-group input {
-	width: 92%; /* 오른쪽 여백 줄임 */
+	width: 92%;
 	padding: 8px;
 	border-radius: 6px;
 	border: 1px solid #ccc;
@@ -84,7 +85,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	margin-top: 20px;
-	padding: 0 4px; /* Login 버튼 왼쪽 이동을 위한 패딩 */
+	padding: 0 4px;
 }
 
 .button-group button {
@@ -98,7 +99,6 @@ body {
 	font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif;
 }
 
-/* 구글 로그인 버튼 */
 .google-login {
 	margin-top: 30px;
 	display: inline-flex;
@@ -122,11 +122,9 @@ body {
 	background-color: #f1f1f1;
 }
 
-/* finding password - 박스 아래 오른쪽 정렬 */
 .find-password {
 	margin-top: 10px;
 	font-size: 12px;
-	color: #888;
 	text-align: right;
 	width: 300px;
 	font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif;
@@ -139,9 +137,7 @@ body {
 	<div class="navbar">
 		<div class="navbar-left">INI</div>
 		<div class="navbar-right">
-			<a href="#">Post</a>
-			<a href="#">MyPage</a>
-			<a href="#" class="login">Login</a>
+			<a href="#">Post</a> <a href="#">MyPage</a> <a href="#" class="login">Login</a>
 		</div>
 	</div>
 
@@ -151,12 +147,12 @@ body {
 			<h2>Login</h2>
 			<form method="post" action="/login">
 				<div class="form-group">
-					<label for="email">이메일:</label>
-					<input type="text" id="email" name="username" required />
+					<label for="email">이메일:</label> <input type="text" id="email"
+						name="username" required />
 				</div>
 				<div class="form-group">
-					<label for="pw">비밀번호:</label>
-					<input type="password" id="pw" name="password" required />
+					<label for="pw">비밀번호:</label> <input type="password" id="pw"
+						name="password" required />
 				</div>
 				<div class="button-group">
 					<button type="button" id="joinBtn" class="join-button">Join</button>
@@ -165,27 +161,27 @@ body {
 			</form>
 
 			<!-- 구글 로그인 -->
-			<a href="/oauth2/authorization/google" class="google-login">
-				<img src="/images/gmail_logo.png" alt="Gmail Logo" />
-				Gmail로 로그인
+			<a href="/oauth2/authorization/google" class="google-login"> <img
+				src="/images/gmail_logo.png" alt="Gmail Logo" /> Gmail로 로그인
 			</a>
 		</div>
 
-		<!-- 박스 아래 오른쪽 정렬 -->
-		<div class="find-password">finding password</div>
-	</div>
+		<!-- 비밀번호 찾기 -->
+		<div class="find-password">
+			<a href="/finding-password"
+				style="color: #888; text-decoration: none;">finding password</a>
+		</div>
 
-	<script>
-		// Join 버튼 클릭 시 회원가입 페이지로 이동
-		document.getElementById('joinBtn').addEventListener('click', function() {
-			window.location.href = '/join';
-		});
 
-		// 로그인 실패시 alert 띄우기 (URL에 ?error 가 있으면)
-		if (window.location.search.indexOf('error') > -1) {
-			alert('이메일 또는 비밀번호가 틀렸습니다.');
-		}
-	</script>
+		<script>
+			document.getElementById('joinBtn').addEventListener('click',
+					function() {
+						window.location.href = '/join';
+					});
 
+			if (window.location.search.indexOf('error') > -1) {
+				alert('이메일 또는 비밀번호가 틀렸습니다.');
+			}
+		</script>
 </body>
 </html>
