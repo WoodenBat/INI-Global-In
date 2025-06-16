@@ -7,8 +7,8 @@ body {
 }
 
 @font-face {
-	font-family: "OwnglyphPDH";
-	src: url("/fonts/온글잎 박다현체.ttf") format("truetype");
+	font-family: 'Ownglyph_PDH';
+	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -36,7 +36,7 @@ body {
 	width: 130px;
 	height: 24px;
 	text-align: center;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .profile_nickname_container {
@@ -57,7 +57,7 @@ body {
 	height: 45px;
 	text-align: center;
 	margin: 0 !important;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .profile_email {
@@ -66,7 +66,7 @@ body {
 	height: 38px;
 	text-align: center;
 	margin: 0 !important;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .profile_wrapper {
@@ -102,7 +102,7 @@ body {
 	height: 45px;
 	text-align: center;
 	margin: 0;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 	line-height: 1;
 }
 
@@ -130,7 +130,7 @@ body {
 
 .myBoard_content_title {
 	font-size: 50px;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .myBoard_content_container {
@@ -164,7 +164,7 @@ body {
 
 .myBoard_user_nickname {
 	font-size: 30px;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .myBoard_category_container {
@@ -179,7 +179,7 @@ body {
 
 .myBoard_category {
 	font-size: 30px;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .myBoard_title_container {
@@ -191,7 +191,7 @@ body {
 
 .myBoard_title {
 	font-size: 30px;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .myBoard_views_container {
@@ -215,7 +215,7 @@ body {
 
 .myBoard_views_cnt {
 	font-size: 30px;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .myBoard_like_container {
@@ -238,7 +238,7 @@ body {
 
 .myBoard_like_cnt {
 	font-size: 30px;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .myBoard_reply_container {
@@ -261,7 +261,7 @@ body {
 
 .myBoard_reply_cnt {
 	font-size: 30px;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .myLike_wrapper {
@@ -324,7 +324,7 @@ body {
 
 .myFollower_follow {
 	font-size: 50px;
-	font-family: "OwnglyphPDH", sans-serif;
+	font-family: "Ownglyph_PDH", sans-serif;
 }
 
 .myFollower_follow_icon {

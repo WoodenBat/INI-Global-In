@@ -1,134 +1,132 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>회원가입</title>
-    <style>
-        @font-face {
-            font-family:'Ownglyph_PDH';
-            src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
-        }
-
-        body {
-    		margin: 0;
-    		font-family: 'Ownglyph_PDH', sans-serif;
-    		background: #fff;
+<meta charset="UTF-8">
+<title>회원가입</title>
+<style>
+@font-face {
+	font-family: 'Ownglyph_PDH';
+	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
 }
 
-        .signup-container {
-            background: #F8F2DE;
-            padding: 30px;
-            border-radius: 20px;
-            width: 400px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            
-        }
-        .signup-wrapper {
-		  display: flex;
-		  justify-content: center;
-		  align-items: center;
-		  height: calc(100vh - 80px); /* 헤더 높이만큼 빼면 중앙정렬 딱! */
-		}
+body {
+	margin: 0;
+	font-family: 'Ownglyph_PDH', sans-serif;
+	background: #fff;
+}
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+.signup-container {
+	background: #F8F2DE;
+	padding: 30px;
+	border-radius: 20px;
+	width: 400px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-        label {
-            display: block;
-            margin-top: 10px;
-        }
+.signup-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: calc(100vh - 80px); /* 헤더 높이만큼 빼면 중앙정렬 딱! */
+}
 
-        input {
-            width: 70%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            margin-right: 5px;
-        }
+h2 {
+	text-align: center;
+	margin-bottom: 20px;
+}
 
-        .check-btn {
-            padding: 8px 10px;
-            background-color: #ffcc00;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+label {
+	display: block;
+	margin-top: 10px;
+}
 
-        .submit-btn {
-            width: 100%;
-            padding: 10px;
-            margin-top: 20px;
-            background-color: #ffa500;
-            border: none;
-            border-radius: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+input {
+	width: 70%;
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	margin-right: 5px;
+}
 
-        .error-message {
-            color: red;
-            font-size: 20px;
-            margin-top: 5px;
-        }
-        
-        
-    </style>
+.check-btn {
+	padding: 8px 10px;
+	background-color: #ffcc00;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.submit-btn {
+	width: 100%;
+	padding: 10px;
+	margin-top: 20px;
+	background-color: #ffa500;
+	border: none;
+	border-radius: 15px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.error-message {
+	color: red;
+	font-size: 20px;
+	margin-top: 5px;
+}
+</style>
 </head>
 
 
-	<!-- signup.html -->
-	<th:block th:replace="member/header :: header"></th:block>
-	
+<!-- signup.html -->
+<th:block th:replace="member/header :: header"></th:block>
+
 <body>
 
 	<main class="signup-wrapper">
-    <div class="signup-container">
-        <h2>회원가입</h2>
+		<div class="signup-container">
+			<h2>회원가입</h2>
 
-        <form th:action="@{/member/signup}" method="post" th:object="${user}" enctype="multipart/form-data">
+			<form th:action="@{/member/signup}" method="post" th:object="${user}" enctype="multipart/form-data">
 
-            <!-- ✅ 전체 에러 메시지 블럭 -->
-            <div th:if="${#fields.hasErrors('*')}">
-                <p th:each="err : ${#fields.errors('*')}" th:text="${err}" class="error-message"></p>
-            </div>
+				<!-- ✅ 전체 에러 메시지 블럭 -->
+				<div th:if="${#fields.hasErrors('*')}">
+					<p th:each="err : ${#fields.errors('*')}" th:text="${err}" class="error-message"></p>
+				</div>
 
-            <label>이메일</label>
-            <div style="display: flex;">
-                <input type="email" th:field="*{user_email}" name="user_email" required>
-                <button type="button" class="check-btn" onclick="checkDuplicate('email')">중복확인</button>
-            </div>
-            <div class="error-message" th:if="${#fields.hasErrors('user_email')}" th:errors="*{user_email}"></div>
+				<label>이메일</label>
+				<div style="display: flex;">
+					<input type="email" th:field="*{user_email}" name="user_email" required>
+					<button type="button" class="check-btn" onclick="checkDuplicate('email')">중복확인</button>
+				</div>
+				<div class="error-message" th:if="${#fields.hasErrors('user_email')}" th:errors="*{user_email}"></div>
 
-            <label>닉네임</label>
-            <div style="display: flex;">
-                <input type="text" th:field="*{user_nickname}" name="user_nickname" required>
-                <button type="button" class="check-btn" onclick="checkDuplicate('nickname')">중복확인</button>
-            </div>
-            <div class="error-message" th:if="${#fields.hasErrors('user_nickname')}" th:errors="*{user_nickname}"></div>
+				<label>닉네임</label>
+				<div style="display: flex;">
+					<input type="text" th:field="*{user_nickname}" name="user_nickname" required>
+					<button type="button" class="check-btn" onclick="checkDuplicate('nickname')">중복확인</button>
+				</div>
+				<div class="error-message" th:if="${#fields.hasErrors('user_nickname')}" th:errors="*{user_nickname}"></div>
 
-            <label>아이디</label>
-            <input type="text" th:field="*{user_id}" name="user_id" required>
-            <div class="error-message" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}"></div>
+				<label>아이디</label>
+				<input type="text" th:field="*{user_id}" name="user_id" required>
+				<div class="error-message" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}"></div>
 
-            <label>비밀번호</label>
-            <input type="password" th:field="*{user_password}" name="user_password" required>
-            <div class="error-message" th:if="${#fields.hasErrors('user_password')}" th:errors="*{user_password}"></div>
+				<label>비밀번호</label>
+				<input type="password" th:field="*{user_password}" name="user_password" required>
+				<div class="error-message" th:if="${#fields.hasErrors('user_password')}" th:errors="*{user_password}"></div>
 
-            <label>전화번호</label>
-            <input type="text" th:field="*{user_phone_number}" name="user_phone_number" required>
-            <div class="error-message" th:if="${#fields.hasErrors('user_phone_number')}" th:errors="*{user_phone_number}"></div>
+				<label>전화번호</label>
+				<input type="text" th:field="*{user_phone_number}" name="user_phone_number" required>
+				<div class="error-message" th:if="${#fields.hasErrors('user_phone_number')}" th:errors="*{user_phone_number}"></div>
 
-            <label>프로필 이미지</label>
-            <input type="file" th:field="*{user_profile_img}">
-            <div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+				<label>프로필 이미지</label>
+				<input type="file" th:field="*{user_profile_img}">
+				<div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
 
-            <button type="submit" class="submit-btn">가입하기</button>
-        </form>
-    </div>
+				<button type="submit" class="submit-btn">가입하기</button>
+			</form>
+		</div>
 
-    <script>
+		<script>
   let emailChecked = false;
   let nicknameChecked = false;
 
