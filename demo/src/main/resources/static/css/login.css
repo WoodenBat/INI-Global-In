@@ -1,77 +1,15 @@
-body {
-	font-family: Arial, sans-serif;
-	background-color: #f8f9fa;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-}
-
-.login-container {
-	background: white;
-	padding: 40px;
-	border-radius: 10px;
-	width: 360px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	text-align: center;
-}
-
-.logo {
-	width: 100px;
-	margin-bottom: 20px;
-}
-
-form input {
-	width: 100%;
-	padding: 10px;
-	margin: 10px 0;
-	border-radius: 8px;
-	border: 1px solid #ccc;
-}
-
-form button {
-	width: 100%;
-	padding: 12px;
-	background-color: #4285f4;
-	border: none;
-	border-radius: 8px;
-	color: white;
-	font-size: 16px;
-	cursor: pointer;
-}
-
-.extra-links {
-	margin-top: 10px;
-}
-
-.extra-links a {
-	display: block;
-	margin: 5px 0;
-	font-size: 14px;
-	color: #007bff;
-	text-decoration: none;
-}
-
-.social-login {
-	margin-top: 20px;
-}
-
-.social-login a {
-	color: white;
-	background-color: #db4437;
-	padding: 10px 20px;
-	border-radius: 8px;
-	text-decoration: none;
-	display: inline-block;
-}
-
 @import
 	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap')
 	;
 
+@font-face {
+	font-family: 'Ownglyph_PDH';
+	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
+}
+
 body {
 	margin: 0;
-	font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif;
+	font-family: 'Ownglyph_PDH', sans-serif;
 	background-color: #ffffff;
 }
 

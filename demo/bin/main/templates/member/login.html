@@ -5,18 +5,8 @@
 <title>Login Page</title>
 <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
+<th:block th:replace="member/header :: header"></th:block>
 <body>
-
-	<!-- 상단 네비게이션 -->
-	<div class="navbar">
-		<div class="navbar-left">INI</div>
-		<div class="navbar-right">
-			<a href="#">Post</a>
-			<a href="#">MyPage</a>
-			<a href="#" class="login">Login</a>
-		</div>
-	</div>
-
 	<!-- 로그인 박스 -->
 	<div class="login-container">
 		<div class="login-box">
@@ -50,7 +40,7 @@
 	<script>
 		// Join 버튼 클릭 시 회원가입 페이지로 이동
 		document.getElementById('joinBtn').addEventListener('click', function() {
-			window.location.href = '/join';
+			window.location.href = '/member/signup';
 		});
 
 		// 로그인 실패시 alert 띄우기 (URL에 ?error 가 있으면)
