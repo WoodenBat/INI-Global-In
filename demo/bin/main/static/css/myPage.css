@@ -217,6 +217,7 @@ body {
 	font-size: 30px;
 	font-family: "OwnglyphPDH", sans-serif;
 }
+
 .myBoard_like_container {
 	display: grid;
 	grid-template-columns: 55px 90px;
@@ -239,6 +240,7 @@ body {
 	font-size: 30px;
 	font-family: "OwnglyphPDH", sans-serif;
 }
+
 .myBoard_reply_container {
 	display: grid;
 	grid-template-columns: 55px 90px;
@@ -284,14 +286,14 @@ body {
 }
 
 .myFollower_wrapper {
-    display: flex;
+	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin-top: 50px;
 }
 
 .myFollower_content_container {
-    align-self: flex-start;
+	align-self: flex-start;
 	width: 1259px;
 	height: 63px;
 	display: flex;
@@ -308,22 +310,23 @@ body {
 	align-items: center;
 	height: 63px;
 }
-.myFollower_follow_container{
-    width: fit-content;
-    height: 75px;
-    white-space: nowrap;
-    background-color: #93c2ff7e;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
+
+.myFollower_follow_container {
+	width: fit-content;
+	height: 75px;
+	white-space: nowrap;
+	background-color: #93c2ff7e;
+	border-radius: 30px;
+	display: flex;
+	align-items: center;
+	padding: 0 20px;
 }
 
-.myFollower_follow{
-    font-size: 50px;
+.myFollower_follow {
+	font-size: 50px;
 	font-family: "OwnglyphPDH", sans-serif;
 }
 
-.myFollower_follow_icon{
-    margin-left: 10px;
+.myFollower_follow_icon {
+	margin-left: 10px;
 }
