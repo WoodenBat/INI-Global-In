@@ -1,10 +1,16 @@
+@font-face {
+	font-family: 'Ownglyph_PDH';
+	src: url('../fonts/Ownglyph_PDH.ttf') format('truetype');
+}
+
 body {
-	font-family: Arial, sans-serif;
-	background-color: #f8f9fa;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+	font-family: 'Ownglyph_PDH', sans-serif;
+    max-width: 1440px;
+	width: 100%;
+	margin: 0 auto;
+	background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
 }
 
 .login-container {
@@ -14,6 +20,7 @@ body {
 	width: 360px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	text-align: center;
+	margin: 0 auto;
 }
 
 .logo {
@@ -65,17 +72,6 @@ form button {
 	display: inline-block;
 }
 
-@import
-	url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap')
-	;
-
-body {
-	margin: 0;
-	font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif;
-	background-color: #ffffff;
-}
-
-/* 상단 바 */
 .navbar {
 	background-color: #a42c2c;
 	color: white;
@@ -135,7 +131,7 @@ body {
 }
 
 .form-group input {
-	width: 92%; /* 오른쪽 여백 줄임 */
+	width: 92%;
 	padding: 8px;
 	border-radius: 6px;
 	border: 1px solid #ccc;
@@ -147,7 +143,7 @@ body {
 	display: flex;
 	justify-content: space-between;
 	margin-top: 20px;
-	padding: 0 4px; /* Login 버튼 왼쪽 이동을 위한 패딩 */
+	padding: 0 4px;
 }
 
 .button-group button {
@@ -161,7 +157,6 @@ body {
 	font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif;
 }
 
-/* 구글 로그인 버튼 */
 .google-login {
 	margin-top: 30px;
 	display: inline-flex;
@@ -185,11 +180,9 @@ body {
 	background-color: #f1f1f1;
 }
 
-/* finding password - 박스 아래 오른쪽 정렬 */
 .find-password {
 	margin-top: 10px;
 	font-size: 12px;
-	color: #888;
 	text-align: right;
 	width: 300px;
 	font-family: 'Noto Sans KR', 'Malgun Gothic', Arial, sans-serif;

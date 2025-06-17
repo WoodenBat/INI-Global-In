@@ -29,26 +29,25 @@
 
 			<!-- 구글 로그인 -->
 			<a href="/oauth2/authorization/google" class="google-login">
-				<img src="/images/gmail_logo.png" alt="Gmail Logo" />
-				Gmail로 로그인
+				<img src="/images/gmail_logo.png" alt="Gmail Logo" /> Gmail로 로그인
 			</a>
 		</div>
 
-		<!-- 박스 아래 오른쪽 정렬 -->
-		<div class="find-password">finding password</div>
+		<!-- 비밀번호 찾기 -->
+		<div class="find-password">
+			<a href="/finding-password" style="color: #888; text-decoration: none;">finding password</a>
+		</div>
+
 	</div>
-
 	<script>
-		// Join 버튼 클릭 시 회원가입 페이지로 이동
-		document.getElementById('joinBtn').addEventListener('click', function() {
-			window.location.href = '/join';
-		});
+        document.getElementById('joinBtn').addEventListener('click',
+                function () {
+                    window.location.href = '/member/signup';
+                });
 
-		// 로그인 실패시 alert 띄우기 (URL에 ?error 가 있으면)
-		if (window.location.search.indexOf('error') > -1) {
-			alert('이메일 또는 비밀번호가 틀렸습니다.');
-		}
-	</script>
-
+        if (window.location.search.indexOf('error') > -1) {
+            alert('이메일 또는 비밀번호가 틀렸습니다.');
+        }
+    </script>
 </body>
 </html>
