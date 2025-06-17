@@ -5,17 +5,8 @@
 <title>Login Page</title>
 <link rel="stylesheet" th:href="@{/css/login.css}" />
 </head>
+<th:block th:replace="member/header :: header"></th:block>
 <body>
-
-	<!-- 상단 네비게이션 -->
-	<div class="navbar">
-		<div class="navbar-left">INI</div>
-		<div class="navbar-right">
-			<a href="#">Post</a>
-			<a href="#">MyPage</a>
-			<a href="#" class="login">Login</a>
-		</div>
-	</div>
 
 	<!-- 로그인 박스 -->
 	<div class="login-container">
