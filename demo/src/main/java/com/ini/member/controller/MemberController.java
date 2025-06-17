@@ -1,5 +1,6 @@
 package com.ini.member.controller;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -58,16 +59,26 @@ public class MemberController {
 		if (bindingResult.hasErrors()) {
 			return "/member/signup";
 		}
-		// 중복 검사
-		if (memberMapper.findByEmail(user.getUser_email()) != null) {
-			model.addAttribute("errorMessage", "이미 사용 중인 이메일입니다. 중복 검사를 해주세요!");
+
+		// ID 중복 검사
+		if (memberMapper.findMemberById(user.getUser_id()) != null) {
+			model.addAttribute("errorMessage", "이미 사용 중인 아이디입니다. 중복 확인을 해주세요!");
 			return "/member/signup";
 		}
 
-		if (memberMapper.findByNickname(user.getUser_nickname()) != null) {
-			model.addAttribute("errorMessage", "이미 사용 중인 닉네임입니다. 중복 검사를 해주세요!");
+		// 이메일 중복 검사
+		if (memberMapper.findByEmail(user.getUser_email()) != null) {
+			model.addAttribute("errorMessage", "이미 사용 중인 이메일입니다. 중복 확인을 해주세요!");
 			return "/member/signup";
 		}
+
+		// 닉네임 중복 검사
+		if (memberMapper.findByNickname(user.getUser_nickname()) != null) {
+			model.addAttribute("errorMessage", "이미 사용 중인 닉네임입니다. 중복 확인을 해주세요!");
+			return "/member/signup";
+		}
+
+		// 프로필 이미지 필수 체크
 		if (file == null || file.isEmpty()) {
 			model.addAttribute("errorMessage", "프로필 이미지는 꼭 첨부해 주세요!");
 			return "/member/signup";
@@ -79,15 +90,11 @@ public class MemberController {
 			user.setUser_password(encoder.encode(user.getUser_password()));
 
 			// 이미지 업로드 처리
-			if (file != null && !file.isEmpty()) {
-				String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-				Path path = Paths.get(uploadDir, fileName);
-				Files.createDirectories(path.getParent());
-				file.transferTo(path.toFile());
-				user.setUser_profile_img_path("/images/profile/" + fileName);
-			} else {
-				user.setUser_profile_img_path("/images/profile/default.png");
-			}
+			String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+			Path path = Paths.get(uploadDir, fileName);
+			Files.createDirectories(path.getParent());
+			file.transferTo(path.toFile());
+			user.setUser_profile_img_path("/images/profile/" + fileName);
 
 			// DB 저장
 			int result = memberMapper.insertMember(user);
@@ -110,19 +117,24 @@ public class MemberController {
 		return "/member/signupsuccess";
 	}
 
+	// 아이디 중복 확인
+	@GetMapping("checkId")
+	@ResponseBody
+	public Map<String, Boolean> checkUserId(@RequestParam("user_id") String userId) {
+		MemberDTO found = memberMapper.findMemberById(userId);
+		return Collections.singletonMap("exists", found != null);
+	}
+
+	// 이메일 중복 확인
 	@GetMapping("checkEmail")
 	@ResponseBody
 	public Map<String, Boolean> checkEmail(@RequestParam("user_email") String email) {
-		try {
-			MemberDTO found = memberMapper.findByEmail(email);
-			return Collections.singletonMap("exists", found != null);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return Collections.singletonMap("exists", false);
-		}
+		MemberDTO found = memberMapper.findByEmail(email);
+		return Collections.singletonMap("exists", found != null);
 	}
 
-	@GetMapping("checkNickname") 
+	// 닉네임 중복 확인
+	@GetMapping("checkNickname")
 	@ResponseBody
 	public Map<String, Boolean> checkNickname(@RequestParam("user_nickname") String nickname) {
 		MemberDTO found = memberMapper.findByNickname(nickname);

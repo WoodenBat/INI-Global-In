@@ -4,22 +4,24 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class MemberDTO {
 
     @NotBlank(message = "아이디를 입력하세요")
+    @Size(min = 4, max = 20, message = "아이디는 4~20자 사이여야 합니다")
     private String user_id;
 
     @NotBlank(message = "비밀번호를 입력하세요")
     private String user_password;
 
     @NotBlank(message = "닉네임을 입력하세요")
+    @Size(max = 16, message = "닉네임은 최대 16자까지 가능합니다")
     private String user_nickname;
-
-    @NotBlank(message = "이메일을 입력하세요")
-    @Email(message = "유효한 이메일 형식이 아닙니다")
+    
+    @Email(message = "이메일을 입력하세요")
     private String user_email;
 
     @NotBlank(message = "전화번호를 입력하세요")
