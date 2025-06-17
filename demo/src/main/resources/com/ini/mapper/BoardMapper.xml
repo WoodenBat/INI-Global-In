@@ -5,5 +5,31 @@
 
 <mapper namespace="com.ini.board.mapper.BoardMapper">
 
+<select id="selectBoardList" resultType="com.ini.board.vo.BoardDTO">
+    SELECT 
+        board_id, board_title, board_category, board_write_date, board_tag, image_yn
+    FROM board
+    WHERE 1 = 1
+    <if test="keyword != null and keyword != ''">
+        AND (board_title LIKE CONCAT('%', #{keyword}, '%') 
+             OR board_content LIKE CONCAT('%', #{keyword}, '%'))
+    </if>
+    <if test="category != null and category != '' and category != '전체'">
+        AND board_category = #{category}
+    </if>
+    ORDER BY board_write_date DESC
+    LIMIT #{startRow}, #{pageSize}
+</select>
 
+<select id="countBoardList" resultType="int">
+    SELECT COUNT(*) FROM board
+    WHERE 1 = 1
+    <if test="keyword != null and keyword != ''">
+        AND (board_title LIKE CONCAT('%', #{keyword}, '%') 
+             OR board_content LIKE CONCAT('%', #{keyword}, '%'))
+    </if>
+    <if test="category != null and category != '' and category != '전체'">
+        AND board_category = #{category}
+    </if>
+</select>
 </mapper>

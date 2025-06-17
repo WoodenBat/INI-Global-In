@@ -8,4 +8,6 @@ public class BoardTagVO {
 	private final String board_tag;
 	private final String board_tag_jp;
 	
+	private String name;
+    private String color;
 }

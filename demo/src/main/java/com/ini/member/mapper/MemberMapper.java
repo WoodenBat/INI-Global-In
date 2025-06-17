@@ -23,4 +23,5 @@ public interface MemberMapper {
 	int insertMember(MemberDTO member); 
 	
 	
+	
 }
