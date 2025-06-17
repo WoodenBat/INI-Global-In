@@ -1,4 +1,4 @@
 /demo/bin/
-demo/build/
-demo/*.class
-demo/*.env
+/demo/build/
+*.class
+*.env
