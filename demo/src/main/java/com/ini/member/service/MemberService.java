@@ -88,16 +88,16 @@ public class MemberService {
 	}
 
 	public boolean registerMember(MemberDTO user) {
-	    if (membermapper.findByEmail(user.getUser_email()) != null) {
-	        return false;
-	    }
-	    if (membermapper.findByNickname(user.getUser_nickname()) != null) {
-	        return false;
-	    }
-	    int result = membermapper.insertMember(user);
-	    return result > 0;
+		if (membermapper.findByEmail(user.getUser_email()) != null) {
+			return false;
+		}
+		if (membermapper.findByNickname(user.getUser_nickname()) != null) {
+			return false;
+		}
+		int result = membermapper.insertMember(user);
+		return result > 0;
 	}
- 
+
 	public MemberDTO findByEmail(String email) {
 		return membermapper.findByEmail(email);
 	}

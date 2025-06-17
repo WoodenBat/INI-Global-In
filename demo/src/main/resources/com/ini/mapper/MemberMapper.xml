@@ -5,20 +5,20 @@
 
 <mapper namespace="com.ini.member.mapper.MemberMapper">
 
-    <!-- 전체 회원 목록 -->
-    <select id="findAllMember" resultType="com.ini.member.vo.MemberDTO">
-        SELECT * FROM ini_user
-    </select>
+	<!-- 전체 회원 목록 -->
+	<select id="findAllMember" resultType="com.ini.member.vo.MemberDTO">
+		SELECT * FROM ini_user
+	</select>
 
 	<!-- ID로 회원 조회 -->
-    <select id="findMemberById" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
-        SELECT * FROM ini_user WHERE user_id = #{user_id}
-    </select>
+	<select id="findMemberById" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
+		SELECT * FROM ini_user WHERE user_id = #{user_id}
+	</select>
 
 	<!-- 팔로우 정보 -->
-    <select id="findFollowById" parameterType="string" resultType="com.ini.member.vo.MemberFollowDTO">
-        SELECT * FROM user_follow WHERE follower_id = #{user_id}
-    </select>
+	<select id="findFollowById" parameterType="string" resultType="com.ini.member.vo.MemberFollowDTO">
+		SELECT * FROM user_follow WHERE follower_id = #{user_id}
+	</select>
 
 	<select id="findBoardById" resultType="com.ini.board.vo.BoardDTO">
 		select * from ini_board where user_id = #{user_id}
@@ -143,22 +143,22 @@
 
 
 	<!-- 회원 등록 -->
-    <insert id="insertMember" parameterType="com.ini.member.vo.MemberDTO">
-        INSERT INTO ini_user (
-            user_id, user_password, user_nickname, user_email, user_phone_number, user_profile_img
-        ) VALUES (
-            #{user_id}, #{user_password}, #{user_nickname}, #{user_email}, #{user_phone_number}, #{user_profile_img_path}
-        )
-    </insert>
+	<insert id="insertMember" parameterType="com.ini.member.vo.MemberDTO">
+		INSERT INTO ini_user (
+		user_id, user_password, user_nickname, user_email, user_phone_number, user_profile_img
+		) VALUES (
+		#{user_id}, #{user_password}, #{user_nickname}, #{user_email}, #{user_phone_number}, #{user_profile_img_path}
+		)
+	</insert>
 
 	<!-- 닉네임으로 회원 조회 -->
-    <select id="findByNickname" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
-        SELECT * FROM ini_user WHERE user_nickname = #{nickname}
-    </select>
+	<select id="findByNickname" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
+		SELECT * FROM ini_user WHERE user_nickname = #{nickname}
+	</select>
 
 	<!-- 이메일로 회원 조회 -->
-    <select id="findByEmail" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
-        SELECT * FROM ini_user WHERE user_email = #{user_email}
-    </select>
+	<select id="findByEmail" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
+		SELECT * FROM ini_user WHERE user_email = #{user_email}
+	</select>
 
 </mapper>

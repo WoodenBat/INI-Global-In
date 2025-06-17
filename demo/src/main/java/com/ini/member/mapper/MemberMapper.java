@@ -16,7 +16,7 @@ import com.ini.member.vo.MemberFollowDTO;
 @Mapper
 public interface MemberMapper {
 
-    public List<MemberDTO> findAllMember();
+	public List<MemberDTO> findAllMember();
 
 	public MemberDTO findMemberById(String user_id);
 
@@ -43,5 +43,5 @@ public interface MemberMapper {
 	public MemberDTO findByNickname(@Param("nickname") String nickname);
 
 	public int insertMember(MemberDTO member);
- 
+
 }
