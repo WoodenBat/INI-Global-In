@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper>
+	<select id="findBoardReplyByBoardId" resultType="com.ini.board.vo.BoardReplyDTO">
+		select * from board_reply where board_id = #{board_id} order by reply_id asc, reply_write_date asc
+	</select>
+</mapper>

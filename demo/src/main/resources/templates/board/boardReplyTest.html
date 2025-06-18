@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        function getboardreply(board_id) {
+            $.ajax({
+                type : "GET",
+                url : "/board/reply/boardReply",
+                data : {
+                    board_id : board_id
+                },
+                success : function (response) {
+                    console.log("성공:", response);
+                    console.log(response);
+                },
+                error : function (xhr, status, error) {
+                    console.error("에러:", error);
+                }
+            });
+        }
+    })
+</script>
+<body>
+
+	<button onclick="getboardreply(999);">댓글 가져오기</button>
+
+</body>
+</html>

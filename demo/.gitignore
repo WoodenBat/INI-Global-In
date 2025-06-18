@@ -3,3 +3,4 @@
 /.gradle/
 *.class
 .env
+/.tern-project
