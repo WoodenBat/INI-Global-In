@@ -25,8 +25,3 @@ public class HomeController {
         return "member/home";  // templates/member/home.html
     }
 }
-
-
-
-
-

@@ -45,8 +45,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
             memberMapper.insertOAuthUser(member); // 반드시 매퍼 XML에 insertOAuthUser 쿼리 구현 필요
         }
-
+        
         // ✅ 세션에 닉네임 저장
+        session.invalidate();
         session.setAttribute("nickname", member.getUser_nickname());
 
         // ROLE_USER 권한으로 사용자 반환 (식별자는 email)

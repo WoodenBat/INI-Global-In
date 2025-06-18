@@ -94,8 +94,9 @@ body {
 			<p>
 				환영해요.
 				<br>
-				<span th:text="${session.nickname != null ? session.nickname : '회원'}"></span>
+				<span th:text="${nickname != null ? nickname : (session.nickname != null ? session.nickname : '회원')}"></span>
 				님!
+			</p>
 			<p>잘 부탁 드려요.</p>
 			<a class="home-link" href="/home">홈 화면으로 돌아가기</a>
 		</div>
