@@ -21,9 +21,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/login/**", "/oauth2/**", "/finding-password", "/find-by-id",
-                        "/find-by-email", "/finding-password/by-id", "/finding-password/by-email",
-                        "/send-password-email", "/css/**", "/js/**", "/images/**")
+            		.requestMatchers(
+                            "/", "/login", "/login/**", "/oauth2/**",
+                            "/finding-password", "/find-by-id", "/find-by-email",
+                            "/finding-password/by-id", "/finding-password/by-email",
+                            "/send-password-email", "/css/**", "/js/**", "/images/**", "/fonts/**",
+                            "/member/signup",
+                            "/member/checkId",
+                            "/member/checkEmail",
+                            "/member/checkNickname"
+                        )
                 .permitAll()
                 .anyRequest().authenticated())
             .formLogin(form -> form
