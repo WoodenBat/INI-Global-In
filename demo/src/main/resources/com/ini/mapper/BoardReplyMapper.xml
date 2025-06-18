@@ -2,9 +2,40 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-<mapper>
-	<select id="findBoardReplyByBoardId" resultType="com.ini.board.vo.BoardReplyDTO">
-		select * from board_reply where board_id = #{board_id} order by reply_id asc, reply_write_date asc
+
+<mapper namespace="com.ini.board.mapper.BoardReplyMapper">
+	<select id="findBoardReplyByBoardId" resultType="com.ini.board.vo.BoardReplyWithUserDTO">
+		SELECT R.REPLY_ID
+		, R.REPLY_CONTENT
+		, R.REPLY_WRITE_DATE
+		,
+		R.REPLY_UPDATE_DATE
+		, R.REPLY_STATUS
+		, R.REPLY_WRITER
+		, R.BOARD_ID
+		, U.USER_NICKNAME
+		, U.USER_PROFILE_IMG
+		FROM BOARD_REPLY R
+		LEFT JOIN
+		INI_USER U ON R.REPLY_WRITER = U.USER_ID
+		WHERE R.BOARD_ID = #{board_id}
+		ORDER BY REPLY_ID ASC
+		, REPLY_WRITE_DATE ASC
 	</select>
+
+	<insert id="insertBoardReplyByBoardId">
+		INSERT INTO BOARD_REPLY (
+		REPLY_ID
+		, REPLY_WRITER
+		, REPLY_CONTENT
+		, REPLY_STATUS
+		, BOARD_ID
+		) VALUES (
+		board_reply_seq.nextval
+		, #{reply_writer}
+		, #{reply_content}
+		, #{reply_status}
+		, #{board_id}
+		);
+	</insert>
 </mapper>

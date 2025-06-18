@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+@font-face {
+	font-family: 'Ownglyph_PDH';
+	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.board_reply_wrapper {
+	width: 1440px;
+	height: fit-content;
+	margin: 0 auto;
+}
+
+.board_reply_container {
+	width: 550px;
+	height: 157px;
+	border-radius: 19px;
+	background-color: #D9D9D94D;
+	display: flex;
+	flex-direction: column;
+	margin-top: 43px;
+}
+
+.board_reply_info {
+	margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 520px;
+	height: fit-content;
+	display: flex;
+}
+
+.board_reply_profileImg {
+	width: 61px;
+	height: 61px;
+}
+
+.board_reply_userNickName {
+	margin-left: 10px;
+	align-self: center;
+	height: 33px;
+	width: fit-content;
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 30px;
+	align-self: center;
+}
+
+.board_reply_write_date {
+	margin-left: 20px;
+	align-self: center;
+	height: 17px;
+	width: fit-content;
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 20px;
+	height: 17px;
+	opacity: 0.5;
+	align-self: center;
+}
+
+.board_reply_report_btn {
+	margin-top: 10px;
+	margin-right: 20px;
+	margin-left: auto;
+	align-self: flex-start;
+	width: 22px;
+	height: 22px;
+	cursor: pointer;
+}
+
+.board_reply_content_container {
+	width: fit-content;
+	height: 27px;
+	margin-top: 20px;
+}
+
+.board_reply_content {
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 30px;
+	margin-left: 41px;
+}
+
+.board_reply_button_container {
+	display: grid;
+	grid-template-columns: 200px 100px;
+	height: 17px;
+	width: fit-content;
+	align-self: flex-end;
+	margin-top: 10px;
+}
+
+.board_reply_button {
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 20px;
+	opacity: 0.5;
+	border: none;
+	cursor: pointer;
+}
+
+.board_reply_reReply_container {
+	width: 550px;
+	height: 157px;
+	border-radius: 19px;
+	background-color: #D9D9D94D;
+	display: flex;
+	flex-direction: column;
+	margin-top: 9px;
+	margin-left: 66px;
+}
+
+.board_reply_reReply_box {
+	display: flex;
+	flex-direction: row;
+}
+
+.board_reply_reReply_icon_container {
+	display: flex;
+	width: 20px;
+	height: 14px;
+	margin-top: 37px;
+	margin-left: 21px;
+}
+
+.board_reply_reReply_info {
+	margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 520px;
+	height: fit-content;
+	display: flex;
+}
+
+.board_reply_container_inner {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+}
+
+.board_reply_insert_container {
+	width: 1440px;;
+	height: 106px;
+	background-color: #D9D9D9;
+	bottom: 0px;
+	display: flex;
+	flex-direction: row;
+	margin: 0 auto;
+	position: relative;
+}
+
+.board_reply_insert_form {
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 30px;
+	align-self: center;
+	border: none;
+	background-color: #D9D9D9;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	resize: none;
+	padding: 0;
+}
+
+.board_reply_insert_btn{
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 30px;
+	width: 100px;
+	height: 100%;
+	border: none;
+}
