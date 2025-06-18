@@ -16,7 +16,16 @@ public class BoardService {
 	private final BoardMapper boardmapper;
 	
 	
-	public void saveBoard(BoardDTO board) {
+	public int saveBoard(BoardDTO board) {
 		boardmapper.insertBoard(board);
+		
+		return board.getBoard_id();
+	}
+	
+	public BoardDTO getBoardById(int board_id) {
+		
+		BoardDTO board = boardmapper.getBoardById(board_id);
+		
+		return board;
 	}
 }

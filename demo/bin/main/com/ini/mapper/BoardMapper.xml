@@ -22,13 +22,33 @@
 </select>
 
 <insert id="insertBoard" parameterType="com.ini.board.vo.BoardDTO">
+	<selectKey keyProperty="board_id" resultType="int" order = "BEFORE">
+		SELECT BOARD_SEQ.NEXTVAL FROM DUAL
+	</selectKey>
 	INSERT INTO INI_BOARD (
 		BOARD_ID,
 		BOARD_TITLE, BOARD_CONTENT, USER_ID, BOARD_VIEWS, BOARD_CATEGORY, BOARD_WRITE_DATE, BOARD_UPDATE_DATE, BOARD_TAG
 	) VALUES (
-		BOARD_SEQ.NEXTVAL,
+		#{board_id},
 		#{board_title}, #{board_content}, #{user_id},
 		0, #{board_category}, SYSDATE, SYSDATE, #{board_tag}
+	)
+</insert>
+<select id ="getBoardById" parameterType="int" resultType="com.ini.board.vo.BoardDTO">
+	SELECT board_id, board_title, board_content, user_id, board_views, board_category,board_write_date,board_update_date,board_tag
+	FROM ini_board
+	WHERE board_id = #{board_id}
+</select>
+
+<select id="getRepliesByBoardId" resultType="com.ini.board.vo.BoardReplyDTO" parameterType="int">
+	SELECT * FROM BOARD_REPLY WHERE board_id = #{board_id} ORDER BY REPLY_WRITE_DATE ASC
+</select>
+
+<insert id="insertReply" parameterType="com.ini.board.vo.BoardReplyDTO">
+	INSERT INTO BOARD_REPLY(
+		REPLY_ID, REPLY_CONTENT, REPLY_WRITER, REPLY_WRITE_DATE, REPLY_UPDATE_DATE, REPLY_STATUS, BOARD_ID
+	) VALUES (
+		REPLY_SEQ.NEXTVAL, #{reply_content}, #{reply_writer}, SYSDATE, SYSDATE, 0, #{board_id}
 	)
 </insert>
 </mapper>
