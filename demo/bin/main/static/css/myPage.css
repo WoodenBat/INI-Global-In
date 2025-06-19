@@ -1,5 +1,34 @@
 @charset "UTF-8";
 
+:root {
+  --background-color: white;
+  --text-color: black;
+  --table-bg-color: white;
+  --table-text-color: black;
+}
+
+.dark-mode {
+  --background-color: #121212;
+  --text-color: #e0e0e0;
+  --table-bg-color: #333;
+  --table-text-color: #fff;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+table {
+  background-color: var(--table-bg-color);
+  color: var(--table-text-color);
+}
+
+.profile_update_button {
+  background-color: var(--table-bg-color);
+  color: var(--table-text-color);
+}
+
 .profile_container {
 	display: flex;
 	justify-content: center;

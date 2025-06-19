@@ -14,4 +14,5 @@ public class BoardReportDTO {
 	private String report_category;
 	private int board_id;
 	
+	
 }

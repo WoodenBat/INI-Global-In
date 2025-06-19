@@ -1,26 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>프로필 이미지 업로드</title>
+  <meta charset="UTF-8">
+  <title>프로필 이미지 업로드</title>
 </head>
 <body>
-	<!--
-	<form id="profileImageForm" th:action="@{/member/memberProfileUpdate}"
-		method="post" enctype="multipart/form-data">
-		<input type="hidden" th:name="감자" th:value="123" />
-		<div style="display: flex; align-items: center; gap: 10px;">
-
-			<label for="profileUploadInput"> <img
-				th:src="@{${member_info.user_profile_img != null} ? '/images/profile/' + ${member_info.user_profile_img} : '/images/default-profile.png'}"
-				class="profile_image" alt="프로필 사진" />
-			</label>
-		</div>
-	</form>
-	-->
-	<!-- ✅ 1. MemberProfileUpdate 에 파일선택및 프로필업로드 폼 추가-->
-
-	<div style="margin-top: 20px;">
+<div style="margin-top: 20px;">
 		<form id="profileImageForm" th:action="@{/member/memberProfileUpdate}"
 			method="post" enctype="multipart/form-data">
 			<label for="profileUploadInput"> <img
@@ -28,7 +13,7 @@
 				class="profile_image" alt="프로필 사진" />
 			</label> <input id="profileUploadInput" type="file" name="profileImage"
 				accept="image/*" />
-			<button type="button" id="submit_button">프로필 업로드</button>
+		<button type="button" id="submit_button">프로필 업로드</button>
 		</form>
 	</div>
 

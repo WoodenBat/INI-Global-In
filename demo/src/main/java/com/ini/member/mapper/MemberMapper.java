@@ -11,7 +11,7 @@ import com.ini.board.vo.BoardReplyDTO;
 import com.ini.member.vo.MemberDTO;
 import com.ini.member.vo.MemberFavoriteDTO;
 import com.ini.member.vo.MemberFollowDTO;
-
+import java.util.List;
 @Mapper
 public interface MemberMapper {
 

@@ -1,6 +1,7 @@
 package com.ini.board.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -16,5 +17,4 @@ public class BoardDTO {
 	private Date board_write_date;
 	private Date board_update_date;
 	private String board_tag;
-	
 }
