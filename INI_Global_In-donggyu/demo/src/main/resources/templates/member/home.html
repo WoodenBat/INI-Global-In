@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>INI Home</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #ffffff;
+        }
+
+        /* 상단 네비게이션 바 */
+        .navbar {
+            background-color: #a32121;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        .navbar a.logo {
+            font-weight: bold;
+            font-size: 20px;
+            /* text-decoration 제거 */
+        }
+
+        /* 메인 콘텐츠 */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .card {
+            background-color: #f9f5e9;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .card img {
+            width: 150px;
+            height: auto;
+        }
+
+        .card p {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 20px 0; /* 간격 늘림 */
+            line-height: 1.6; /* 줄 간격 */
+        }
+
+        .home-link {
+            margin-top: 30px;
+            font-size: 16px;
+            color: red;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .home-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<th:block th:replace="member/header :: header"></th:block>
+<body>
+    <!-- 메인 카드 -->
+    <div class="container">
+        <div class="card">
+            <!-- 이미지 경로 주의 -->
+            <img src="/images/cat.png" alt="고양이 이미지">
+            <p>환영해요.<br><span th:text="${nickname}">[닉네임]</span> 님!</p>
+            <p>잘 부탁 드려요.</p>
+            <a class="home-link" href="/home">홈 화면으로 돌아가기</a>
+        </div>
+    </div>
+</body>
+</html>
