@@ -21,6 +21,9 @@
 	display: flex;
 	flex-direction: column;
 	margin-top: 43px;
+	border-color: #000000;
+	border: thin;
+	border-style: solid;
 }
 
 .board_reply_info {
@@ -83,11 +86,22 @@
 
 .board_reply_button_container {
 	display: grid;
-	grid-template-columns: 200px 100px;
+	grid-template-columns: 90px 90px 90px;
 	height: 17px;
 	width: fit-content;
 	align-self: flex-end;
 	margin-top: 10px;
+	margin-right: 10px;
+}
+
+.board_reply_button_container_other {
+	display: grid;
+	grid-template-columns: 100px;
+	height: 17px;
+	width: fit-content;
+	align-self: flex-end;
+	margin-top: 10px;
+	margin-right: 10px;
 }
 
 .board_reply_button {
@@ -107,6 +121,9 @@
 	flex-direction: column;
 	margin-top: 9px;
 	margin-left: 66px;
+	border-color: #000000;
+	border: thin;
+	border-style: solid;
 }
 
 .board_reply_reReply_box {
@@ -144,8 +161,11 @@
 	bottom: 0px;
 	display: flex;
 	flex-direction: row;
-	margin: 0 auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
 	position: relative;
+	border-radius: 15px 15px 15px 15px;
 }
 
 .board_reply_insert_form {
@@ -159,12 +179,68 @@
 	overflow: auto;
 	resize: none;
 	padding: 0;
+	border-radius: 15px 0px 0px 15px;
+	margin-left: 10px;
 }
 
-.board_reply_insert_btn{
+.board_reply_insert_btn {
 	font-family: "Ownglyph_PDH", sans-serif;
 	font-size: 30px;
 	width: 100px;
 	height: 100%;
 	border: none;
+	cursor: pointer;
+	border-radius: 0px 15px 15px 0px;
+}
+
+.board_reply_reReply_insert_container {
+	width: 550px;
+	height: 120px;
+	display: flex;
+	flex-direction: row;
+}
+
+.board_reply_reReply_insert_form {
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 20px;
+	width: 85%;
+	border: none;
+	background-color: #D9D9D9;
+	resize: none;
+	border-radius: 15px 0px 0px 15px;
+}
+
+.board_reply_reReply_insert_btn {
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 30px;
+	width: 15%;
+	border: none;
+	border-radius: 0px 15px 15px 0px;
+	cursor: pointer;
+}
+
+.board_reply_update_container {
+	width: 550px;
+	height: 120px;
+	display: flex;
+	flex-direction: row;
+}
+
+.replyUpdateForm {
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 20px;
+	width: 85%;
+	border: none;
+	background-color: #D9D9D9;
+	resize: none;
+	border-radius: 15px 0px 0px 15px;
+}
+
+.replyUpdateBtn{
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 30px;
+	width: 15%;
+	border: none;
+	border-radius: 0px 15px 15px 0px;
+	cursor: pointer;
 }

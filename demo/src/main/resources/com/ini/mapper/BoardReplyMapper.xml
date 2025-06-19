@@ -36,6 +36,44 @@
 		, #{reply_content}
 		, #{reply_status}
 		, #{board_id}
-		);
+		)
 	</insert>
+
+	<insert id="insertBoardReReplyByBoardId">
+		INSERT INTO BOARD_REPLY (
+		REPLY_ID
+		, REPLY_WRITER
+		, REPLY_CONTENT
+		, REPLY_STATUS
+		, BOARD_ID
+		) VALUES (
+		#{reply_id}
+		,
+		#{reply_writer}
+		, #{reply_content}
+		, #{reply_status}
+		, #{board_id}
+		)
+	</insert>
+
+	<delete id="deleteBoardReplyByReplyId">
+		delete from board_reply where reply_id = #{reply_id}
+	</delete>
+
+	<delete id="deleteBoardRereplyByReplyId">
+		delete from board_reply where reply_id = #{reply_id} and reply_status = #{reply_status}
+	</delete>
+
+	<select id="findBoardReplyBtReplyId" resultType="com.ini.board.vo.BoardReplyDTO">
+		select * from board_reply where reply_id = #{reply_id} order by
+		reply_write_date asc
+	</select>
+
+	<update id="updateBoardReplyByReplyId">
+		UPDATE BOARD_REPLY
+		SET REPLY_CONTENT = #{reply_content}, REPLY_UPDATE_DATE = DEFAULT
+		WHERE REPLY_ID = #{reply_id}
+		AND REPLY_STATUS = #{reply_status}
+	</update>
+
 </mapper>

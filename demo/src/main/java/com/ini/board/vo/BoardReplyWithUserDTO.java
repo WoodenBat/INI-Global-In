@@ -16,5 +16,6 @@ public class BoardReplyWithUserDTO {
 	private int board_id;
 	private String user_nickname;
 	private String user_profile_img;
+	private Long reply_date_differ;
 	
 }
