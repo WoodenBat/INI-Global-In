@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>게시글 수정</title>
+</head>
+<body>
+<h2>게시글 수정</h2>
+
+<form th:action="@{/board/edit}" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="board_id" th:value="${post.board_id}"/>
+
+    <label>제목:</label><br>
+    <input type="text" name="board_title" th:value="${post.board_title}" required><br><br>
+
+    <label>말머리:</label><br>
+    <select name="board_tag">
+	    <option value="">말머리 선택</option>
+	    <option th:each="tag : ${tags}" 
+	            th:value="${tag.boardTag}" 
+	            th:text="${tag.boardTagJp}" 
+	            th:selected="${tag.boardTag == post.board_tag}">
+	    </option>
+	</select>
+    <br><br>
+
+    <label>카테고리:</label><br>
+    <select name="board_category">
+	    <option value="">카테고리 선택</option>
+	    <option th:each="category : ${categories}" 
+	            th:value="${category.boardCategory}" 
+	            th:text="${category.boardCategoryJp}" 
+	            th:selected="${category.boardCategory == post.board_category}">
+	    </option>
+	</select>
+    <br><br>
+
+    <label>내용:</label><br>
+    <textarea name="board_content" rows="10" cols="50" required
+              th:text="${#strings.replace(post.board_content, '<br>', '\n')}"></textarea><br><br>
+
+    <label>이미지 교체 (선택):</label><br>
+    <input type="file" name="uploadFile"><br><br>
+
+    <button type="submit">수정 완료</button>
+</form>
+
+</body>
+</html>
