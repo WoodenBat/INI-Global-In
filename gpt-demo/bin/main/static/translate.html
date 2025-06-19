@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>GPT번역 테스트</title>
+</head>
+<body>
+  <h2>번역할 문장</h2>
+  <textarea id="inputText" rows="5" cols="50">안녕하세요.</textarea><br>
+  <button id="translateBtn">번역하기</button>
+
+  <h3>번역 결과</h3>
+  <div id="result">-</div>
+
+  <script>
+  
+  	document.getElementById("translateBtn").addEventListener("click", translate);
+    async function translate() {
+      const input = document.getElementById("inputText").value;
+
+      const response = await fetch("/api/translate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ input: input })
+      });
+
+      if (response.ok) {
+        const translated = await response.text();
+        document.getElementById("result").textContent = translated;
+      } else {
+        document.getElementById("result").textContent = "번역 실패";
+      }
+    }
+  </script>
+</body>
+</html>
