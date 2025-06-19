@@ -159,6 +159,8 @@
 	                console.error("에러:", error);
 	            }
 	        })
+	        
+	        $("#reply_insert_form").val("");
 	    });
 	    
 	    $(document).on("click", "#replyDelete", function () {
@@ -166,35 +168,63 @@
 	        const reply_id = container.find("span#reply_id").text().trim();
 	        const reply_status = container.find("span#reply_status").text().trim();
 
-	        $.ajax({
-	            type : "POST",
-	            url : "/board/reply/boardReplyDelete",
-	            data : {
-	                reply_id : reply_id,
-	                reply_status : reply_status,
-	            },
-	            success : function () {
-	                getBoardReply("999");
-	            },
-	            error : function (xhr, status, error) {
-	                console.error("삭제 실패:", error);
-	            }
-	        });
+	        if(confirm("정말 삭제하시겠습니까?")) {
+		        $.ajax({
+		            type : "POST",
+		            url : "/board/reply/boardReplyDelete",
+		            data : {
+		                reply_id : reply_id,
+		                reply_status : reply_status,
+		            },
+		            success : function () {
+		                getBoardReply("999");
+		            },
+		            error : function (xhr, status, error) {
+		                console.error("삭제 실패:", error);
+		            }
+		        });
+	            
+	        } else {
+	            return ;
+	        }
+	        
 	    });
 	    
 	    $(document).on("click", "#replyRereply", function(){
 	        
+	        $(".board_reply_reReply_insert_container").hide();
+	        $(".board_reply_update_container").hide();
+	        
 	        const container = $(this).closest(".board_reply_container, .board_reply_reReply_container");
 	        const inputBox = container.next(".board_reply_reReply_insert_container");
 	        
-	        inputBox.toggle();
+	        if (container.hasClass("board_reply_container")) {
+	        	inputBox.toggle();
+	        	
+	        } else {
+	            inputBox.css("margin-left", "67px");
+	            inputBox.toggle();
+	            
+	        }
 	    });
 	    
 	    $(document).on("click", "#replyUpdate", function(){
 	        
+	        $(".board_reply_reReply_insert_container").hide();
+	        $(".board_reply_update_container").hide();
+	        
 	        const container = $(this).closest(".board_reply_container, .board_reply_reReply_container");
 	        const inputBox = container.nextAll(".board_reply_update_container").eq(0);
-	        inputBox.toggle();
+	        
+	        if (container.hasClass("board_reply_container")) {
+	        	inputBox.toggle();
+	        	
+	        } else {
+	            inputBox.css("margin-left", "67px");
+	            inputBox.toggle();
+	            
+	        }
+	        
 	    });
 	    
 	    $(document).on("click", "#reReplyInsertBtn", function(){
@@ -220,6 +250,7 @@
 	                console.error("에러:", error);
 	            }
 	        })
+	        
 	    });
 	    
 	    $(document).on("click", "#replyUpdateBtn", function(){

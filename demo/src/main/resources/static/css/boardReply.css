@@ -198,6 +198,7 @@
 	height: 120px;
 	display: flex;
 	flex-direction: row;
+	margin-top: 5px;
 }
 
 .board_reply_reReply_insert_form {
@@ -224,6 +225,7 @@
 	height: 120px;
 	display: flex;
 	flex-direction: row;
+	margin-top: 5px;
 }
 
 .replyUpdateForm {
