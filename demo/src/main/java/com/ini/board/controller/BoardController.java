@@ -17,6 +17,7 @@ import com.ini.board.service.BoardTagService;
 import com.ini.board.vo.BoardDTO;
 import com.ini.board.vo.BoardReplyDTO;
 
+
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
@@ -30,6 +31,7 @@ public class BoardController {
 	private final BoardCategoryService boardCategoryService;	
 	private final BoardTagService boardTagService;
 	private final BoardReplyService boardReplyService;
+	
 	//게시글 작성 페이지 조회
 	@GetMapping("/write")
 	public String writeBoard(Model model) {
