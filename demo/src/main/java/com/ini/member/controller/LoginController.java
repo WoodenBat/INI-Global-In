@@ -2,6 +2,7 @@ package com.ini.member.controller;
 
 import com.ini.member.service.MemberService;
 import com.ini.member.vo.MemberDTO;
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,13 @@ public class LoginController {
 	@GetMapping("/login")
 	public String loginForm() {
 		return "member/login";
+	}
+
+	/** 로그아웃 */
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate(); // 세션 전체 삭제
+		return "redirect:/home"; // 홈 화면으로 리다이렉트
 	}
 
 	/** 비밀번호 찾기 메인 폼 */

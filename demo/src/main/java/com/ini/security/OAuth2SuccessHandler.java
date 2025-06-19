@@ -24,8 +24,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 			OAuth2User oauthUser = (OAuth2User) principal;
 
 			// 세션에 유저 정보 저장 (필요시)
+			request.getSession().invalidate();
 			request.getSession().setAttribute("user", oauthUser.getAttributes());
-
 			// 로그인 성공 후 홈으로 리다이렉트
 			response.sendRedirect("/");
 		} else {

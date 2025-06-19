@@ -11,36 +11,10 @@
 
 body {
 	font-family: 'Ownglyph_PDH', sans-serif;
-    max-width: 1440px;
+	max-width: 1440px;
 	width: 100%;
 	margin: 0 auto;
 	background-color: #ffffff;
-}
-
-.navbar {
-	background-color: #a42c2c;
-	color: white;
-	padding: 12px 24px;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
-.navbar-left {
-	font-size: 20px;
-	font-weight: bold;
-	cursor: pointer;
-}
-
-.navbar-right a {
-	margin-left: 16px;
-	color: white;
-	text-decoration: none;
-	font-weight: bold;
-}
-
-.navbar-right a.login {
-	color: #fcb017;
 }
 
 .result-container {
@@ -83,6 +57,9 @@ body {
 </style>
 </head>
 <body>
+
+	<!-- 공통 헤더 추가 -->
+	<th:block th:replace="member/header :: header"></th:block>
 
 	<!-- 결과 박스 -->
 	<div class="result-container">
