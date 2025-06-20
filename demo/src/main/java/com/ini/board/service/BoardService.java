@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BoardService {
 	
+<<<<<<< HEAD
 	 private final BoardMapper boardMapper;
 
 	public List<BoardDTO> getBoardList(String keyword, String category, int page, int pageSize) {
@@ -24,3 +25,19 @@ public class BoardService {
 	    return boardMapper.countBoardList(keyword, category);
 	}
 }
+=======
+	
+	public int saveBoard(BoardDTO board) {
+		boardmapper.insertBoard(board);
+		
+		return board.getBoard_id();
+	}
+	
+	public BoardDTO getBoardById(int board_id) {
+		
+		BoardDTO board = boardmapper.getBoardById(board_id);
+		
+		return board;
+	}
+}
+>>>>>>> refs/remotes/origin/mincheol

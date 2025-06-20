@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 작성</title>
+</head>
+<body>
+    <h1>게시글 작성</h1>
+    
+    <form th:action="@{/board/write}" th:object="${board}" method="post">
+        <label>제목:</label><br>
+        <input type="text" th:field="*{board_title}" required><br><br>
+        
+        <label>말머리:</label><br>
+        <select th:field="*{board_tag}">
+            <option th:each="t : ${tagList}" th:value="${t.tagName}" th:text="${t.tagName}"></option>
+           
+        </select><br><br>
+        
+        <label>카테고리:</label><br>
+        <select th:field="*{board_category}">
+            <option th:each="c : ${categoryList}" th:value="${c.categoryName}" th:text="${c.categoryName}"></option>
+        </select><br><br>
+        
+        <label>내용:</label><br>
+        <textarea th:field="*{board_content}" rows="10" cols="50" required></textarea><br><br>
+
+        
+
+        
+
+        <!-- 로그인된 사용자의 user_id는 서버에서 넣어주기 때문에 hidden 처리 -->
+        <input type="hidden" th:field="*{user_id}" >
+
+        <button type="submit">작성</button>
+    </form>
+</body>
+</html>
