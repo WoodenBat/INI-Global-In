@@ -15,8 +15,8 @@
 
 .board_reply_container {
 	width: 550px;
-	height: 157px;
-	border-radius: 19px;
+	min-height: 157px;
+	height: fit-content; border-radius : 19px;
 	background-color: #D9D9D94D;
 	display: flex;
 	flex-direction: column;
@@ -24,6 +24,8 @@
 	border-color: #000000;
 	border: thin;
 	border-style: solid;
+	border-radius: 19px;
+	position: relative;
 }
 
 .board_reply_info {
@@ -74,8 +76,11 @@
 
 .board_reply_content_container {
 	width: fit-content;
-	height: 27px;
+	min-height: 27px;
+	height: fit-content;
 	margin-top: 20px;
+	margin-right: 40px;
+	padding-bottom: 37px;
 }
 
 .board_reply_content {
@@ -86,12 +91,14 @@
 
 .board_reply_button_container {
 	display: grid;
-	grid-template-columns: 90px 90px 90px;
+	grid-template-columns: 100px 100px 100px;
 	height: 17px;
 	width: fit-content;
 	align-self: flex-end;
 	margin-top: 10px;
-	margin-right: 10px;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
 }
 
 .board_reply_button_container_other {
@@ -101,7 +108,9 @@
 	width: fit-content;
 	align-self: flex-end;
 	margin-top: 10px;
-	margin-right: 10px;
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
 }
 
 .board_reply_button {
@@ -110,11 +119,13 @@
 	opacity: 0.5;
 	border: none;
 	cursor: pointer;
+	background: none;
 }
 
 .board_reply_reReply_container {
 	width: 550px;
-	height: 157px;
+	min-height: 157px;
+	height: fit-content;
 	border-radius: 19px;
 	background-color: #D9D9D94D;
 	display: flex;
@@ -124,6 +135,7 @@
 	border-color: #000000;
 	border: thin;
 	border-style: solid;
+	position: relative;
 }
 
 .board_reply_reReply_box {
@@ -238,7 +250,7 @@
 	border-radius: 15px 0px 0px 15px;
 }
 
-.replyUpdateBtn{
+.replyUpdateBtn {
 	font-family: "Ownglyph_PDH", sans-serif;
 	font-size: 30px;
 	width: 15%;

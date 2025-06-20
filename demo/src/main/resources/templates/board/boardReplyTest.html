@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="${#locale.language}">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <link rel="stylesheet" th:href="@{/css/boardReply.css}" />
+<link rel="stylesheet" th:href="@{/css/popup.css}">
+<script th:src="@{/js/TranslateRequest.js}"></script>
 </head>
 <script type="text/javascript">
 
@@ -36,15 +38,17 @@
                                     <div class="board_reply_report_btn">
                                         <img alt="신고버튼" src="/img/icon/reply_report_icon.png" />
                                     </div>
+                                    <button class="translate-btn">번역 테스트</button>
                                 </div>
                                 <div class="board_reply_content_container">
-                                    <span class="board_reply_content">${br.reply_content}</span>
+                                    <div class="board_reply_content">${br.reply_content}</div>
+                                    <div class="board_reply_content_hidden" style="display: none;"></div>
                                 </div>
                                     `;
                		             if(br.reply_writer === sessionNickname)   {
                		                 html += `
                                 	<div class="board_reply_button_container">
-               		                  	<button id="replyUpdate" type="button" class="board_reply_button">댓글 수정</button>
+               		                  	<button id="replyUpdate" type="button" class="board_reply_button">` + $("#msg_reply_button").text() + `</button>
                		                 	<button id="replyDelete" type="button" class="board_reply_button">댓글 삭제</button>
                                  	  	<button id="replyRereply" type="button" class="board_reply_button">대댓글 작성</button>
                		                 `;
@@ -83,15 +87,17 @@
 		                                    <div class="board_reply_report_btn">
 		                                        <img alt="신고버튼" src="/img/icon/reply_report_icon.png" />
 		                                    </div>
+		                                    <button class="translate-btn">번역 테스트</button>
 		                                </div>
 		                                <div class="board_reply_content_container">
-		                                    <span class="board_reply_content">${br.reply_content}</span>
+		                                    <div class="board_reply_content">${br.reply_content}</div>
+		                                    <div class="board_reply_content_hidden" style="display: none;"></div>
 		                                </div>
 		                                `;
 		               		             if(br.reply_writer === sessionNickname)   {
 		               		                 html += `
 		                                	<div class="board_reply_button_container">
-		               		                 	<button id="replyUpdate" type="button" class="board_reply_button">댓글 수정</button>
+		               		                  	<button id="replyUpdate" type="button" class="board_reply_button" th:text="#{board_reply_button}"></button>
 		               		                 	<button id="replyDelete" type="button" class="board_reply_button">댓글 삭제</button>
 		                                 	  	<button id="replyRereply" type="button" class="board_reply_button">대댓글 작성</button>
 		               		                 `;
@@ -259,6 +265,8 @@
 	        const reply_id = container.find("span#reply_id").text().trim();
 	        const reply_status = container.find("span#reply_status").text().trim();
 	        const reply_content = $(this).siblings("#replyUpdateForm").val();
+	        container.find(".board_reply_content_hidden").text("");
+	        Object.keys(translationCache).forEach(key => delete translationCache[key]);
 	        console.log(reply_id);
 	        console.log(reply_status);
 	        
@@ -292,5 +300,6 @@
 		<textarea id="reply_insert_form" class="board_reply_insert_form" placeholder="댓글 작성하기"></textarea>
 		<button id="reply_insert_btn" class="board_reply_insert_btn">작성</button>
 	</div>
+	<span id="msg_reply_button" th:text="#{board_reply_button}" style="display:none;"></span>
 </body>
 </html>

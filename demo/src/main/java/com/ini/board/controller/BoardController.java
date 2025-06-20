@@ -30,12 +30,6 @@ public class BoardController {
 	private final BoardTagService boardTagService;
 	private final BoardReplyService boardReplyService;
 	
-	@GetMapping("test")
-	public String test() {
-		
-		return "test";
-	}
-	
 	@GetMapping("/list")
 	public String boardList(@RequestParam(defaultValue = "1") int page,
 	                        @RequestParam(required = false) String keyword,
