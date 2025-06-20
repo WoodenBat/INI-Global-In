@@ -12,15 +12,16 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class BoardService {
-	
-	 private final BoardMapper boardMapper;
 
-	public List<BoardDTO> getBoardList(String keyword, String category, int page, int pageSize) {
-	    int startRow = (page - 1) * pageSize;
-	    return boardMapper.selectBoardList(keyword, category, startRow, pageSize);
-	}
+    private final BoardMapper boardMapper;
 
-	public int getBoardCount(String keyword, String category) {
-	    return boardMapper.countBoardList(keyword, category);
-	}
+    // 🔹 end 제거된 메서드
+    public List<BoardDTO> getBoardList(String keyword, String category, int offset, int limit) {
+        return boardMapper.selectBoardList(keyword, category, offset, limit);
+    }
+
+    // 🔸 게시글 총 개수 조회
+    public int countBoards(String keyword, String category) {
+        return boardMapper.countBoards(keyword, category);
+    }
 }

@@ -1,5 +1,9 @@
 package com.ini.member.controller;
 
+//일본에서 유저가 회원가입할 때 보이는 페이지
+//signup.html, MemberController 등 수정
+//따로 페이지 생성 필요 X
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
