@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ini.board.mapper.BoardMapper;
 import com.ini.board.mapper.BoardReplyMapper;
 import com.ini.board.vo.BoardReplyDTO;
 import com.ini.board.vo.BoardReplyWithUserDTO;
@@ -19,6 +20,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class BoardReplyService {
 
+	private BoardMapper boardMapper;
 	private BoardReplyMapper boardReplyMapper;
 
 	public List<BoardReplyWithUserDTO> findBoardReplyByBoardId(String board_id) {
@@ -44,7 +46,7 @@ public class BoardReplyService {
 
 	public void insertBoardReReplyByBoardId(BoardReplyDTO boardReplyDTO) {
 
-		List<BoardReplyDTO> boardReplyDTOList = findBoardReplyBtReplyId(String.valueOf(boardReplyDTO.getReply_id()));
+		List<BoardReplyDTO> boardReplyDTOList = findBoardReplyByReplyId(String.valueOf(boardReplyDTO.getReply_id()));
 
 		if (boardReplyDTOList.size() == 1) {
 			boardReplyDTO.setReply_status("rereply1");
@@ -71,9 +73,9 @@ public class BoardReplyService {
 
 	}
 
-	public List<BoardReplyDTO> findBoardReplyBtReplyId(String reply_id) {
+	public List<BoardReplyDTO> findBoardReplyByReplyId(String reply_id) {
 
-		return boardReplyMapper.findBoardReplyBtReplyId(reply_id);
+		return boardReplyMapper.findBoardReplyByReplyId(reply_id);
 
 	}
 
@@ -93,4 +95,14 @@ public class BoardReplyService {
 		return differTime;
 
 	}
+	
+	public List<BoardReplyDTO> getRepliesByBoardId(int board_id) {
+		
+		return boardMapper.getRepliesByBoardId(board_id);
+	}
+
+	public void insertReply(BoardReplyDTO reply) {
+		boardMapper.insertReply(reply);
+	}
+	
 }

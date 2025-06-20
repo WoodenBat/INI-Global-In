@@ -20,7 +20,7 @@ public interface BoardReplyMapper {
 	
 	public void deleteBoardRereplyByReplyId(BoardReplyDTO boardReplyDTO);
 	
-	public List<BoardReplyDTO> findBoardReplyBtReplyId(String reply_id);
+	public List<BoardReplyDTO> findBoardReplyByReplyId(String reply_id);
 	
 	public void updateBoardReplyByReplyId(BoardReplyDTO boardReplyDTO);
 }

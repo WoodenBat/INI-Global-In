@@ -64,7 +64,7 @@
 		delete from board_reply where reply_id = #{reply_id} and reply_status = #{reply_status}
 	</delete>
 
-	<select id="findBoardReplyBtReplyId" resultType="com.ini.board.vo.BoardReplyDTO">
+	<select id="findBoardReplyByReplyId" resultType="com.ini.board.vo.BoardReplyDTO">
 		select * from board_reply where reply_id = #{reply_id} order by
 		reply_write_date asc
 	</select>

@@ -21,4 +21,6 @@ public class BoardCategoryVO {
         );
     }
 
+//	private String categoryName;
+	
 }
