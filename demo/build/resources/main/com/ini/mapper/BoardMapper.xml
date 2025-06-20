@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ini.board.mapper.BoardMapper">
+
+    <!-- 게시글 등록 -->
+    <insert id="insertPost" parameterType="com.ini.board.vo.BoardDTO">
+        INSERT INTO INI_BOARD (
+            BOARD_ID, BOARD_TITLE, BOARD_CONTENT, USER_ID, BOARD_CATEGORY, BOARD_TAG
+        ) VALUES (
+            INI_BOARD_SEQ.NEXTVAL, #{title}, #{content}, #{writer}, #{category}, #{tag}
+        )
+    </insert>
+
+    <!-- 게시글 수정 -->
+    <update id="updatePost" parameterType="com.ini.board.vo.BoardDTO">
+        UPDATE INI_BOARD
+        SET BOARD_TITLE = #{title},
+            BOARD_CONTENT = #{content},
+            BOARD_CATEGORY = #{category},
+            BOARD_TAG = #{tag},
+            BOARD_UPDATE_DATE = SYSDATE
+        WHERE BOARD_ID = #{id}
+    </update>
+
+    <!-- 게시글 삭제 -->
+    <delete id="deletePost">
+        DELETE FROM INI_BOARD WHERE BOARD_ID = #{boardId}
+    </delete>
+
+    <!-- 게시글 상세 조회 -->
+    <select id="selectPostById" resultType="com.ini.board.vo.BoardDetailDTO">
+	    SELECT
+	        b.BOARD_ID AS id,
+	        b.BOARD_TITLE AS title,
+	        b.BOARD_CONTENT AS content,
+	        b.USER_ID AS writer,
+	        b.BOARD_WRITE_DATE AS createdAt,
+	        b.BOARD_UPDATE_DATE AS updatedAt,
+	        b.BOARD_VIEWS AS viewCount,
+	        c.BOARD_CATEGORY_JP AS categoryName,
+	        t.BOARD_TAG_JP AS tagName
+	    FROM INI_BOARD b
+	    LEFT JOIN BOARD_CATEGORY c ON b.BOARD_CATEGORY = c.BOARD_CATEGORY
+	    LEFT JOIN BOARD_TAG t ON b.BOARD_TAG = t.BOARD_TAG
+	    WHERE b.BOARD_ID = #{id}
+	</select>
+
+    <!-- 게시글 기본 조회 -->
+    <select id="selectBoardById" resultType="com.ini.board.vo.BoardDTO">
+        SELECT * FROM INI_BOARD WHERE BOARD_ID = #{boardId}
+    </select>
+
+    <!-- 조회수 증가 -->
+    <update id="updateViewCount">
+        UPDATE INI_BOARD SET BOARD_VIEWS = BOARD_VIEWS + 1 WHERE BOARD_ID = #{boardId}
+    </update>
+
+	<resultMap id="BoardListResultMap" type="com.ini.board.vo.BoardListDTO">
+	    <result property="board_id" column="BOARD_ID"/>
+	    <result property="board_title" column="BOARD_TITLE"/>
+	    <result property="category_name" column="CATEGORY_NAME_JP"/>
+	    <result property="tag_name" column="TAG_NAME_JP"/>
+	    <result property="user_id" column="USER_ID"/>
+	    <result property="user_nickname" column="USER_NICKNAME"/>
+	    <result property="board_views" column="BOARD_VIEWS"/>
+	    <result property="board_write_date" column="BOARD_WRITE_DATE"/>
+	    <result property="like_count" column="LIKE_COUNT"/>
+	    <result property="reply_count" column="REPLY_COUNT"/>
+	</resultMap>
+
+    <!-- 게시글 리스트 -->
+    <select id="getBoardList" resultMap="BoardListResultMap" parameterType="map">
+		SELECT
+		    b.BOARD_ID,
+		    b.BOARD_TITLE,
+		    c.BOARD_CATEGORY_JP AS CATEGORY_NAME_JP,
+		    t.BOARD_TAG_JP AS TAG_NAME_JP,
+		    b.USER_ID,
+		    u.USER_NICKNAME,
+		    b.BOARD_VIEWS,
+		    b.BOARD_WRITE_DATE,
+		    (SELECT COUNT(*) FROM BOARD_LIKE bl WHERE bl.BOARD_ID = b.BOARD_ID) AS LIKE_COUNT,
+		    (SELECT COUNT(*) FROM BOARD_REPLY r WHERE r.BOARD_ID = b.BOARD_ID) AS REPLY_COUNT
+		FROM INI_BOARD b
+		LEFT JOIN BOARD_CATEGORY c ON b.BOARD_CATEGORY = c.BOARD_CATEGORY
+		LEFT JOIN BOARD_TAG t ON b.BOARD_TAG = t.BOARD_TAG
+		LEFT JOIN INI_USER u ON b.USER_ID = u.USER_ID
+		<where>
+		    <if test="keyword != null and keyword != ''">
+		        AND LOWER(b.BOARD_TITLE) LIKE '%' || LOWER(#{keyword, jdbcType=VARCHAR}) || '%'
+		    </if>
+		    <if test="category != null and category != ''">
+		        AND b.BOARD_CATEGORY = #{category, jdbcType=VARCHAR}
+		    </if>
+		    <if test="tag != null and tag != ''">
+		        AND b.BOARD_TAG = #{tag, jdbcType=VARCHAR}
+		    </if>
+		</where>
+		ORDER BY b.BOARD_WRITE_DATE DESC
+		OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+	</select>
+
+    <select id="getPostCount" resultType="int" parameterType="map">
+	    SELECT COUNT(*)
+	    FROM INI_BOARD b
+	    <where>
+	        <if test="keyword != null and keyword != ''">
+	            AND LOWER(b.BOARD_TITLE) LIKE '%' || LOWER(#{keyword, jdbcType=VARCHAR}) || '%'
+	        </if>
+	        <if test="category != null and category != ''">
+	            AND b.BOARD_CATEGORY = #{category, jdbcType=VARCHAR}
+	        </if>
+	        <if test="tag != null and tag != ''">
+	            AND b.BOARD_TAG = #{tag, jdbcType=VARCHAR}
+	        </if>
+	    </where>
+	</select>
+
+    <!-- 카테고리, 태그 -->
+    <select id="selectAllBoardTags" resultType="com.ini.board.vo.BoardTagVO">
+        SELECT * FROM BOARD_TAG
+    </select>
+
+    <select id="selectAllBoardCategories" resultType="com.ini.board.vo.BoardCategoryVO">
+        SELECT * FROM BOARD_CATEGORY
+    </select>
+
+    <!-- 좋아요 관련 -->
+    <select id="hasUserLiked" resultType="int">
+        SELECT COUNT(*) FROM BOARD_LIKE WHERE BOARD_ID = #{boardId} AND USER_ID = #{userId}
+    </select>
+
+    <insert id="insertLike" parameterType="com.ini.board.vo.BoardLikeDTO">
+        INSERT INTO BOARD_LIKE (BOARD_ID, USER_ID, LIKE_STATUS)
+        VALUES (#{boardId}, #{userId}, 1)
+    </insert>
+
+    <delete id="deleteLike">
+        DELETE FROM BOARD_LIKE WHERE BOARD_ID = #{boardId} AND USER_ID = #{userId}
+    </delete>
+
+    <select id="countLikes" resultType="int">
+        SELECT COUNT(*) FROM BOARD_LIKE WHERE BOARD_ID = #{boardId}
+    </select>
+
+    <select id="getLikeCount" resultType="int">
+        SELECT COUNT(*) FROM BOARD_LIKE WHERE BOARD_ID = #{boardId}
+    </select>
+
+    <delete id="deleteLikesByBoardId">
+        DELETE FROM BOARD_LIKE WHERE BOARD_ID = #{boardId}
+    </delete>
+
+    <!-- 이미지 -->
+    <insert id="insertBoardImages">
+        INSERT INTO BOARD_IMAGE (BOARD_ID, IMAGE_PATH, ORIGINAL_NAME, UPLOAD_DATE)
+        VALUES
+        <foreach collection="list" item="img" separator=",">
+            (#{img.boardId}, #{img.imagePath}, #{img.originalName}, SYSDATE)
+        </foreach>
+    </insert>
+
+    <select id="selectImageList" resultType="com.ini.board.vo.BoardImageDTO">
+        SELECT * FROM BOARD_IMAGE WHERE BOARD_ID = #{boardId}
+    </select>
+
+    <delete id="deleteImagesByBoardId">
+        DELETE FROM BOARD_IMAGE WHERE BOARD_ID = #{boardId}
+    </delete>
+
+    <!-- 댓글 삭제 -->
+    <delete id="deleteCommentsByBoardId">
+        DELETE FROM BOARD_REPLY WHERE BOARD_ID = #{boardId}
+    </delete>
+
+    <!-- 상세 조회 (이미지 포함용) -->
+    <select id="selectBoardDetail" resultType="com.ini.board.vo.BoardDetailDTO">
+        SELECT
+            b.BOARD_ID AS id,
+            b.BOARD_TITLE AS title,
+            b.BOARD_CONTENT AS content,
+            b.USER_ID AS writer,
+            b.BOARD_WRITE_DATE AS createdAt,
+            b.BOARD_UPDATE_DATE AS updatedAt,
+            b.BOARD_VIEWS AS viewCount,
+            c.BOARD_CATEGORY_JP AS categoryName,
+            t.BOARD_TAG_JP AS tagName
+        FROM INI_BOARD b
+        LEFT JOIN BOARD_CATEGORY c ON b.BOARD_CATEGORY = c.BOARD_CATEGORY
+        LEFT JOIN BOARD_TAG t ON b.BOARD_TAG = t.BOARD_TAG
+        WHERE b.BOARD_ID = #{boardId}
+    </select>
+
+</mapper>
