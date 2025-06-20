@@ -15,13 +15,22 @@ public class HomeController {
     @Autowired
     private MemberService memberService;
 
+    // 루트 경로('/') 요청을 '/home' 으로 리다이렉트
+    @GetMapping("/")
+    public String root() {
+        return "redirect:/home";
+    }
+
+    // 로그인 성공 후 보여줄 홈 화면
     @GetMapping("/home")
     public String home(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
         if (userDetails != null) {
-            String userId = userDetails.getUsername(); // 실제로는 userId임
+            String userId = userDetails.getUsername(); // 실제 userId
             MemberDTO member = memberService.findMemberById(userId);
-            model.addAttribute("nickname", member.getUser_nickname());
+            if (member != null) {
+                model.addAttribute("nickname", member.getUser_nickname());
+            }
         }
-        return "member/home";  // templates/member/home.html
+        return "member/home";  // templates/member/home.html 뷰를 리턴
     }
 }

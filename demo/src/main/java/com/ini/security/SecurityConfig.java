@@ -22,15 +22,15 @@ public class SecurityConfig {
         http.csrf().disable()
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers(
-                            "/", "/login", "/login/**", "/oauth2/**",
-                            "/finding-password", "/find-by-id", "/find-by-email",
-                            "/finding-password/by-id", "/finding-password/by-email",
-                            "/send-password-email", "/css/**", "/js/**", "/images/**", "/fonts/**",
-                            "/member/signup",
-                            "/member/checkId",
-                            "/member/checkEmail",
-                            "/member/checkNickname"
-                        )
+            			    "/", "/login", "/login/**", "/oauth2/**",
+            			    "/finding-password", "/find-by-id", "/find-by-email",
+            			    "/finding-password/by-id", "/finding-password/by-email",
+            			    "/send-password-email", "/css/**", "/js/**", "/images/**", "/fonts/**",
+            			    "/member/signup", "/member/signupsuccess",
+            			    "/member/MemberMyPage", "/member/myPage",
+            			    "/member/checkId", "/member/checkEmail", "/member/checkNickname",
+            			    "/board/list" 
+            			)
                 .permitAll()
                 .anyRequest().authenticated())
             .formLogin(form -> form

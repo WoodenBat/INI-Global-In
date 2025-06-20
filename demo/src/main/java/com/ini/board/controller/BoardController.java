@@ -46,7 +46,7 @@ public class BoardController {
 	    model.addAttribute("keyword", keyword);
 	    model.addAttribute("category", category);
 
-	    return "boardList";
+	    return "member/boardList";
 	}
 	
 }

@@ -33,7 +33,7 @@ th, td {
 	<h2>📚 게시글 목록</h2>
 
 	<!-- 🔍 검색 + 카테고리 -->
-	<form th:action="@{/board/board}" method="get">
+	<form th:action="@{/board/list}" method="get">
 		<input type="text" name="keyword" th:value="${keyword}" placeholder="검색어 입력" />
 		<select name="category">
 			<option value="">전체</option>
@@ -73,14 +73,13 @@ th, td {
 	<!-- ⏩ 페이징 -->
 	<div class="pagination">
 		<span th:each="i : ${#numbers.sequence(1, totalPage)}">
-			<a th:if="${i != currentPage}" th:href="@{|/board/board?page=${i}&keyword=${keyword}&category=${category}|}">
+			<a th:if="${i != currentPage}" th:href="@{|/board/list?page=${i}&keyword=${keyword}&category=${category}|}">
 				[
-				<span th:text="${i}" />
+				<span th:text="${i}"></span>
 				]
 			</a>
 			<span th:if="${i == currentPage}">
-				<strong>[<span th:text="${i}" />]
-				</strong>
+				<strong>[<span th:text="${i}"></span>]</strong>
 			</span>
 		</span>
 	</div>
