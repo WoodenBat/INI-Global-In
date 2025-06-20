@@ -49,4 +49,11 @@ public class BoardController {
 	    return "member/boardList";
 	}
 	
+	// HomeController.java 또는 BoardController.java
+	@GetMapping("/post")
+	public String redirectToPost() {
+	    return "redirect:/board/list";
+	}
+
+	
 }

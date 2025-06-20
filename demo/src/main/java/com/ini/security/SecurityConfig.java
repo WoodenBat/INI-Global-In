@@ -29,7 +29,8 @@ public class SecurityConfig {
             			    "/member/signup", "/member/signupsuccess",
             			    "/member/MemberMyPage", "/member/myPage",
             			    "/member/checkId", "/member/checkEmail", "/member/checkNickname",
-            			    "/board/list" 
+            			    "/board/list",
+            			    "/post"
             			)
                 .permitAll()
                 .anyRequest().authenticated())
