@@ -27,6 +27,7 @@ public class MemberService {
     // 기존 메소드: findBoardById, findLikeById 등 유지
     public List<BoardDTO> findBoardById(String userId) {
         return memberMapper.findBoardById(userId);
+        
     }
     public List<BoardLikeDTO> findLikeById(String userId) {
         return memberMapper.findLikeById(userId);
@@ -60,5 +61,10 @@ public class MemberService {
 
     public void updateProfileImage(String userId, String profileImage) {
         memberMapper.updateProfileImage(userId, profileImage);
+    }
+    public void updateMemberIntro(MemberDTO dto) {
+    	System.out.println("➡️ 자기소개 업데이트 시도: user_id = " + dto.getUser_id() +
+                ", user_intro = " + dto.getUser_intro());
+    	memberMapper.updateUserIntro(dto);
     }
 }

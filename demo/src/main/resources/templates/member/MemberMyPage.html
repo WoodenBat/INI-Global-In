@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <title>마이페이지</title>
   <link rel="stylesheet" th:href="@{/css/myPage.css}" />
-  <style>
-   /* 야간 모드 시 바디 배경/글자색 변경 */
-    body.dark-mode {
-      background-color: #121212;
-      color: #e0e0e0;
-    }
-     /* 테이블 헤더, 테두리 등도 살짝 어둡게 */
-    body.dark-mode table {
-      border-color: #444;
-    }
-     body.dark-mode th {
-      background-color: #1e1e1e;
-    }
-  </style>
 </head>
 <body>
+<button onclick="toggleDarkMode()">🌙 야간 모드</button>
 
+<script>
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDark);
+  }
+
+  // 페이지 로드시 상태 복원
+  window.onload = function () {
+    const isDark = localStorage.getItem('darkMode') === 'true';
+    if (isDark) document.body.classList.add('dark-mode');
+  };
+</script>
   <div class="profile_container">
     <a th:href="@{/member/memberProfileUpdateForm}">
       <!-- 1) 업로드된 이미지가 있으면 -->
@@ -44,15 +44,15 @@
   <div class="profile_nickname_container">
     <p class="profile_nickname" th:text="${member_info.user_nickname}"></p>
   </div>
+<div class="profile_intro_container">
+  <p class="profile_intro" th:text="${member_info.user_intro} ?: ' 없습니다.'"></p>
+</div>
 
   <div class="profile_email_container">
     <p class="profile_email" th:text="${member_info.user_email}"></p>
   </div>
 
-  <!-- 이후 반복 출력할 데이터가 모델에 올라와 있어야 합니다.
-       서비스/컨트롤러에서 member_board, member_like, member_reply,
-       member_follow, member_favorite 리스트를 model.addAttribute 해 주셔야
-       아래 테이블들이 정상 렌더링됩니다. -->
+
 
   <h3>내가 쓴 글</h3>
   <table>

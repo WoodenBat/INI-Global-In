@@ -50,28 +50,44 @@ public class MemberController {
         return "member/MemberMyPage";
     }
 
-    // 프로필 이미지 업로드 처리
     @PostMapping("/memberProfileUpdate")
-    public String uploadProfileImage(@RequestParam("profileImage") MultipartFile file,
-                                     Principal principal) throws IOException {
+    public String updateProfile(@RequestParam(value = "profileImage", required = false) MultipartFile file,
+                                @RequestParam("user_intro") String userIntro,
+                                @RequestParam(value = "mode",defaultValue = "both")String mode,
+                                Principal principal) throws IOException {
         String userId = principal != null ? principal.getName() : "test";
-        if (file.isEmpty()) {
-            return "redirect:/member/myPage?error=emptyFile";
+        System.out.println("モード：" + mode);
+        System.out.println("入記しれた 自己紹介: " + userIntro);
+     // 먼저 자기소개부터 저장
+        MemberDTO dto = new MemberDTO();
+        dto.setUser_id(userId);
+        dto.setUser_intro(userIntro);
+        memberService.updateMemberIntro(dto);
+        
+        // 프로필 이미지가 있을 경우에만 처리
+        if ("both".equals(mode) && file != null && !file.isEmpty()) {
+            String original = file.getOriginalFilename();
+            String ext = original.substring(original.lastIndexOf('.') + 1).toLowerCase();
+
+            if (!List.of("jpg", "jpeg", "png", "gif").contains(ext)) {
+                return "redirect:/member/myPage?error=unsupportedFileType";
+            }
+
+            Path dir = Paths.get(uploadDir, "profile");
+            if (!Files.exists(dir)) Files.createDirectories(dir);
+
+            String newName = UUID.randomUUID() + "." + ext;
+            file.transferTo(dir.resolve(newName).toFile());
+
+            memberService.updateProfileImage(userId, newName);
         }
 
-        String original = file.getOriginalFilename();
-        String ext = original.substring(original.lastIndexOf('.') + 1).toLowerCase();
-        if (!List.of("jpg","jpeg","png","gif").contains(ext)) {
-            return "redirect:/member/myPage?error=unsupportedFileType";
-        }
-
-        Path dir = Paths.get(uploadDir, "profile");
-        if (!Files.exists(dir)) Files.createDirectories(dir);
-
-        String newName = UUID.randomUUID() + "." + ext;
-        file.transferTo(dir.resolve(newName).toFile());
-
-        memberService.updateProfileImage(userId, newName);
-        return "redirect:/member/myPage";
+        // 3. 성공 리다이렉트
+        return "redirect:/member/myPage?success=true";
     }
 }
+
+
+
+
+

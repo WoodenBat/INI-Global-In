@@ -18,7 +18,6 @@ public interface MemberMapper {
 	public MemberDTO findAllMember();
 	
 	public MemberDTO findMemberById(String user_id);
-	
 	public List<MemberFollowDTO> findFollowById(String user_id);
 	
 	public List<BoardDTO> findBoardById(String user_id);
@@ -29,5 +28,5 @@ public interface MemberMapper {
 	
 	public List<MemberFavoriteDTO> findFavoriteById(String user_id);
 	void updateProfileImage(@Param("userId") String userId, @Param("profileImage") String profileImage);
-	
+	void updateUserIntro(MemberDTO dto);
 }
