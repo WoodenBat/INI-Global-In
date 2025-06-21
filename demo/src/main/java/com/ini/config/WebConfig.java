@@ -13,15 +13,19 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        // 슬래시 통일
-    	String path = uploadPath.replace("\\", "/");
-    	if (!path.endsWith("/")) {
-    	    path += "/";
-    	}
+        // 기본 정적 리소스 경로 매핑 다시 등록
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("classpath:/static/css/");
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("classpath:/static/js/");
 
-        // file: 프로토콜  (file:///은 절대경로 앞에 쓰임)
-    	registry.addResourceHandler("/uploads/**")
-        		.addResourceLocations("file:" + path);
+        // 업로드 폴더 매핑 (기존 코드)
+        String path = uploadPath.replace("\\", "/");
+        if (!path.endsWith("/")) {
+            path += "/";
+        }
+        registry.addResourceHandler("/uploads/**")
+                .addResourceLocations("file:" + path);
     }
 }
 
