@@ -113,9 +113,18 @@
 	right: 10px;
 }
 
-.board_reply_button {
+.board_reply_button.ko {
 	font-family: "Ownglyph_PDH", sans-serif;
 	font-size: 20px;
+	opacity: 0.5;
+	border: none;
+	cursor: pointer;
+	background: none;
+}
+
+.board_reply_button.ja {
+	font-family: "Ownglyph_PDH", sans-serif;
+	font-size: 14px;
 	opacity: 0.5;
 	border: none;
 	cursor: pointer;

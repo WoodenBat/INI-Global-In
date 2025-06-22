@@ -1,0 +1,6 @@
+@charset "UTF-8";
+body {
+	max-width: 1440px !important;
+	width: 100%!important;
+	margin: 0 auto!important;
+}

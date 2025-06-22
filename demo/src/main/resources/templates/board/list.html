@@ -20,14 +20,15 @@
 		<input type="text" name="keyword" placeholder="검색어"
 			th:value="${keyword}"> <select name="category">
 			<option value="">전체 카테고리</option>
-			<option th:each="cat : ${categories}" th:value="${cat.boardCategory}"
-				th:selected="${cat.boardCategory == category}"
-				th:text="${cat.boardCategoryJp}"></option>
+			<option th:each="cat : ${categories}"
+				th:value="${cat.board_category}"
+				th:selected="${cat.board_category == category}"
+				th:text="${cat.board_category_jp}"></option>
 		</select> <select name="tag">
 			<option value="">전체 말머리</option>
-			<option th:each="tagObj : ${tags}" th:value="${tagObj.boardTag}"
-				th:selected="${tagObj.boardTag == tag}"
-				th:text="${tagObj.boardTagJp}"></option>
+			<option th:each="tagObj : ${tags}" th:value="${tagObj.board_tag}"
+				th:selected="${tagObj.board_tag == tag}"
+				th:text="${tagObj.board_tag_jp}"></option>
 		</select>
 
 		<button type="submit">검색</button>

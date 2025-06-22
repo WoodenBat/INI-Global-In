@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="${#locale.language}">
 <head>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <title th:text="${board.board_title}">게시글 보기</title>
+<link rel="stylesheet" th:href="@{/css/boardReply.css}" />
 <link rel="stylesheet" th:href="@{/css/popup.css}" />
+<script th:src="@{/js/boardReply.js}"></script>
 </head>
+<th:block th:replace="member/header :: header"></th:block>
+<script th:inline="javascript">
+	let boardId = '[[${board.board_id}]]'; 
+</script>
 <body>
-
+	<span id="localeClass" th:text="${#locale}" style="display:none;"></span>
 	<h1 th:text="${board.board_title}">제목</h1>
-
+	
 	<!-- 게시글 정보 -->
 	<div>
 		<p>
@@ -116,7 +123,7 @@ document.getElementById("likeBtn").addEventListener("click", function () {
 			<button type="button" id="closeModal">취소</button>
 		</form>
 	</div>
-
+	<th:block th:replace="board/boardReplyTest :: boardReply"></th:block>
 	<script>
 	document.getElementById('reportBtn').addEventListener('click', () => {
 	    document.getElementById('reportModal').style.display = 'block';
