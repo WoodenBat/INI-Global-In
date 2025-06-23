@@ -2,12 +2,16 @@ package com.ini.board.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ini.board.service.BoardService;
 import com.ini.board.vo.BoardDTO;
@@ -20,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 
     private final BoardService boardService;
+   
+
 
     @GetMapping("/list")
     public String boardListPage(
@@ -55,6 +61,10 @@ public class BoardController {
         model.addAttribute("categories", categories);
 
         return "board/list";
+        
+        
     }
 
     }
+
+

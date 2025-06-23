@@ -8,132 +8,89 @@
       font-family: 'Ownglyph_PDH1';
       src: url('/fonts/Ownglyph_PDH1.ttf') format('truetype');
     }
-
     body {
       font-family: 'Ownglyph_PDH1', sans-serif;
     }
-
     .btn-write {
       display: inline-block;
-      font-size: 20px;;
+      font-size: 20px;
       color: #000;
       margin-bottom: 20px;
     }
-
-    .category-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
+    .translated-text {
+      margin-top: 4px;
+      font-size: 14px;
+      color: #555;
     }
-
-    .category-tags .tag-box {
-      padding: 6px 18px;
-      border-radius: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .category-tags .tag {
-      padding: 6px 18px;
-      border-radius: 30px;
-      font-size: 18px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease-in-out;
-      color: #000;
-    }
-
-    .category-tags .tag.active {
-      border: 3px solid #333;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      transform: scale(1.1);
-    }
-
-    /*카테고리미친거*/
-    .category-tags .tag-box.Java    { background-color: rgba(235, 179, 179, 0.6); }
-    .category-tags .tag-box.DB      { background-color: rgba(255, 219, 141, 0.6); }
-    .category-tags .tag-box.JSP     { background-color: rgba(255, 165, 109, 0.6); }
-    .category-tags .tag-box.Spring  { background-color: rgba(167, 255, 167, 0.6); }
-    .category-tags .tag-box.Python  { background-color: rgba(173, 216, 230, 0.6); }
-    .category-tags .tag-box.일본어  { background-color: rgba(192, 109, 255, 0.6); }
-
-    .search-box {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .search-box input[type="text"] {
-      padding: 6px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      width: 200px;
-    }
-
-    .search-box button {
-      padding: 6px 12px;
-      margin-left: 6px;
-      border: none;
-      background-color: #333;
-      color: white;
-      border-radius: 4px;
+    .jp-btn {
+      margin-left: 8px;
+      font-size: 12px;
+      padding: 2px 8px;
       cursor: pointer;
     }
+    
+    .category-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.category-tags .tag-box {
+  padding: 6px 18px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.category-tags .tag {
+  padding: 6px 18px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  color: #000;
+}
+.category-tags .tag.active {
+  border: 3px solid #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+}
+.tag-box.Java    { background-color: rgba(235, 179, 179, 0.6); }
+.tag-box.DB      { background-color: rgba(255, 219, 141, 0.6); }
+.tag-box.JSP     { background-color: rgba(255, 165, 109, 0.6); }
+.tag-box.Spring  { background-color: rgba(167, 255, 167, 0.6); }
+.tag-box.Python  { background-color: rgba(173, 216, 230, 0.6); }
+.tag-box.일본어  { background-color: rgba(192, 109, 255, 0.6); }
 
     table {
       width: 100%;
       border-collapse: separate;
       border-spacing: 0 16px;
     }
-
     thead tr {
       background-color: #e9eef5;
     }
-
     thead th {
       padding: 14px 10px;
       font-weight: 700;
       text-align: center;
     }
-
     tbody tr {
       background-color: rgba(217, 217, 217, 0.3);
       border: 1px solid #ccc;
       border-radius: 50px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      transition: background-color 0.2s ease;
     }
-
-    tbody tr:hover {
-      background-color: #f5faff;
-    }
-
     tbody td {
       padding: 14px 10px;
       text-align: center;
-      background-color: transparent;
-      border: none;
     }
-    
-	  tbody td a {
-	  color: #000;
-	  
-	}
-	
-	tbody td a:hover {
-	  text-decoration: underline;
-	}
-
     .pagination {
       text-align: center;
       margin-top: 24px;
     }
-
-    .pagination a,
-    .pagination span {
+    .pagination a, .pagination span {
       display: inline-block;
       margin: 0 6px;
       padding: 6px 12px;
@@ -141,7 +98,6 @@
       text-decoration: none;
       border-radius: 4px;
     }
-
     .pagination .current {
       font-weight: bold;
       color: #FF0000;
@@ -153,29 +109,40 @@
 
 <body>
 
-  <h1>게시글 목록</h1>
+  <!-- 게시글 목록 제목 + 번역 버튼 -->
+  <h1>
+    게시글 목록
+    <button type="button"
+            class="jp-btn"
+            onclick="handleTranslateClick(this)"
+            data-title="게시글 목록"
+            data-target="heading">🇯🇵</button>
+  </h1>
+  <div id="jp-heading" class="translated-text"></div>
 
+  <!-- 게시글 작성하기 버튼 + 번역 버튼 -->
   <a href="/board/write" class="btn-write">📝 게시글 작성하기</a>
-
-  <!-- ✅ 카테고리 필터 -->
-  <div class="category-tags">
-    <div class="tag-box" th:classappend="${category == null or category == ''} ? 'active'">
-      <a th:href="@{/board/list(keyword=${keyword})}" class="tag">전체</a>
-    </div>
-    <div th:each="cat : ${categories}" class="tag-box" th:classappend="${cat}">
-      <a th:href="@{/board/list(category=${cat}, keyword=${keyword})}" th:text="${cat}"
-         th:class="${cat == category} ? 'tag active' : 'tag'"></a>
-    </div>
+  <button type="button"
+          class="jp-btn"
+          onclick="handleTranslateClick(this)"
+          data-title="게시글 작성하기"
+          data-target="write">🇯🇵</button>
+  <div id="jp-write-button" class="translated-text"></div>
+  
+  <!-- 카테고리 필터 -->
+<div class="category-tags">
+  <div class="tag-box" th:classappend="${category == null or category == ''} ? 'active'">
+    <a th:href="@{/board/list(keyword=${keyword})}" class="tag">전체</a>
   </div>
+  <div th:each="cat : ${categories}" class="tag-box" th:classappend="${cat}">
+    <a th:href="@{/board/list(category=${cat}, keyword=${keyword})}"
+       th:text="${cat}"
+       th:class="${cat == category} ? 'tag active' : 'tag'">
+    </a>
+  </div>
+</div>
 
-  <!-- 검색 -->
-  <form class="search-box" th:action="@{/board/list}" method="get">
-    <input type="text" name="keyword" th:value="${keyword}" placeholder="검색어 입력" />
-    <input type="hidden" name="category" th:value="${category}" />
-    <button type="submit">검색</button>
-  </form>
-
-  <!-- 게시글 리스트 -->
+  <!-- 게시글 목록 테이블 -->
   <table>
     <thead>
       <tr>
@@ -198,9 +165,14 @@
         <td th:text="${iterStat.index + 1 + (currentPage * pageSize)}"></td>
         <td th:text="${board.user_id}">작성자</td>
         <td th:text="${board.board_category}">카테고리</td>
-        <td th:text="${board.board_tag}">말머리</td>
+        <td th:text="${board.board_tag}" id="tag-[[${board.board_id}]]">말머리</td>
         <td>
           <a th:href="@{'/board/' + ${board.board_id}}" th:text="${board.board_title}">제목</a>
+          <button type="button"
+                  class="jp-btn"
+                  th:attr="data-id=${board.board_id}, data-title=${board.board_title}, data-target='title'"
+                  onclick="handleTranslateClick(this)">🇯🇵</button>
+          <div th:attr="id='jp-title-' + ${board.board_id}" class="translated-text"></div>
         </td>
         <td th:text="${#dates.format(board.board_write_date, 'yyyy-MM-dd')}">작성일</td>
         <td th:text="${board.board_views}">조회수</td>
@@ -210,7 +182,7 @@
     </tbody>
   </table>
 
-  <!-- 페이징 -->
+  <!-- 페이지네이션 -->
   <div class="pagination" th:if="${totalCount > pageSize}">
     <span th:each="i : ${#numbers.sequence(0, (totalCount - 1) / pageSize)}">
       <a th:href="@{/board/list(page=${i}, size=${pageSize}, category=${category}, keyword=${keyword})}"
@@ -218,6 +190,35 @@
          th:text="${i + 1}">1</a>
     </span>
   </div>
+
+  <!-- 번역 JS -->
+  <script>
+    function handleTranslateClick(btn) {
+      const boardId = btn.dataset.id || "";
+      const title = btn.dataset.title || "";
+      const target = btn.dataset.target;
+
+      fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: title, tag: "" })
+      })
+      .then(res => res.text())
+      .then(result => {
+        let targetId = "";
+        if (target === "title") targetId = "jp-title-" + boardId;
+        else if (target === "heading") targetId = "jp-heading";
+        else if (target === "write") targetId = "jp-write-button";
+
+        if (targetId) {
+          document.getElementById(targetId).innerText = result;
+        }
+      })
+      .catch(err => {
+        console.error("⚠️ 번역 실패", err);
+      });
+    }
+  </script>
 
 </body>
 </html>

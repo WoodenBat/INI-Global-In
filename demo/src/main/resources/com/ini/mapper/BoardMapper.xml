@@ -78,5 +78,11 @@
     FROM ini_board
     WHERE board_id = #{boardId}
   </select>
+  <!-- 게시글 제목 가져오기 -->
+  <select id="getBoardTitle" resultType="string">
+    SELECT board_title
+    FROM ini_board
+    WHERE board_title = #{boardtitle}
+  </select>
 
 </mapper>
