@@ -15,7 +15,6 @@ import com.ini.board.service.BoardReplyService;
 import com.ini.board.vo.BoardReplyDTO;
 import com.ini.board.vo.BoardReplyReportDTO;
 import com.ini.board.vo.BoardReplyWithUserDTO;
-import com.ini.board.vo.BoardReportDTO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
