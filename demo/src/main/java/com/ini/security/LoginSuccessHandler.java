@@ -32,6 +32,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		if (member != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("nickname", member.getUser_nickname());
+			session.setAttribute("user_id", member.getUser_id());
 		}
 
 		response.sendRedirect("/home"); // 로그인 성공 후 홈으로 이동
