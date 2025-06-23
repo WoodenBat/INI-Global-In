@@ -1,5 +1,6 @@
 
-const translationCache = {};  //캐시메모리
+const translationCache_board = {};
+const translationCache_reply = {};  //캐시메모리
 
 //버튼 여러개 인덱스 설정
 /*
@@ -43,9 +44,9 @@ $(document).on("click", ".translate-btn", function() {
 	const originalText = textElem.text();
 	if (unTransText.text() === "") {
 
-		if (translationCache[replyId]) {
+		if (translationCache_reply[replyId]) {
 			unTransText.text(textElem.text());
-			textElem.text(translationCache[replyId] + ' (번역)');
+			textElem.text(translationCache_reply[replyId] + ' (번역)');
 			textElem.css('font-size', '23px');
 		} else {
 			fetch("/api/translate", {
@@ -55,7 +56,7 @@ $(document).on("click", ".translate-btn", function() {
 			})
 				.then(res => res.text())
 				.then(translated => {
-					translationCache[replyId] = translated;
+					translationCache_reply[replyId] = translated;
 					//showPopup(translated);
 					unTransText.text(textElem.text());
 					textElem.text(translated + ' (번역)');
@@ -78,15 +79,15 @@ $(document).on("click", ".translate_board-btn", function() {
 	const textElem = replyBlock.find('.reply-text');
 	const unTransText = textElem.next('.board_content_hidden');
 	console.log(textElem);
-	const replyId = $(".translate_board-btn").index(this);  // 인덱스로 고유 식별
-	console.log(replyId);
+	const board_id = $(".translate_board-btn").index(this);  // 인덱스로 고유 식별
+	console.log(board_id);
 
 	const originalText = textElem.text();
 	if (unTransText.text() === "") {
 
-		if (translationCache[replyId]) {
+		if (translationCache_board[board_id]) {
 			unTransText.text(textElem.text());
-			textElem.text(translationCache[replyId] + ' (번역)');
+			textElem.text(translationCache_board[board_id] + ' (번역)');
 			textElem.css('font-size', '15px');
 		} else {
 			fetch("/api/translate", {
@@ -96,7 +97,7 @@ $(document).on("click", ".translate_board-btn", function() {
 			})
 				.then(res => res.text())
 				.then(translated => {
-					translationCache[replyId] = translated;
+					translationCache_board[board_id] = translated;
 					unTransText.text(textElem.text());
 					textElem.text(translated + ' (번역)');
 					textElem.css('font-size', '15px');

@@ -76,4 +76,9 @@
 		AND REPLY_STATUS = #{reply_status}
 	</update>
 
+	<insert id="insertBoardReplyReport">
+		insert into board_reply_report (report_id, report_content, report_user, report_date, report_category, reply_id)
+		values (board_reply_report_seq.nextval, #{report_content}, #{report_user}, default, #{report_category}, #{reply_id})
+	</insert>
+
 </mapper>

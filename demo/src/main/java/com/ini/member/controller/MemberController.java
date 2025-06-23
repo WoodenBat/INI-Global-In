@@ -1,12 +1,14 @@
 package com.ini.member.controller;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
+
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -34,14 +36,16 @@ public class MemberController {
 	private MemberMapper memberMapper;
 
 	@GetMapping("myPage")
-	public String myPageTest(Model model) {
+	public String myPageTest(Model model, HttpSession session) {
 
-		model.addAttribute("member_info", memberservice.findMemberById("test"));
-		model.addAttribute("member_follow", memberservice.findFollowById("test"));
-		model.addAttribute("member_board", memberservice.findBoardLikeReplyById("test"));
-		model.addAttribute("member_like", memberservice.findBoardLikeReplyByLikeId("test"));
-		model.addAttribute("member_reply", memberservice.findBoardLikeReplyByReplyId("test"));
-		model.addAttribute("member_favorite", memberservice.findBoardLikeReplyByFavoriteId("test"));
+		System.out.println("sessionid ==========================================" + session.getAttribute("user_id"));
+		String session_id = String.valueOf(session.getAttribute("user_id"));
+		model.addAttribute("member_info", memberservice.findMemberById(session_id));
+		model.addAttribute("member_follow", memberservice.findFollowById(session_id));
+		model.addAttribute("member_board", memberservice.findBoardLikeReplyById(session_id));
+		model.addAttribute("member_like", memberservice.findBoardLikeReplyByLikeId(session_id));
+		model.addAttribute("member_reply", memberservice.findBoardLikeReplyByReplyId(session_id));
+		model.addAttribute("member_favorite", memberservice.findBoardLikeReplyByFavoriteId(session_id));
 
 		return "/member/MemberMyPage";
 	}

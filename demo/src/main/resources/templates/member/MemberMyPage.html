@@ -6,6 +6,16 @@
 <link rel="stylesheet" th:href="@{/css/myPage.css}" />
 </head>
 <th:block th:replace="member/header :: header"></th:block>
+<script type="text/javascript">
+    window.onload = function () {
+        console.log('[[${member_info}]]');
+        console.log('[[${member_follow}]]');
+        console.log('[[${member_board}]]');
+        console.log('[[${member_like}]]');
+        console.log('[[${member_reply}]]');
+        console.log('[[${member_favorite}]]');
+    };
+</script>
 <body>
 	<div class="profile_wrapper">
 		<div class="profile_container">
@@ -37,38 +47,40 @@
 				</div>
 
 				<div class="myBoard_content_container" th:each="mb, stat : ${member_board}">
-					<div class="myBoard_content">
-						<div class="myBoard_user_nickname_container">
-							<span class="myBoard_user_nickname" th:text="${mb.user_id}"></span>
-						</div>
+					<a th:href="@{/board/view/{id}(id=${mb.board_id})}">
+						<div class="myBoard_content">
+							<div class="myBoard_user_nickname_container">
+								<span class="myBoard_user_nickname" th:text="${mb.user_id}"></span>
+							</div>
 
-						<div class="myBoard_category_container">
-							<span class="myBoard_category" th:text="${mb.board_category}"></span>
-						</div>
+							<div class="myBoard_category_container">
+								<span class="myBoard_category" th:text="${mb.board_category}"></span>
+							</div>
 
-						<div class="myBoard_title_container">
-							<span class="myBoard_title" th:text="${mb.board_title}"></span>
-						</div>
+							<div class="myBoard_title_container">
+								<span class="myBoard_title" th:text="${mb.board_title}"></span>
+							</div>
 
-						<div class="myBoard_views_container">
-							<img class="myBoard_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
-							<div class="myBoard_views_cnt_container">
-								<span class="myBoard_views_cnt" th:text="${mb.board_views}"></span>
+							<div class="myBoard_views_container">
+								<img class="myBoard_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
+								<div class="myBoard_views_cnt_container">
+									<span class="myBoard_views_cnt" th:text="${mb.board_views}"></span>
+								</div>
+							</div>
+							<div class="myBoard_like_container">
+								<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
+								<div class="mtBoard_like_cnt_container">
+									<span class="myBoard_like_cnt" th:text="${mb.board_like_cnt}"></span>
+								</div>
+							</div>
+							<div class="myBoard_reply_container">
+								<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
+								<div class="mtBoard_reply_cnt_container">
+									<span class="myBoard_reply_cnt" th:text="${mb.board_reply_cnt}"></span>
+								</div>
 							</div>
 						</div>
-						<div class="myBoard_like_container">
-							<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
-							<div class="mtBoard_like_cnt_container">
-								<span class="myBoard_like_cnt" th:text="${mb.board_like_cnt}"></span>
-							</div>
-						</div>
-						<div class="myBoard_reply_container">
-							<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
-							<div class="mtBoard_reply_cnt_container">
-								<span class="myBoard_reply_cnt" th:text="${mb.board_reply_cnt}"></span>
-							</div>
-						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -84,38 +96,40 @@
 				</div>
 
 				<div class="myBoard_content_container" th:each="ml, stat : ${member_like}">
-					<div class="myBoard_content">
-						<div class="myBoard_user_nickname_container">
-							<span class="myBoard_user_nickname" th:text="${ml.user_id}"></span>
-						</div>
+					<a th:href="@{/board/view/{id}(id=${ml.board_id})}">
+						<div class="myBoard_content">
+							<div class="myBoard_user_nickname_container">
+								<span class="myBoard_user_nickname" th:text="${ml.user_id}"></span>
+							</div>
 
-						<div class="myBoard_category_container">
-							<span class="myBoard_category" th:text="${ml.board_category}"></span>
-						</div>
+							<div class="myBoard_category_container">
+								<span class="myBoard_category" th:text="${ml.board_category}"></span>
+							</div>
 
-						<div class="myBoard_title_container">
-							<span class="myBoard_title" th:text="${ml.board_title}"></span>
-						</div>
+							<div class="myBoard_title_container">
+								<span class="myBoard_title" th:text="${ml.board_title}"></span>
+							</div>
 
-						<div class="myBoard_views_container">
-							<img class="myBoard_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
-							<div class="myBoard_views_cnt_container">
-								<span class="myBoard_views_cnt" th:text="${ml.board_views}"></span>
+							<div class="myBoard_views_container">
+								<img class="myBoard_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
+								<div class="myBoard_views_cnt_container">
+									<span class="myBoard_views_cnt" th:text="${ml.board_views}"></span>
+								</div>
+							</div>
+							<div class="myBoard_like_container">
+								<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
+								<div class="mtBoard_like_cnt_container">
+									<span class="myBoard_like_cnt" th:text="${ml.board_like_cnt}"></span>
+								</div>
+							</div>
+							<div class="myBoard_reply_container">
+								<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
+								<div class="mtBoard_reply_cnt_container">
+									<span class="myBoard_reply_cnt" th:text="${ml.board_reply_cnt}"></span>
+								</div>
 							</div>
 						</div>
-						<div class="myBoard_like_container">
-							<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
-							<div class="mtBoard_like_cnt_container">
-								<span class="myBoard_like_cnt" th:text="${ml.board_like_cnt}"></span>
-							</div>
-						</div>
-						<div class="myBoard_reply_container">
-							<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
-							<div class="mtBoard_reply_cnt_container">
-								<span class="myBoard_reply_cnt" th:text="${ml.board_reply_cnt}"></span>
-							</div>
-						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -131,38 +145,40 @@
 				</div>
 
 				<div class="myBoard_content_container" th:each="mr, stat : ${member_reply}">
-					<div class="myBoard_content">
-						<div class="myBoard_user_nickname_container">
-							<span class="myBoard_user_nickname" th:text="${mr.user_id}"></span>
-						</div>
+					<a th:href="@{/board/view/{id}(id=${mr.board_id})}">
+						<div class="myBoard_content">
+							<div class="myBoard_user_nickname_container">
+								<span class="myBoard_user_nickname" th:text="${mr.user_id}"></span>
+							</div>
 
-						<div class="myBoard_category_container">
-							<span class="myBoard_category" th:text="${mr.board_category}"></span>
-						</div>
+							<div class="myBoard_category_container">
+								<span class="myBoard_category" th:text="${mr.board_category}"></span>
+							</div>
 
-						<div class="myBoard_title_container">
-							<span class="myBoard_title" th:text="${mr.board_title}"></span>
-						</div>
+							<div class="myBoard_title_container">
+								<span class="myBoard_title" th:text="${mr.board_title}"></span>
+							</div>
 
-						<div class="myBoard_views_container">
-							<img class="myBoard_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
-							<div class="myBoard_views_cnt_container">
-								<span class="myBoard_views_cnt" th:text="${mr.board_views}"></span>
+							<div class="myBoard_views_container">
+								<img class="myBoard_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
+								<div class="myBoard_views_cnt_container">
+									<span class="myBoard_views_cnt" th:text="${mr.board_views}"></span>
+								</div>
+							</div>
+							<div class="myBoard_like_container">
+								<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
+								<div class="mtBoard_like_cnt_container">
+									<span class="myBoard_like_cnt" th:text="${mr.board_like_cnt}"></span>
+								</div>
+							</div>
+							<div class="myBoard_reply_container">
+								<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
+								<div class="mtBoard_reply_cnt_container">
+									<span class="myBoard_reply_cnt" th:text="${mr.board_reply_cnt}"></span>
+								</div>
 							</div>
 						</div>
-						<div class="myBoard_like_container">
-							<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
-							<div class="mtBoard_like_cnt_container">
-								<span class="myBoard_like_cnt" th:text="${mr.board_like_cnt}"></span>
-							</div>
-						</div>
-						<div class="myBoard_reply_container">
-							<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
-							<div class="mtBoard_reply_cnt_container">
-								<span class="myBoard_reply_cnt" th:text="${mr.board_reply_cnt}"></span>
-							</div>
-						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -178,38 +194,40 @@
 				</div>
 
 				<div class="myBoard_content_container" th:each="mf, stat : ${member_favorite}">
-					<div class="myBoard_content">
-						<div class="myBoard_user_nickname_container">
-							<span class="myBoard_user_nickname" th:text="${mf.user_id}"></span>
-						</div>
+					<a th:href="@{/board/view/{id}(id=${mf.board_id})}">
+						<div class="myBoard_content">
+							<div class="myBoard_user_nickname_container">
+								<span class="myBoard_user_nickname" th:text="${mf.user_id}"></span>
+							</div>
 
-						<div class="myBoard_category_container">
-							<span class="myBoard_category" th:text="${mf.board_category}"></span>
-						</div>
+							<div class="myBoard_category_container">
+								<span class="myBoard_category" th:text="${mf.board_category}"></span>
+							</div>
 
-						<div class="myBoard_title_container">
-							<span class="myBoard_title" th:text="${mf.board_title}"></span>
-						</div>
+							<div class="myBoard_title_container">
+								<span class="myBoard_title" th:text="${mf.board_title}"></span>
+							</div>
 
-						<div class="myBoard_views_container">
-							<img class="myBoard_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
-							<div class="myBoard_views_cnt_container">
-								<span class="myBoard_views_cnt" th:text="${mf.board_views}"></span>
+							<div class="myBoard_views_container">
+								<img class="myBoard_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
+								<div class="myBoard_views_cnt_container">
+									<span class="myBoard_views_cnt" th:text="${mf.board_views}"></span>
+								</div>
+							</div>
+							<div class="myBoard_like_container">
+								<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
+								<div class="mtBoard_like_cnt_container">
+									<span class="myBoard_like_cnt" th:text="${mf.board_like_cnt}"></span>
+								</div>
+							</div>
+							<div class="myBoard_reply_container">
+								<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
+								<div class="mtBoard_reply_cnt_container">
+									<span class="myBoard_reply_cnt" th:text="${mf.board_reply_cnt}"></span>
+								</div>
 							</div>
 						</div>
-						<div class="myBoard_like_container">
-							<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
-							<div class="mtBoard_like_cnt_container">
-								<span class="myBoard_like_cnt" th:text="${mf.board_like_cnt}"></span>
-							</div>
-						</div>
-						<div class="myBoard_reply_container">
-							<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
-							<div class="mtBoard_reply_cnt_container">
-								<span class="myBoard_reply_cnt" th:text="${mf.board_reply_cnt}"></span>
-							</div>
-						</div>
-					</div>
+					</a>
 				</div>
 			</div>
 		</div>

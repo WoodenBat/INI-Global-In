@@ -21,10 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ini.board.mapper.BoardMapper;
-import com.ini.board.service.BoardCategoryService;
-import com.ini.board.service.BoardReplyService;
 import com.ini.board.service.BoardService;
-import com.ini.board.service.BoardTagService;
 import com.ini.board.vo.BoardDTO;
 import com.ini.board.vo.BoardDetailDTO;
 import com.ini.board.vo.BoardImageDTO;

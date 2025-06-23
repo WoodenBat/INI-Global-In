@@ -1,4 +1,12 @@
 @charset "UTF-8";
+
+@font-face {
+	font-family: 'Ownglyph_PDH';
+	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
 body {
 	max-width: 1440px !important;
 	width: 100%!important;

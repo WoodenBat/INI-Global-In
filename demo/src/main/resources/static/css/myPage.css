@@ -6,6 +6,12 @@ body {
 	margin: 0 auto;
 }
 
+a {
+	text-decoration: none;
+	color: inherit;
+	display: block;
+}
+
 @font-face {
 	font-family: 'Ownglyph_PDH';
 	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
@@ -306,7 +312,7 @@ body {
 
 .myFollower_content {
 	display: grid;
-	grid-template-columns: 150px 150px 150px 150px 110px 110px;
+	grid-template-columns: 50px 50px 50px 50px 50px;
 	align-items: center;
 	height: 63px;
 }

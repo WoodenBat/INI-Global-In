@@ -77,13 +77,13 @@ public class MemberService {
 
 	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByReplyId(String user_id) {
 
-		return membermapper.findBoardLikeReplyByLikeId(user_id);
+		return membermapper.findBoardLikeReplyByReplyId(user_id);
 
 	}
 
 	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByFavoriteId(String user_id) {
 
-		return membermapper.findBoardLikeReplyByLikeId(user_id);
+		return membermapper.findBoardLikeReplyByFavoriteId(user_id);
 
 	}
 

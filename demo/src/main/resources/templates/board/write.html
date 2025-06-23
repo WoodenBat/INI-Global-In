@@ -5,6 +5,7 @@
 <title>게시글 작성</title>
 <meta charset="UTF-8">
 </head>
+<th:block th:replace="member/header :: header"></th:block>
 <body>
 	<h2>게시글 작성</h2>
 
@@ -53,6 +54,9 @@
 
 	<script>
         // 말머리/카테고리 유효성 검사
+        window.onload = function () {
+            console.log('[[${tags}]]');
+        };
         function validateForm() {
             const tag = document.getElementById("board_tag").value;
             const category = document.getElementById("board_category").value;
