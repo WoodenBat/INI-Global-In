@@ -22,17 +22,21 @@
 <!-- 게시글 본문 + 이미지 -->
 <div class="reply-block">
     <!-- 본문 -->
-    <div class="reply-text" th:utext="${board.board_content}">본문</div>
-	
+    <div class="reply-text"
+	     th:text="${board.board_content}"
+	     style="white-space: pre-line;">
+	</div>
+
+
 	<!-- 번역 버튼 -->
 	<button type="button" class="translate-btn">번역하기</button>
 	
     <!-- 이미지 -->
     <div th:if="${imageList != null and !#lists.isEmpty(imageList)}">
         <div th:each="image : ${imageList}">
-            <img th:if="${image.imagePath != null and !#strings.isEmpty(image.imagePath)}"
-                 th:src="@{'/uploads/' + ${image.imagePath}}"
-                 th:alt="${image.originalName}"
+            <img th:if="${image.image_path != null and !#strings.isEmpty(image.image_path)}"
+                 th:src="@{'/uploads/' + ${image.image_path}}"
+                 th:alt="${image.original_name}"
                  style="max-width: 100%; height: auto; margin-top: 10px;" />
         </div>
     </div>

@@ -24,7 +24,6 @@
 	    )
 	</insert>
 
-
     <!-- 게시글 수정 -->
     <update id="updatePost" parameterType="com.ini.board.vo.BoardDTO">
 	    UPDATE INI_BOARD
@@ -38,7 +37,7 @@
 
     <!-- 게시글 삭제 -->
     <delete id="deletePost">
-        DELETE FROM INI_BOARD WHERE BOARD_ID = #{boardId}
+        DELETE FROM INI_BOARD WHERE BOARD_ID = #{board_id}
     </delete>
 
     <!-- 게시글 상세 조회 -->
@@ -59,17 +58,17 @@
 	    LEFT JOIN BOARD_CATEGORY c ON b.BOARD_CATEGORY = c.BOARD_CATEGORY
 	    LEFT JOIN BOARD_TAG t ON b.BOARD_TAG = t.BOARD_TAG
 	    LEFT JOIN INI_USER u ON b.USER_ID = u.USER_ID
-	    WHERE b.BOARD_ID = #{boardId}
+	    WHERE b.BOARD_ID = #{board_id}
 	</select>
 
     <!-- 게시글 기본 조회 -->
     <select id="selectBoardById" resultType="com.ini.board.vo.BoardDTO">
-        SELECT * FROM INI_BOARD WHERE BOARD_ID = #{boardId}
+        SELECT * FROM INI_BOARD WHERE BOARD_ID = #{board_id}
     </select>
 
     <!-- 조회수 증가 -->
     <update id="updateViewCount">
-        UPDATE INI_BOARD SET BOARD_VIEWS = BOARD_VIEWS + 1 WHERE BOARD_ID = #{boardId}
+        UPDATE INI_BOARD SET BOARD_VIEWS = BOARD_VIEWS + 1 WHERE BOARD_ID = #{board_id}
     </update>
 
 	<resultMap id="BoardListResultMap" type="com.ini.board.vo.BoardListDTO">
@@ -147,15 +146,15 @@
     <!-- 카테고리, 태그 -->
     <select id="selectAllBoardTags" resultType="com.ini.board.vo.BoardTagVO">
 	    SELECT
-	        BOARD_TAG AS boardTag,
-	        BOARD_TAG_JP AS boardTagJp
+	        BOARD_TAG AS board_tag,
+	        BOARD_TAG_JP AS board_tag_jp
 	    FROM BOARD_TAG
 	</select>
 
     <select id="selectAllBoardCategories" resultType="com.ini.board.vo.BoardCategoryVO">
         SELECT
-			BOARD_CATEGORY AS boardCategory,
-			BOARD_CATEGORY_JP AS boardCategoryJp
+			BOARD_CATEGORY AS board_category,
+			BOARD_CATEGORY_JP AS board_category_jp
 		FROM BOARD_CATEGORY
     </select>
 
@@ -163,56 +162,56 @@
     <select id="hasUserLiked" parameterType="map" resultType="int">
 	    SELECT COUNT(*) 
 	    FROM BOARD_LIKE 
-	    WHERE BOARD_ID = #{boardId, jdbcType=INTEGER} 
-	      AND USER_ID = #{userId, jdbcType=VARCHAR}
+	    WHERE BOARD_ID = #{board_id, jdbcType=INTEGER} 
+	      AND USER_ID = #{user_id, jdbcType=VARCHAR}
 	</select>
 
     <insert id="insertLike" parameterType="com.ini.board.vo.BoardLikeDTO">
         INSERT INTO BOARD_LIKE (BOARD_ID, USER_ID, LIKE_STATUS)
-        VALUES (#{boardId}, #{userId}, 1)
+        VALUES (#{board_id}, #{user_id}, 1)
     </insert>
 
     <delete id="deleteLike">
-        DELETE FROM BOARD_LIKE WHERE BOARD_ID = #{boardId} AND USER_ID = #{userId}
+        DELETE FROM BOARD_LIKE WHERE BOARD_ID = #{board_id} AND USER_ID = #{user_id}
     </delete>
 
     <select id="countLikes" resultType="int">
-        SELECT COUNT(*) FROM BOARD_LIKE WHERE BOARD_ID = #{boardId}
+        SELECT COUNT(*) FROM BOARD_LIKE WHERE BOARD_ID = #{board_id}
     </select>
 
     <select id="getLikeCount" resultType="int">
-        SELECT COUNT(*) FROM BOARD_LIKE WHERE BOARD_ID = #{boardId}
+        SELECT COUNT(*) FROM BOARD_LIKE WHERE BOARD_ID = #{board_id}
     </select>
 
     <delete id="deleteLikesByBoardId">
-        DELETE FROM BOARD_LIKE WHERE BOARD_ID = #{boardId}
+        DELETE FROM BOARD_LIKE WHERE BOARD_ID = #{board_id}
     </delete>
 
     <!-- 이미지 -->
     <insert id="insertBoardImage" parameterType="com.ini.board.vo.BoardImageDTO">
 	    INSERT INTO BOARD_IMAGE (ID, BOARD_ID, IMAGE_PATH, ORIGINAL_NAME, UPLOAD_DATE)
-	    VALUES (BOARD_IMAGE_SEQ.NEXTVAL, #{boardId}, #{imagePath}, #{originalName}, SYSDATE)
+	    VALUES (BOARD_IMAGE_SEQ.NEXTVAL, #{board_id}, #{image_path}, #{original_name}, SYSDATE)
 	</insert>
 
     <select id="selectImageList" resultType="com.ini.board.vo.BoardImageDTO">
 	    SELECT
 	        ID AS id,
-	        BOARD_ID AS boardId,
-	        IMAGE_PATH AS imagePath,
-	        ORIGINAL_NAME AS originalName,
-	        UPLOAD_DATE AS uploadDate
+	        BOARD_ID AS board_id,
+	        IMAGE_PATH AS image_path,
+	        ORIGINAL_NAME AS original_name,
+	        UPLOAD_DATE AS upload_date
 	    FROM BOARD_IMAGE
-	    WHERE BOARD_ID = #{boardId}
+	    WHERE BOARD_ID = #{board_id}
 	</select>
 
 
     <delete id="deleteImagesByBoardId">
-        DELETE FROM BOARD_IMAGE WHERE BOARD_ID = #{boardId}
+        DELETE FROM BOARD_IMAGE WHERE BOARD_ID = #{board_id}
     </delete>
 
     <!-- 댓글 삭제 -->
     <delete id="deleteCommentsByBoardId">
-        DELETE FROM BOARD_REPLY WHERE BOARD_ID = #{boardId}
+        DELETE FROM BOARD_REPLY WHERE BOARD_ID = #{board_id}
     </delete>
 
     <!-- 상세 조회 (이미지 포함용) -->
@@ -233,7 +232,7 @@
         LEFT JOIN BOARD_CATEGORY c ON b.BOARD_CATEGORY = c.BOARD_CATEGORY
         LEFT JOIN BOARD_TAG t ON b.BOARD_TAG = t.BOARD_TAG
         LEFT JOIN INI_USER u ON b.USER_ID = u.USER_ID
-        WHERE b.BOARD_ID = #{boardId}
+        WHERE b.BOARD_ID = #{board_id}
     </select>
 
 	<select id="countAllPosts" resultType="int">
