@@ -44,6 +44,7 @@ public interface BoardMapper {
 	// 댓글 저장하기
 	void insertReply(BoardReplyDTO reply);
 
+	// 게시글
 	void insertPost(BoardDTO dto);
 
 	void updatePost(BoardDTO dto);
@@ -102,7 +103,7 @@ public interface BoardMapper {
 	int insertBoardReport(BoardReportDTO report);
 
 	// 특정 게시글에 특정 유저가 이미 신고했는지 확인 (중복신고 방지용)
-	int countReportsByBoardAndUser(@Param("board_id") int board_id, @Param("report_user") String reportUser);
+	int countReportsByBoardAndUser(@Param("board_id") int boardId, @Param("report_user") String report_user);
 
 	// 특정 게시글 신고 횟수 조회
 	int countReportsByBoard(int board_id);

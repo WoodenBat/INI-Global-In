@@ -274,7 +274,7 @@ $(document).ready(function() {
 		const reply_status = container.find("span#reply_status").text().trim();
 		const reply_content = $(this).siblings("#replyUpdateForm").val();
 		container.find(".board_reply_content_hidden").text("");
-		Object.keys(translationCache).forEach(key => delete translationCache[key]);
+		Object.keys(translationCache_reply).forEach(key => delete translationCache_reply[key]);
 		console.log(reply_id);
 		console.log(reply_status);
 

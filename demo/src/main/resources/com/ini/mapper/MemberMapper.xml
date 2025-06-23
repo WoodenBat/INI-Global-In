@@ -128,7 +128,7 @@
 		left join board_like bl on b.board_id = bl.board_id
 		left join board_reply br on b.board_id = br.board_id
 		where
-		b.board_id = (select board_id from user_favorite where user_id = 'test')
+		b.board_id in (select board_id from user_favorite where user_id = 'test')
 		group by b.board_id
 		, b.board_title
 		, b.user_id

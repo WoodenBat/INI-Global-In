@@ -18,39 +18,35 @@
 
 	<!-- 🔍 검색 + 필터 폼 -->
 	<form method="get" th:action="@{/board/list}" id="searchForm">
-		<input type="text" name="keyword" placeholder="검색어"
-			th:value="${keyword}"> <select name="category">
+		<input type="text" name="keyword" placeholder="검색어" th:value="${keyword}"> <select name="category">
 			<option value="">전체 카테고리</option>
-			<option th:each="cat : ${categories}"
-				th:value="${cat.board_category}"
-				th:selected="${cat.board_category == category}"
-				th:text="${cat.board_category_jp}"></option>
+			<option th:each="cat : ${categories}" th:if="${cat != null}" th:value="${cat.board_category}"
+				th:selected="${cat.board_category == category}" th:text="${cat.board_category_jp}"></option>
 		</select> <select name="tag">
 			<option value="">전체 말머리</option>
-			<option th:each="tagObj : ${tags}" th:value="${tagObj.board_tag}"
-				th:selected="${tagObj.board_tag == tag}"
-				th:text="${tagObj.board_tag_jp}"></option>
+			<option th:each="tagObj : ${tags}" th:if="${cat != null}" th:value="${tagObj.boardTag}"
+				th:selected="${tagObj.board_tag == tag}" th:text="${tagObj.board_tag_jp}"></option>
 		</select>
 
 		<button type="submit">검색</button>
 	</form>
 
 	<script>
-	document.getElementById('searchForm').addEventListener('submit', function(e) {
-	    const params = new URLSearchParams(new FormData(this));
-	    for (const key of [...params.keys()]) {
-	        if (!params.get(key)) {
-	            params.delete(key);
-	        }
-	    }
-	    e.preventDefault();
-	    if (params.toString()) {
-	        window.location = this.action + '?' + params.toString();
-	    } else {
-	        window.location = this.action;
-	    }
-	});
-</script>
+		document.getElementById('searchForm').addEventListener('submit', function(e) {
+		    const params = new URLSearchParams(new FormData(this));
+		    for (const key of [...params.keys()]) {
+		        if (!params.get(key)) {
+		            params.delete(key);
+		        }
+		    }
+		    e.preventDefault();
+		    if (params.toString()) {
+		        window.location = this.action + '?' + params.toString();
+		    } else {
+		        window.location = this.action;
+		    }
+		});
+	</script>
 
 	<hr>
 
@@ -72,8 +68,7 @@
 				<td th:text="${post.board_id}"></td>
 				<td th:text="${post.tag_name}"></td>
 				<td>
-					<a th:href="@{'/board/view/' + ${post.board_id}}"
-						th:text="${post.board_title}"></a>
+					<a th:href="@{'/board/view/' + ${post.board_id}}" th:text="${post.board_title}"></a>
 				</td>
 				<td th:text="${post.user_id}"></td>
 				<td th:text="${post.category_name}"></td>
@@ -88,9 +83,8 @@
 	<div>
 		<span th:if="${totalPages > 1}">
 			<a th:each="i : ${#numbers.sequence(1, totalPages)}"
-				th:href="@{/board/list(page=${i}, keyword=${keyword}, category=${category}, tag=${tag})}"
-				th:text="${i}" th:classappend="${i == currentPage} ? 'active' : ''"
-				style="margin: 0 5px; text-decoration: none;"></a>
+				th:href="@{/board/list(page=${i}, keyword=${keyword}, category=${category}, tag=${tag})}" th:text="${i}"
+				th:classappend="${i == currentPage} ? 'active' : ''" style="margin: 0 5px; text-decoration: none;"></a>
 		</span>
 	</div>
 
