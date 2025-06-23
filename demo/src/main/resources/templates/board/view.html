@@ -9,7 +9,7 @@
 </head>
 <th:block th:replace="member/header :: header"></th:block>
 <script th:inline="javascript">
-	let boardId = '[[${board.board_id}]]'; 
+	let board_id = '[[${board.board_id}]]'; 
 </script>
 <body>
 	<span id="localeClass" th:text="${#locale}" style="display:none;"></span>
@@ -46,9 +46,10 @@
 	<div class="reply-block">
 		<!-- 본문 -->
 		<div class="reply-text" th:utext="${board.board_content}">본문</div>
+		<div class="board_content_hidden" style="display: none;"></div>
 
 		<!-- 번역 버튼 -->
-		<button type="button" class="translate-btn">번역하기</button>
+		<button type="button" class="translate_board-btn">번역하기</button>
 
 		<!-- 이미지 -->
 		<div th:if="${imageList != null and !#lists.isEmpty(imageList)}">
@@ -95,8 +96,8 @@ let isProcessing = false;
 document.getElementById("likeBtn").addEventListener("click", function () {
     if (isProcessing) return;
     isProcessing = true;
-    const boardId = '[[${board.board_id}]]';
-    fetch(`/board/like/${boardId}`, { method: 'POST' })
+    const board_id = '[[${board.board_id}]]';
+    fetch(`/board/like/${board_id}`, { method: 'POST' })
         .then(res => res.json())
         .then(data => {
             document.getElementById("likeIcon").textContent = data.liked ? '❤️' : '🤍';

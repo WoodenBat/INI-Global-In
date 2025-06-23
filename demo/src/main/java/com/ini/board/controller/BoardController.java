@@ -87,8 +87,8 @@ public class BoardController {
 //	// 게시글 작성 제출
 //	@PostMapping("/write")
 //	public String writeSubmit(@ModelAttribute BoardDTO board) {
-//		int boardId = boardService.saveBoard(board);
-//		return "redirect:/board/view/" + boardId;
+//		int board_id = boardService.saveBoard(board);
+//		return "redirect:/board/view/" + board_id;
 //	}
 //	
 //	
@@ -99,7 +99,7 @@ public class BoardController {
 //
 //		BoardDTO board = boardService.getBoardById(board_id);
 //		BoardReplyDTO reply = new BoardReplyDTO();
-//		List<BoardReplyDTO> replies = boardReplyService.getRepliesByBoardId(board_id);
+//		List<BoardReplyDTO> replies = boardReplyService.getRepliesByboard_id(board_id);
 //		reply.setBoard_id(board_id);
 //		reply.setReply_writer("tester"); // 유저닉네임 가져오기 지금은 하드코딩
 //		model.addAttribute("board", board);
@@ -146,8 +146,8 @@ public class BoardController {
 		dto.setBoard_write_date(new Date());
 		dto.setBoard_update_date(new Date());
 
-		String userId = (String) session.getAttribute("loginUser");
-		dto.setUser_id(userId != null ? userId : "test");
+		String user_id = (String) session.getAttribute("loginUser");
+		dto.setUser_id(user_id != null ? user_id : "test");
 
 		// 게시글 저장 (board_id 생성됨)
 		boardService.savePost(dto);
@@ -164,7 +164,7 @@ public class BoardController {
 					imageFile.transferTo(destFile);
 
 					BoardImageDTO imageDTO = new BoardImageDTO();
-					imageDTO.setBoardId(dto.getBoard_id());
+					imageDTO.setBoard_id(dto.getBoard_id());
 					// DB에는 파일명만 저장 (상대경로 X)
 					imageDTO.setImagePath(fileName);
 					imageDTO.setOriginalName(imageFile.getOriginalFilename());
@@ -217,29 +217,29 @@ public class BoardController {
 
 	// 게시글 상세 보기 (이미지 포함)
 	@GetMapping("/view/{id}")
-	public String viewBoard(@PathVariable("id") int boardId, Model model, HttpSession session) {
-		boardService.incrementViews(boardId);
-		BoardDetailDTO board = boardService.getPostById(boardId);
+	public String viewBoard(@PathVariable("id") int board_id, Model model, HttpSession session) {
+		boardService.incrementViews(board_id);
+		BoardDetailDTO board = boardService.getPostById(board_id);
 
 		if (board == null)
 			return "redirect:/board/list";
 
 		// 이미지 목록 조회
-		List<BoardImageDTO> images = boardService.getBoardImages(boardId);
+		List<BoardImageDTO> images = boardService.getBoardImages(board_id);
 		logger.info("▶ 이미지 개수: {}", images.size()); // 이거 반드시 추가
 		for (BoardImageDTO img : images) {
 			logger.info("▶ imagePath: {}", img.getImagePath());
 		}
 
 		// 로그인 사용자가 없을 경우 'test'로 가정
-		String userId = "test";
+		String user_id = "test";
 		Object loginUser = session.getAttribute("loginUser");
 		if (loginUser != null && loginUser instanceof String) {
-			userId = (String) loginUser;
+			user_id = (String) loginUser;
 		}
 
-		boolean liked = boardService.hasUserLiked(boardId, userId);
-		int likeCount = boardService.getLikeCount(boardId);
+		boolean liked = boardService.hasUserLiked(board_id, user_id);
+		int likeCount = boardService.getLikeCount(board_id);
 
 		model.addAttribute("board", board);
 		model.addAttribute("liked", liked);
@@ -259,14 +259,14 @@ public class BoardController {
 
 	// 수정 처리
 	@PostMapping("/edit")
-	public String updatePost(@RequestParam("board_id") Long boardId, @RequestParam("board_title") String boardTitle,
+	public String updatePost(@RequestParam("board_id") Long board_id, @RequestParam("board_title") String boardTitle,
 			@RequestParam("board_content") String boardContent, @RequestParam("board_category") String boardCategory,
 			@RequestParam("board_tag") String boardTag,
 			@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files, HttpSession session)
 			throws IOException {
 
 		BoardDTO dto = new BoardDTO();
-		dto.setBoard_id(boardId.intValue());
+		dto.setBoard_id(board_id.intValue());
 		dto.setBoard_title(boardTitle);
 		dto.setBoard_category(boardCategory);
 		dto.setBoard_tag(boardTag);
@@ -286,7 +286,7 @@ public class BoardController {
 					file.transferTo(destFile);
 
 					BoardImageDTO image = new BoardImageDTO();
-					image.setBoardId(dto.getBoard_id());
+					image.setBoard_id(dto.getBoard_id());
 					image.setImagePath(fileName);
 					image.setOriginalName(file.getOriginalFilename());
 					image.setUploadDate(new Date());
@@ -300,45 +300,45 @@ public class BoardController {
 
 		boardService.updatePost(dto);
 
-		return "redirect:/board/view/" + boardId;
+		return "redirect:/board/view/" + board_id;
 	}
 
 	// 삭제
 	@PostMapping("/delete/{id}")
-	public String deletePost(@PathVariable("id") int boardId, HttpSession session) {
-		String userId = (String) session.getAttribute("loginUser");
-		BoardDetailDTO post = boardService.getBoardById(boardId, userId);
-		if (post == null || (userId != null && !userId.equals(post.getUser_id()))) {
+	public String deletePost(@PathVariable("id") int board_id, HttpSession session) {
+		String user_id = (String) session.getAttribute("loginUser");
+		BoardDetailDTO post = boardService.getBoardById(board_id, user_id);
+		if (post == null || (user_id != null && !user_id.equals(post.getUser_id()))) {
 			return "redirect:/board/list";
 		}
 
-		boardService.deletePost(boardId);
+		boardService.deletePost(board_id);
 		return "redirect:/board/list";
 	}
 
 	// 좋아요 토글
-	@PostMapping("/like/{boardId}")
+	@PostMapping("/like/{board_id}")
 	@ResponseBody
-	public ResponseEntity<?> toggleLike(@PathVariable("boardId") int boardId, HttpSession session) {
-		String userId = (String) session.getAttribute("loginUser");
-		if (userId == null) {
-			userId = "test";
-			session.setAttribute("loginUser", userId);
+	public ResponseEntity<?> toggleLike(@PathVariable("board_id") int board_id, HttpSession session) {
+		String user_id = (String) session.getAttribute("loginUser");
+		if (user_id == null) {
+			user_id = "test";
+			session.setAttribute("loginUser", user_id);
 		}
 
-		int likeCount = boardService.toggleLike(boardId, userId);
-		boolean liked = boardService.hasUserLiked(boardId, userId);
+		int likeCount = boardService.toggleLike(board_id, user_id);
+		boolean liked = boardService.hasUserLiked(board_id, user_id);
 
 		return ResponseEntity.ok().body(Map.of("likeCount", likeCount, "liked", liked));
 	}
 
 	@PostMapping("/report")
 	public ResponseEntity<?> reportPost(@RequestBody BoardReportDTO report, HttpSession session) {
-		String userId = (String) session.getAttribute("loginUser");
-		if (userId == null) {
-			userId = "test"; // 비로그인 시 기본값 처리
+		String user_id = (String) session.getAttribute("loginUser");
+		if (user_id == null) {
+			user_id = "test"; // 비로그인 시 기본값 처리
 		}
-		report.setReport_user(userId);
+		report.setReport_user(user_id);
 
 		boolean success = boardService.addReport(report);
 		if (success) {

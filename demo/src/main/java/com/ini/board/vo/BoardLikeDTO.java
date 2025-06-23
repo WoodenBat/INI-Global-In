@@ -9,9 +9,9 @@ public class BoardLikeDTO {
 	private String user_id;
 	private int like_status;
 	
-	public BoardLikeDTO(int boardId, String userId) {
-        this.board_id = boardId;
-        this.user_id = userId;
+	public BoardLikeDTO(int board_id, String user_id) {
+        this.board_id = board_id;
+        this.user_id = user_id;
     }
 	
 }

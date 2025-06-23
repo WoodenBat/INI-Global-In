@@ -8,7 +8,7 @@ window.onload = function() {
 	localeClass = $("#localeClass").text().trim();
 	console.log("페이지 로딩 끝");
 	console.log(localeClass)
-	getBoardReply(boardId);
+	getBoardReply(board_id);
 };
 
 function getBoardReply(board_id) {
@@ -158,10 +158,10 @@ $(document).ready(function() {
 			data: {
 				reply_content: $("#reply_insert_form").val(),
 				reply_writer: sessionNickname,
-				board_id: boardId,
+				board_id: board_id,
 			},
 			success: function() {
-				getBoardReply(boardId);
+				getBoardReply(board_id);
 			},
 			error: function(xhr, status, error) {
 				console.error("에러:", error);
@@ -185,7 +185,7 @@ $(document).ready(function() {
 					reply_status: reply_status,
 				},
 				success: function() {
-					getBoardReply(boardId);
+					getBoardReply(board_id);
 				},
 				error: function(xhr, status, error) {
 					console.error("삭제 실패:", error);
@@ -223,7 +223,14 @@ $(document).ready(function() {
 
 		const container = $(this).closest(".board_reply_container, .board_reply_reReply_container");
 		const inputBox = container.nextAll(".board_reply_update_container").eq(0);
-
+		let original_reply = container.find(".board_reply_content").text();
+		
+		if(original_reply.includes("(번역)")) {
+			original_reply = container.find(".board_reply_content_hidden").text();
+		}
+		
+		inputBox.find(".board_reply_reReply_insert_form").text(original_reply);
+		
 		if (container.hasClass("board_reply_container")) {
 			inputBox.toggle();
 
@@ -249,10 +256,10 @@ $(document).ready(function() {
 				reply_content: reply_content,
 				reply_writer: sessionNickname,
 				reply_id: reply_id,
-				board_id: boardId,
+				board_id: board_id,
 			},
 			success: function() {
-				getBoardReply(boardId);
+				getBoardReply(board_id);
 			},
 			error: function(xhr, status, error) {
 				console.error("에러:", error);
@@ -262,7 +269,6 @@ $(document).ready(function() {
 	});
 
 	$(document).on("click", "#replyUpdateBtn", function() {
-		const sessionNickname = $("#session_nickname").text();
 		const container = $(this).closest(".board_reply_update_container").prev().prev();
 		const reply_id = container.find("span#reply_id").text().trim();
 		const reply_status = container.find("span#reply_status").text().trim();
@@ -279,10 +285,10 @@ $(document).ready(function() {
 				reply_content: reply_content,
 				reply_id: reply_id,
 				reply_status: reply_status,
-				board_id: boardId,
+				board_id: board_id,
 			},
 			success: function() {
-				getBoardReply(boardId);
+				getBoardReply(board_id);
 			},
 			error: function(xhr, status, error) {
 				console.error("에러:", error);

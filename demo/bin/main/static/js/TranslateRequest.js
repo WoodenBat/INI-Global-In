@@ -70,6 +70,46 @@ $(document).on("click", ".translate-btn", function() {
 	}
 });
 
+$(document).on("click", ".translate_board-btn", function() {
+	const btn = $(this);
+	console.log(btn);
+	const replyBlock = btn.closest('.reply-block');
+	console.log(replyBlock);
+	const textElem = replyBlock.find('.reply-text');
+	const unTransText = textElem.next('.board_content_hidden');
+	console.log(textElem);
+	const replyId = $(".translate_board-btn").index(this);  // 인덱스로 고유 식별
+	console.log(replyId);
+
+	const originalText = textElem.text();
+	if (unTransText.text() === "") {
+
+		if (translationCache[replyId]) {
+			unTransText.text(textElem.text());
+			textElem.text(translationCache[replyId] + ' (번역)');
+			textElem.css('font-size', '15px');
+		} else {
+			fetch("/api/translate", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ input: originalText })
+			})
+				.then(res => res.text())
+				.then(translated => {
+					translationCache[replyId] = translated;
+					unTransText.text(textElem.text());
+					textElem.text(translated + ' (번역)');
+					textElem.css('font-size', '15px');
+				})
+				.catch(() => showPopup(originalText, "번역 실패"));
+		}
+	} else {
+		textElem.text(unTransText.text());
+		unTransText.text("");
+		textElem.css('font-size', '15px');
+	}
+});
+
 function showPopup(translated) { //팝업
 	const popup = document.createElement("div");
 	popup.className = "floating-window";

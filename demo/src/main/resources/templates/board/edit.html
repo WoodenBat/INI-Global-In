@@ -13,16 +13,16 @@
 			required><br>
 		<br> <label>말머리:</label><br> <select name="board_tag">
 			<option value="">말머리 선택</option>
-			<option th:each="tag : ${tags}" th:value="${tag.boardTag}"
-				th:text="${tag.boardTagJp}"
-				th:selected="${tag.boardTag == post.board_tag}"></option>
+			<option th:each="tag : ${tags}" th:value="${tag.board_tag}"
+				th:text="${tag.board_tag_jp}"
+				th:selected="${tag.board_tag == post.board_tag}"></option>
 		</select> <br>
 		<br> <label>카테고리:</label><br> <select name="board_category">
 			<option value="">카테고리 선택</option>
 			<option th:each="category : ${categories}"
-				th:value="${category.boardCategory}"
-				th:text="${category.boardCategoryJp}"
-				th:selected="${category.boardCategory == post.board_category}">
+				th:value="${category.board_category}"
+				th:text="${category.board_category_jp}"
+				th:selected="${category.board_category == post.board_category}">
 			</option>
 		</select> <br>
 		<br> <label>내용:</label><br>
