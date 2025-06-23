@@ -45,9 +45,7 @@ sourceSets {
     main {
         resources {
             srcDirs = ['src/main/resources']
-            include '**/*.html'
-            include '**/*.properties'
-            include '**/*.xml'
+            // 모든 리소스를 포함 (include 조건 제거)
         }
     }
 }
