@@ -22,8 +22,12 @@
 <!-- 게시글 본문 + 이미지 -->
 <div class="reply-block">
     <!-- 본문 -->
-    <div class="reply-text" th:utext="${board.board_content}">본문</div>
-	
+    <div class="reply-text"
+	     th:text="${board.board_content}"
+	     style="white-space: pre-line;">
+	</div>
+
+
 	<!-- 번역 버튼 -->
 	<button type="button" class="translate-btn">번역하기</button>
 	
