@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class BoardCategoryVO {
-    private String boardCategory;
-    private String boardCategoryJp;
+    private String board_category;
+    private String board_category_jp;
 }

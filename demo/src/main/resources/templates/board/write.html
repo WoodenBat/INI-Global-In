@@ -16,8 +16,8 @@
     <select name="board_tag" id="board_tag">
         <option value="">말머리 선택</option>
         <option th:each="tag : ${tags}" 
-                th:value="${tag.boardTag}" 
-                th:text="${tag.boardTagJp}">
+                th:value="${tag.board_tag}" 
+                th:text="${tag.board_tag_jp}">
         </option>
     </select>
     <br><br>
@@ -26,8 +26,8 @@
     <select name="board_category" id="board_category">
         <option value="">카테고리 선택</option>
         <option th:each="category : ${categories}" 
-                th:value="${category.boardCategory}" 
-                th:text="${category.boardCategoryJp}">
+                th:value="${category.board_category}" 
+                th:text="${category.board_category_jp}">
         </option>
     </select>
     <br><br>

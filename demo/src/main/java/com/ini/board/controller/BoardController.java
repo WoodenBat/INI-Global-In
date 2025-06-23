@@ -81,11 +81,11 @@ public class BoardController {
                     imageFile.transferTo(destFile);
 
                     BoardImageDTO imageDTO = new BoardImageDTO();
-                    imageDTO.setBoardId(dto.getBoard_id());
+                    imageDTO.setBoard_id(dto.getBoard_id());
                     // DB에는 파일명만 저장 (상대경로 X)
-                    imageDTO.setImagePath(fileName);
-                    imageDTO.setOriginalName(imageFile.getOriginalFilename());
-                    imageDTO.setUploadDate(new Date());
+                    imageDTO.setImage_path(fileName);
+                    imageDTO.setOriginal_name(imageFile.getOriginalFilename());
+                    imageDTO.setUpload_date(new Date());
 
                     imageList.add(imageDTO);
                 }
@@ -145,7 +145,7 @@ public class BoardController {
         List<BoardImageDTO> images = boardService.getBoardImages(boardId);
         logger.info("▶ 이미지 개수: {}", images.size());  // 이거 반드시 추가
         for (BoardImageDTO img : images) {
-            logger.info("▶ imagePath: {}", img.getImagePath());
+            logger.info("▶ imagePath: {}", img.getImage_path());
         }
 
         // 로그인 사용자가 없을 경우 'test'로 가정
@@ -168,28 +168,37 @@ public class BoardController {
     // 수정 폼
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") int id, Model model) {
-        model.addAttribute("post", boardService.getPostById(id));
-        model.addAttribute("tags", boardMapper.selectAllBoardTags());
-        model.addAttribute("categories", boardMapper.selectAllBoardCategories());
+        BoardDetailDTO post = boardService.getPostById(id);
+        if (post == null) {
+            return "redirect:/board/list";
+        }
+        model.addAttribute("post", post);
+
+        List<BoardTagVO> tags = boardMapper.selectAllBoardTags();
+        model.addAttribute("tags", tags);
+
+        List<BoardCategoryVO> categories = boardMapper.selectAllBoardCategories();
+        model.addAttribute("categories", categories);
+
         return "board/edit";
     }
 
     // 수정 처리
     @PostMapping("/edit")
-    public String updatePost(@RequestParam("board_id") Long boardId,
-                             @RequestParam("board_title") String boardTitle,
-                             @RequestParam("board_content") String boardContent,
-                             @RequestParam("board_category") String boardCategory,
-                             @RequestParam("board_tag") String boardTag,
+    public String updatePost(@RequestParam("board_id") Long board_id,
+                             @RequestParam("board_title") String board_title,
+                             @RequestParam("board_content") String board_content,
+                             @RequestParam("board_category") String board_category,
+                             @RequestParam("board_tag") String board_tag,
                              @RequestParam(value = "uploadFiles", required = false) MultipartFile[] files,
                              HttpSession session) throws IOException {
 
         BoardDTO dto = new BoardDTO();
-        dto.setBoard_id(boardId.intValue());
-        dto.setBoard_title(boardTitle);
-        dto.setBoard_category(boardCategory);
-        dto.setBoard_tag(boardTag);
-        dto.setBoard_content(boardContent);
+        dto.setBoard_id(board_id.intValue());
+        dto.setBoard_title(board_title);
+        dto.setBoard_category(board_category);
+        dto.setBoard_tag(board_tag);
+        dto.setBoard_content(board_content);
         dto.setBoard_update_date(new Date());
         dto.setUser_id((String) session.getAttribute("loginUser"));
         
@@ -205,10 +214,10 @@ public class BoardController {
                     file.transferTo(destFile);
 
                     BoardImageDTO image = new BoardImageDTO();
-                    image.setBoardId(dto.getBoard_id());
-                    image.setImagePath(fileName);
-                    image.setOriginalName(file.getOriginalFilename());
-                    image.setUploadDate(new Date());
+                    image.setBoard_id(dto.getBoard_id());
+                    image.setImage_path(fileName);
+                    image.setOriginal_name(file.getOriginalFilename());
+                    image.setUpload_date(new Date());
 
                     imageList.add(image);
                 }
@@ -219,7 +228,7 @@ public class BoardController {
 
         boardService.updatePost(dto);
 
-        return "redirect:/board/view/" + boardId;
+        return "redirect:/board/view/" + board_id;
     }
     
     // 삭제

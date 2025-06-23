@@ -41,7 +41,7 @@ public class BoardService {
     public List<String> getHeadList() {
         return boardMapper.selectAllBoardTags()
                 .stream()
-                .map(BoardTagVO::getBoardTag)
+                .map(BoardTagVO::getBoard_tag)
                 .toList();
     }
 
@@ -49,7 +49,7 @@ public class BoardService {
     public List<String> getCategoryList() {
         return boardMapper.selectAllBoardCategories()
                 .stream()
-                .map(BoardCategoryVO::getBoardCategory)
+                .map(BoardCategoryVO::getBoard_category)
                 .toList();
     }
 
@@ -181,7 +181,7 @@ public class BoardService {
         List<BoardImageDTO> images = boardMapper.selectImageList(boardId);
 
         for (BoardImageDTO img : images) {
-            File file = new File(uploadPath, img.getImagePath());
+            File file = new File(uploadPath, img.getImage_path());
             if (file.exists()) {
                 boolean deleted = file.delete();
                 if(!deleted){

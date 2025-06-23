@@ -19,13 +19,13 @@ public interface BoardMapper {
     // 게시글
     void insertPost(BoardDTO dto);
     void updatePost(BoardDTO dto);
-    void deletePost(int boardId);
+    void deletePost(int board_id);
     void insertBoardImage(BoardImageDTO image);
 
     // 게시글 조회
-    BoardDetailDTO selectPostById(@Param("boardId") int id);
-    BoardDTO selectBoardById(int boardId);
-    void updateViewCount(int boardId);
+    BoardDetailDTO selectPostById(@Param("board_id") int id);
+    BoardDTO selectBoardById(int board_id);
+    void updateViewCount(int board_id);
 
     // 리스트
     List<BoardListDTO> getBoardList(
@@ -49,28 +49,28 @@ public interface BoardMapper {
     List<BoardCategoryVO> selectAllBoardCategories();
 
     // 좋아요
-    Integer hasUserLiked(@Param("boardId") int boardId, @Param("userId") String userId);
+    Integer hasUserLiked(@Param("board_id") int board_id, @Param("user_id") String user_id);
     void insertLike(BoardLikeDTO like);
-    void deleteLike(@Param("boardId") int boardId, @Param("userId") String userId);
-    int countLikes(@Param("boardId") int boardId);
-    int getLikeCount(Long boardId);
-    void deleteLikesByBoardId(int boardId);
+    void deleteLike(@Param("board_id") int board_id, @Param("user_id") String user_id);
+    int countLikes(@Param("board_id") int board_id);
+    int getLikeCount(Long board_id);
+    void deleteLikesByBoardId(int board_id);
 
     // 이미지
     void insertBoardImages(@Param("list") List<BoardImageDTO> imageList);
-    List<BoardImageDTO> selectImageList(@Param("boardId") int boardId);
-    void deleteImagesByBoardId(@Param("boardId") int boardId);
+    List<BoardImageDTO> selectImageList(@Param("board_id") int board_id);
+    void deleteImagesByBoardId(@Param("board_id") int board_id);
 
     // 댓글 삭제
-    void deleteCommentsByBoardId(int boardId);
+    void deleteCommentsByBoardId(int board_id);
     
-    BoardDetailDTO selectBoardDetail(int boardId);
+    BoardDetailDTO selectBoardDetail(int board_id);
     
  // 신고 등록
     int insertBoardReport(BoardReportDTO report);
 
     // 특정 게시글에 특정 유저가 이미 신고했는지 확인 (중복신고 방지용)
-    int countReportsByBoardAndUser(@Param("board_id") int boardId, @Param("report_user") String reportUser);
+    int countReportsByBoardAndUser(@Param("board_id") int boardId, @Param("report_user") String report_user);
 
     // 특정 게시글 신고 횟수 조회
     int countReportsByBoard(int board_id);

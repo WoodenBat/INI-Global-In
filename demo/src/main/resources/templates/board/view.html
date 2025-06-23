@@ -34,9 +34,9 @@
     <!-- 이미지 -->
     <div th:if="${imageList != null and !#lists.isEmpty(imageList)}">
         <div th:each="image : ${imageList}">
-            <img th:if="${image.imagePath != null and !#strings.isEmpty(image.imagePath)}"
-                 th:src="@{'/uploads/' + ${image.imagePath}}"
-                 th:alt="${image.originalName}"
+            <img th:if="${image.image_path != null and !#strings.isEmpty(image.image_path)}"
+                 th:src="@{'/uploads/' + ${image.image_path}}"
+                 th:alt="${image.original_name}"
                  style="max-width: 100%; height: auto; margin-top: 10px;" />
         </div>
     </div>

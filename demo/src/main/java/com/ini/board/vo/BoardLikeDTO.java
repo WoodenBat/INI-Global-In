@@ -4,29 +4,29 @@ import lombok.Data;
 
 @Data
 public class BoardLikeDTO {
-    private int boardId;
-    private String userId;
+    private int board_id;
+    private String user_id;
 
     public BoardLikeDTO() {}
 
     public BoardLikeDTO(int boardId, String userId) {
-        this.boardId = boardId;
-        this.userId = userId;
+        this.board_id = boardId;
+        this.user_id = userId;
     }
 
     public int getBoardId() {
-        return boardId;
+        return board_id;
     }
 
     public void setBoardId(int boardId) {
-        this.boardId = boardId;
+        this.board_id = boardId;
     }
 
     public String getUserId() {
-        return userId;
+        return user_id;
     }
 
     public void setUserId(String userId) {
-        this.userId = userId;
+        this.user_id = userId;
     }
 }
