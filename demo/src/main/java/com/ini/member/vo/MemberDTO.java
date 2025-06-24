@@ -33,4 +33,6 @@ public class MemberDTO {
 
     // DB에 저장할 이미지 경로 (문자열)
     private String user_profile_img_path;
+    
+    private String user_intro;
 }

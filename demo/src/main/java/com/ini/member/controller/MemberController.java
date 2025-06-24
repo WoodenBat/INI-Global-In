@@ -1,10 +1,14 @@
 package com.ini.member.controller;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -29,7 +33,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MemberController {
 
-	private final MemberService memberservice;
+	private final MemberService memberService;
 	private final String uploadDir = "C:/upload/profile";
 
 	@Autowired
@@ -40,12 +44,12 @@ public class MemberController {
 
 		System.out.println("sessionid ==========================================" + session.getAttribute("user_id"));
 		String session_id = String.valueOf(session.getAttribute("user_id"));
-		model.addAttribute("member_info", memberservice.findMemberById(session_id));
-		model.addAttribute("member_follow", memberservice.findFollowById(session_id));
-		model.addAttribute("member_board", memberservice.findBoardLikeReplyById(session_id));
-		model.addAttribute("member_like", memberservice.findBoardLikeReplyByLikeId(session_id));
-		model.addAttribute("member_reply", memberservice.findBoardLikeReplyByReplyId(session_id));
-		model.addAttribute("member_favorite", memberservice.findBoardLikeReplyByFavoriteId(session_id));
+		model.addAttribute("member_info", memberService.findMemberById(session_id));
+		model.addAttribute("member_follow", memberService.findFollowById(session_id));
+		model.addAttribute("member_board", memberService.findBoardLikeReplyById(session_id));
+		model.addAttribute("member_like", memberService.findBoardLikeReplyByLikeId(session_id));
+		model.addAttribute("member_reply", memberService.findBoardLikeReplyByReplyId(session_id));
+		model.addAttribute("member_favorite", memberService.findBoardLikeReplyByFavoriteId(session_id));
 
 		return "/member/MemberMyPage";
 	}
@@ -98,7 +102,7 @@ public class MemberController {
 			Path path = Paths.get(uploadDir, fileName);
 			Files.createDirectories(path.getParent());
 			file.transferTo(path.toFile());
-			user.setUser_profile_img_path("/images/profile/" + fileName);
+			user.setUser_profile_img_path(fileName);
 
 			// DB 저장
 			int result = memberMapper.insertMember(user);
@@ -143,6 +147,56 @@ public class MemberController {
 	public Map<String, Boolean> checkNickname(@RequestParam("user_nickname") String nickname) {
 		MemberDTO found = memberMapper.findByNickname(nickname);
 		return Collections.singletonMap("exists", found != null);
+	}
+
+	// 프로필 수정 폼
+	@GetMapping("/memberProfileUpdateForm")
+	public String showProfileUpdateForm(Model model, Principal principal) {
+		String userId = principal != null ? principal.getName() : "test";
+		MemberDTO member = memberService.findMemberById(userId);
+		model.addAttribute("member_info", member);
+		return "member/MemberProfileUpdate";
+	}
+
+	@PostMapping("/memberProfileUpdate")
+	public String updateProfile(@RequestParam(value = "profileImage", required = false) MultipartFile file,
+			@RequestParam("user_intro") String userIntro,
+			@RequestParam(value = "mode", defaultValue = "both") String mode, Principal principal) throws IOException {
+		String userId = principal != null ? principal.getName() : "test";
+		System.out.println("モード：" + mode);
+		System.out.println("入記しれた 自己紹介: " + userIntro);
+		// 먼저 자기소개부터 저장
+		MemberDTO dto = new MemberDTO();
+		dto.setUser_id(userId);
+		dto.setUser_intro(userIntro);
+		memberService.updateMemberIntro(dto);
+
+		// 프로필 이미지가 있을 경우에만 처리
+		if ("both".equals(mode) && file != null && !file.isEmpty()) {
+			String original = file.getOriginalFilename();
+			String ext = original.substring(original.lastIndexOf('.') + 1).toLowerCase();
+
+			if (!List.of("jpg", "jpeg", "png", "gif").contains(ext)) {
+				return "redirect:/member/myPage?error=unsupportedFileType";
+			}
+
+//			Path dir = Paths.get(uploadDir, "profile");
+//			if (!Files.exists(dir))
+//				Files.createDirectories(dir);
+
+//			String newName = UUID.randomUUID() + "." + ext;
+//			file.transferTo(dir.resolve(newName).toFile());
+			
+			String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+			Path path = Paths.get(uploadDir, fileName);
+			Files.createDirectories(path.getParent());
+			file.transferTo(path.toFile());
+			
+			memberService.updateProfileImage(userId, fileName);
+		}
+
+		// 3. 성공 리다이렉트
+		return "redirect:/member/myPage?success=true";
 	}
 
 }

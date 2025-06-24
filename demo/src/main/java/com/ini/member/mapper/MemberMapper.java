@@ -43,7 +43,11 @@ public interface MemberMapper {
 	public MemberDTO findByNickname(@Param("nickname") String nickname);
 
 	public int insertMember(MemberDTO member);
-	
+
 	public int insertOAuthUser(MemberDTO memberDTO);
-	
+
+	void updateProfileImage(@Param("userId") String userId, @Param("profileImage") String profileImage);
+
+	void updateUserIntro(MemberDTO dto);
+
 }

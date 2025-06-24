@@ -46,8 +46,7 @@ public class BoardController {
 	private final BoardMapper boardMapper;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-	@Value("${file.upload-path}")
-	private String uploadPath;
+	private String uploadPath = "C:/upload/board";
 
 //	@GetMapping("/list")
 //	public String boardList(@RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String keyword,
@@ -144,7 +143,7 @@ public class BoardController {
 		dto.setBoard_views(0);
 		dto.setBoard_write_date(new Date());
 		dto.setBoard_update_date(new Date());
-
+		
 		String userId = (String) session.getAttribute("loginUser");
 		dto.setUser_id(userId != null ? userId : "test");
 
@@ -283,7 +282,7 @@ public class BoardController {
 		dto.setUser_id((String) session.getAttribute("loginUser"));
 
 		List<BoardImageDTO> imageList = new ArrayList<>();
-
+		System.out.println(files.length);
 		// 이미지 업로드가 있을 경우 추가 저장
 		if (files != null && files.length > 0) {
 			for (MultipartFile file : files) {
