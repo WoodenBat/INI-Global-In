@@ -5,8 +5,11 @@ import lombok.Data;
 @Data
 public class BoardTagVO {
 
-	 private String tagName;
-	 private String boardTagJp;
-	 // 추가
-   
+	private final String board_tag;
+	private final String board_tag_jp;
+	
+	private String tagName;
+	
+	private String name;
+    private String color;
 }

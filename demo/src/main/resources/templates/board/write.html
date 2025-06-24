@@ -1,35 +1,78 @@
+<!-- templates/board/write.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>게시글 작성</title>
+<title>게시글 작성</title>
+<meta charset="UTF-8">
 </head>
+<th:block th:replace="member/header :: header"></th:block>
 <body>
-    <h1>게시글 작성</h1>
-    
-    <form th:action="@{/board/write}" th:object="${board}" method="post">
-        <label>제목:</label><br>
-        <input type="text" th:field="*{board_title}" required><br><br>
-        
-        <label>말머리:</label><br>
-        <select th:field="*{board_tag}">
-            <option th:each="t : ${tagList}" th:value="${t.tagName}" th:text="${t.tagName}"></option>
-           
-        </select><br><br>
-        
-        <label>카테고리:</label><br>
-        <select th:field="*{board_category}">
-            <option th:each="c : ${categoryList}" th:value="${c.categoryName}" th:text="${c.categoryName}"></option>
-        </select><br><br>
-        
-        <label>내용:</label><br>
-        <textarea th:field="*{board_content}" rows="10" cols="50" required></textarea><br><br>
+	<h2>게시글 작성</h2>
 
-        
-        <!-- 로그인된 사용자의 user_id는 서버에서 넣어주기 때문에 hidden 처리 -->
-        <input type="hidden" th:field="*{user_id}" >
+	<form th:action="@{/board/write}" method="post" enctype="multipart/form-data"
+		onsubmit="return validateForm()" id="writeForm">
+		<label>제목:</label><br> <input type="text" name="board_title" required><br> <br> <label>말머리:</label><br>
+		<select name="board_tag" id="board_tag">
+			<option value="">말머리 선택</option>
+			<option th:each="tag : ${tags}" th:value="${tag.board_tag}" th:text="${tag.board_tag_jp}"></option>
+		</select> <br> <br> <label>카테고리:</label><br> <select name="board_category" id="board_category">
+			<option value="">카테고리 선택</option>
+			<option th:each="category : ${categories}" th:value="${category.board_category}"
+				th:text="${category.board_category_jp}"></option>
+		</select> <br> <br> <label>내용:</label><br>
+		<textarea name="board_content" rows="10" cols="50" required></textarea>
+		<br> <br> <label>이미지 업로드:</label><br> <input type="file" name="uploadFiles" multiple><br>
+		<br>
 
-        <button type="submit">작성</button>
-    </form>
+		<button type="submit">작성</button>
+	</form>
+
+	<script>
+		// 말머리/카테고리 유효성 검사
+		function validateForm() {
+			const tag = document.getElementById("board_tag").value;
+			const category = document.getElementById("board_category").value;
+
+			if (!tag) {
+				alert("말머리를 선택해주세요.");
+				return false;
+			}
+
+			if (!category) {
+				alert("카테고리를 선택해주세요.");
+				return false;
+			}
+
+			return true;
+		}
+
+		// 작성 중 페이지 이탈 방지
+		let isFormDirty = false;
+
+		document.addEventListener("DOMContentLoaded",
+				function() {
+					const inputs = document
+							.querySelectorAll("input, textarea, select");
+
+					inputs.forEach(function(input) {
+						input.addEventListener("change", function() {
+							isFormDirty = true;
+						});
+					});
+
+					window.addEventListener("beforeunload", function(e) {
+						if (isFormDirty) {
+							e.preventDefault();
+							e.returnValue = ""; // 일부 브라우저에서는 이게 있어야 동작
+						}
+					});
+
+					document.getElementById("writeForm").addEventListener(
+							"submit", function() {
+								isFormDirty = false;
+							});
+				});
+	</script>
+
 </body>
 </html>

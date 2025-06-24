@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>📋 게시판 목록</title>
+<style>
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+th, td {
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+
+.image-icon {
+	color: green;
+	font-weight: bold;
+}
+
+.pagination a {
+	margin: 0 5px;
+	text-decoration: none;
+}
+</style>
+</head>
+<body>
+	<div style="text-align: right; margin-bottom: 10px;">
+		<a th:href="@{/board/write}"
+			style="padding: 8px 12px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 4px;"> ✍️ 게시글 작성 </a>
+	</div>
+	<h2>📚 게시글 목록</h2>
+
+	<!-- 🔍 검색 + 카테고리 -->
+	<form th:action="@{/board/board}" method="get">
+		<input type="text" name="keyword" th:value="${keyword}" placeholder="검색어 입력" />
+		<select name="category">
+			<option value="">전체</option>
+			<option value="Java" th:selected="${category == 'Java'}">Java</option>
+			<option value="Spring" th:selected="${category == 'Spring'}">Spring</option>
+			<!-- 필요시 더 추가 -->
+		</select>
+		<button type="submit">검색</button>
+	</form>
+
+	<!-- 📄 테이블 -->
+	<table>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>카테고리</th>
+				<th>작성자</th>
+				<th>태그</th>
+				<th>이미지</th>
+				<th>작성일</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="board : ${boardList}">
+				<td th:text="${board.board_id}">1</td>
+				<td><a th:href="@{'/board/view?boardId=' + ${board.board_id}}" th:text="${board.board_title}">제목</a></td>
+				<td th:text="${board.board_category}">카테고리</td>
+				<td th:text="${board.user_id}">작성자</td>
+				<td th:text="${board.board_tag}">태그</td>
+				<td><span th:if="${board.image_yn == 'Y'}" class="image-icon">🖼️</span></td>
+				<td th:text="${#dates.format(board.board_write_date, 'yyyy-MM-dd')}">작성일</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- ⏩ 페이징 -->
+	<div class="pagination">
+		<span th:each="i : ${#numbers.sequence(1, totalPage)}">
+			<a th:if="${i != currentPage}" th:href="@{|/board/board?page=${i}&keyword=${keyword}&category=${category}|}">
+				[
+				<span th:text="${i}" />
+				]
+			</a>
+			<span th:if="${i == currentPage}">
+				<strong>[<span th:text="${i}" />]
+				</strong>
+			</span>
+		</span>
+	</div>
+
+</body>
+</html>

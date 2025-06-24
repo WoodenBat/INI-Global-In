@@ -5,51 +5,198 @@
 
 <mapper namespace="com.ini.member.mapper.MemberMapper">
 
-	<select id="findAllMember"
-		resultType="com.ini.member.vo.MemberDTO">
-		select * from ini_user
+	<!-- 전체 회원 목록 -->
+	<select id="findAllMember" resultType="com.ini.member.vo.MemberDTO">
+		SELECT * FROM ini_user
 	</select>
 
-	<select id="findMemberById"
-		resultType="com.ini.member.vo.MemberDTO">
-		select * from ini_user where user_id = #{user_id}
-
+	<!-- ID로 회원 조회 -->
+	<select id="findMemberById" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
+		SELECT
+		user_id,
+		user_password,
+		user_nickname,
+		user_email,
+		user_phone_number,
+		user_profile_img as user_profile_img_path,
+		user_intro		
+		FROM ini_user 
+		WHERE user_id = #{user_id}
 	</select>
 
-
-	<select id="findFollowById"
-		resultType="com.ini.member.vo.MemberFollowDTO">
-		select * from user_follow where follower_id = #{user_id}
+	<!-- 팔로우 정보 -->
+	<select id="findFollowById" parameterType="string" resultType="com.ini.member.vo.MemberFollowDTO">
+		SELECT * FROM user_follow WHERE follower_id = #{user_id}
 	</select>
 
-	<select id="findBoardById"
-		resultType="com.ini.board.vo.BoardDTO">
+	<select id="findBoardById" resultType="com.ini.board.vo.BoardDTO">
 		select * from ini_board where user_id = #{user_id}
 	</select>
 
-	<select id="findLikeById"
-		resultType="com.ini.board.vo.BoardLikeDTO">
+	<select id="findLikeById" resultType="com.ini.board.vo.BoardLikeDTO">
 		select * from board_like where user_id = #{user_id}
 	</select>
 
-	<select id="findReplyById"
-		resultType="com.ini.board.vo.BoardReplyDTO">
+	<select id="findReplyById" resultType="com.ini.board.vo.BoardReplyDTO">
 		select * from board_reply where reply_writer = #{user_id}
 	</select>
 
-	<select id="findFavoriteById"
-		resultType="com.ini.member.vo.MemberFavoriteDTO">
+	<select id="findFavoriteById" resultType="com.ini.member.vo.MemberFavoriteDTO">
 		select * from user_favorite where user_id = #{user_id}
 	</select>
+
+	<select id="findBoardLikeReplyById" resultType="com.ini.board.vo.BoardWithLikeReplyDTO">
+		select b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		,
+		b.board_category
+		, b.board_tag
+		, count(distinct bl.board_id) as board_like_cnt
+		, count(distinct br.board_id) as board_reply_cnt
+		from ini_board b
+		left join board_like bl on b.board_id = bl.board_id
+		left join board_reply br on b.board_id = br.board_id
+		where
+		b.user_id = 'test'
+		group by b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		, b.board_category
+		, b.board_tag
+		,
+		b.board_write_date
+		order by b.board_write_date asc
+	</select>
+
+	<select id="findBoardLikeReplyByLikeId" resultType="com.ini.board.vo.BoardWithLikeReplyDTO">
+		select b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		,
+		b.board_category
+		, b.board_tag
+		, count(distinct bl.board_id) as board_like_cnt
+		, count(distinct br.board_id) as board_reply_cnt
+		from ini_board b
+		left join board_like bl on b.board_id = bl.board_id
+		left join board_reply br on b.board_id = br.board_id
+		where
+		bl.user_id = 'test' and BL.LIKE_STATUS = 1
+		group by b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		, b.board_category
+		,
+		b.board_tag
+		, b.board_write_date
+		order by b.board_write_date asc
+	</select>
+
+	<select id="findBoardLikeReplyByReplyId" resultType="com.ini.board.vo.BoardWithLikeReplyDTO">
+		select b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		,
+		b.board_category
+		, b.board_tag
+		, count(distinct bl.board_id) as board_like_cnt
+		, count(distinct br.board_id) as board_reply_cnt
+		from ini_board b
+		left join board_like bl on b.board_id = bl.board_id
+		left join board_reply br on b.board_id = br.board_id
+		where
+		br.reply_writer = 'test'
+		group by b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		, b.board_category
+		, b.board_tag
+		,
+		b.board_write_date
+		order by b.board_write_date asc
+	</select>
+
+	<select id="findBoardLikeReplyByFavoriteId" resultType="com.ini.board.vo.BoardWithLikeReplyDTO">
+		select b.board_id
+		, b.board_title
+		, b.user_id
+		, b.board_views
+		,
+		b.board_category
+		, b.board_tag
+		, count(distinct bl.board_id) as board_like_cnt
+		, count(distinct br.board_id) as board_reply_cnt
+		from ini_board b
+		left join board_like bl on b.board_id = bl.board_id
+		left join board_reply br on b.board_id = br.board_id
+		where
+		b.board_id in (select board_id from user_favorite where user_id = 'test')
+		group by b.board_id
+		, b.board_title
+		, b.user_id
+		,
+		b.board_views
+		, b.board_category
+		, b.board_tag
+		,
+		b.board_write_date
+		order by b.board_write_date asc
+	</select>
+
+
+	<!-- 회원 등록 -->
+	<insert id="insertMember" parameterType="com.ini.member.vo.MemberDTO">
+		INSERT INTO ini_user (
+		user_id, user_password, user_nickname, user_email,
+		user_phone_number, user_profile_img
+		) VALUES (
+		#{user_id}, #{user_password}, #{user_nickname}, #{user_email},
+		#{user_phone_number}, #{user_profile_img_path}
+		)
+	</insert>
+
+	<!-- 닉네임으로 회원 조회 -->
+	<select id="findByNickname" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
+		SELECT * FROM ini_user WHERE user_nickname = #{nickname}
+	</select>
+
+	<!-- 이메일로 회원 조회 -->
+	<select id="findByEmail" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
+		SELECT * FROM ini_user WHERE user_email = #{user_email}
+	</select>
+
+	<insert id="insertOAuthUser" parameterType="com.ini.member.vo.MemberDTO">
+		INSERT INTO ini_user (user_id, user_password, user_nickname, user_email,
+		user_phone_number, user_profile_img)
+		VALUES (
+		#{user_id, jdbcType=VARCHAR},
+		#{user_password, jdbcType=VARCHAR},
+		#{user_nickname,
+		jdbcType=VARCHAR},
+		#{user_email, jdbcType=VARCHAR},
+		#{user_phone_number, jdbcType=VARCHAR},
+		#{user_profile_img_path,
+		jdbcType=VARCHAR}
+		)
+	</insert>
+
 	<update id="updateProfileImage">
 		UPDATE INI_USER
 		SET USER_PROFILE_IMG = #{profileImage}
 		WHERE user_id = #{userId}
 	</update>
-	<update id="updateUserIntro"
-		parameterType="com.ini.member.vo.MemberDTO">
+	
+	<update id="updateUserIntro" parameterType="com.ini.member.vo.MemberDTO">
 		UPDATE INI_USER
 		SET USER_INTRO = #{user_intro}
 		WHERE USER_ID = #{user_id}
 	</update>
+
 </mapper>

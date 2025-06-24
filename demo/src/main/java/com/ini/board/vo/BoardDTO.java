@@ -17,4 +17,10 @@ public class BoardDTO {
 	private Date board_write_date;
 	private Date board_update_date;
 	private String board_tag;
+	
+	private List<BoardImageDTO>imageList;
+	
+	private String image_yn;
+	private int startRow;
+	private int pageSize;
 }

@@ -1,4 +1,5 @@
 package com.ini.board.vo;
+
 import java.util.Date;
 import java.util.List;
 
@@ -19,4 +20,5 @@ public class BoardDetailDTO {
     private Date board_write_date;
     private int like_count;
     private boolean liked;  // 현재 사용자가 좋아요 눌렀는지 여부
+    private List<BoardImageDTO> imageList;
 }

@@ -14,4 +14,5 @@ public class BoardReplyDTO {
 	private Date reply_update_date;
 	private String reply_status;
 	private int board_id;
+	
 }

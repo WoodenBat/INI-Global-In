@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<div class="board_reply_body" th:fragment="boardReply">
+	<span id="session_user_id" th:text="${session.user_id}" style="display: none;"></span>
+	<div class="board_reply_title_container">
+		<span class="board_reply_title">댓글</span>
+	</div>
+	<div class="board_reply_wrapper"></div>
+	<div class="board_reply_insert_container">
+		<textarea id="reply_insert_form" class="board_reply_insert_form" placeholder="댓글 작성하기"></textarea>
+		<button id="reply_insert_btn" class="board_reply_insert_btn">작성</button>
+	</div>
+	<span id="msg_reply_update_button" th:text="#{board_reply_update_button}" style="display: none;"></span>
+	<span id="msg_reply_delete_button" th:text="#{board_reply_delete_button}" style="display: none;"></span>
+	<span id="msg_reReply_insert_button" th:text="#{board_reply_reReply_button}" style="display: none;"></span>
+</div>

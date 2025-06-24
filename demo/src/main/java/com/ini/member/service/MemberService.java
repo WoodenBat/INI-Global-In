@@ -3,68 +3,116 @@ package com.ini.member.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import com.ini.member.mapper.MemberMapper;
-import com.ini.member.vo.MemberDTO;
-import com.ini.member.vo.MemberFollowDTO;
+
 import com.ini.board.vo.BoardDTO;
 import com.ini.board.vo.BoardLikeDTO;
 import com.ini.board.vo.BoardReplyDTO;
+import com.ini.board.vo.BoardWithLikeReplyDTO;
+import com.ini.member.mapper.MemberMapper;
+import com.ini.member.vo.MemberDTO;
 import com.ini.member.vo.MemberFavoriteDTO;
+import com.ini.member.vo.MemberFollowDTO;
+
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class MemberService {
 
-    private final MemberMapper memberMapper;
+	private final MemberMapper memberMapper;
 
-    public MemberService(MemberMapper memberMapper) {
-        this.memberMapper = memberMapper;
-    }
+	public List<MemberDTO> findAllMember() {
 
-    public MemberDTO findMemberById(String userId) {
-        return memberMapper.findMemberById(userId);
-    }
+		return memberMapper.findAllMember();
 
-    // 기존 메소드: findBoardById, findLikeById 등 유지
-    public List<BoardDTO> findBoardById(String userId) {
-        return memberMapper.findBoardById(userId);
-        
-    }
-    public List<BoardLikeDTO> findLikeById(String userId) {
-        return memberMapper.findLikeById(userId);
-    }
-    public List<BoardReplyDTO> findReplyById(String userId) {
-        return memberMapper.findReplyById(userId);
-    }
-    public List<MemberFollowDTO> findFollowById(String userId) {
-        return memberMapper.findFollowById(userId);
-    }
-    public List<MemberFavoriteDTO> findFavoriteById(String userId) {
-        return memberMapper.findFavoriteById(userId);
-    }
+	}
 
-    // **alias 메소드 추가**: 컨트롤러 호출명에 맞춤
-    public List<BoardDTO> findBoardsByUserId(String userId) {
-        return findBoardById(userId);
-    }
-    public List<BoardLikeDTO> findLikesByUserId(String userId) {
-        return findLikeById(userId);
-    }
-    public List<BoardReplyDTO> findRepliesByUserId(String userId) {
-        return findReplyById(userId);
-    }
-    public List<MemberFollowDTO> findFollowsByUserId(String userId) {
-        return findFollowById(userId);
-    }
-    public List<MemberFavoriteDTO> findFavoritesByUserId(String userId) {
-        return findFavoriteById(userId);
-    }
+	public List<MemberFollowDTO> findFollowById(String user_id) {
 
-    public void updateProfileImage(String userId, String profileImage) {
-        memberMapper.updateProfileImage(userId, profileImage);
-    }
-    public void updateMemberIntro(MemberDTO dto) {
-    	System.out.println("➡️ 자기소개 업데이트 시도: user_id = " + dto.getUser_id() +
-                ", user_intro = " + dto.getUser_intro());
-    	memberMapper.updateUserIntro(dto);
-    }
+		return memberMapper.findFollowById(user_id);
+
+	}
+
+	public MemberDTO findMemberById(String user_id) {
+
+		return memberMapper.findMemberById(user_id);
+
+	}
+
+	public List<BoardDTO> findBoardById(String user_id) {
+
+		return memberMapper.findBoardById(user_id);
+
+	}
+
+	public List<BoardLikeDTO> findLikeById(String user_id) {
+
+		return memberMapper.findLikeById(user_id);
+
+	}
+
+	public List<BoardReplyDTO> findReplyById(String user_id) {
+
+		return memberMapper.findReplyById(user_id);
+
+	}
+
+	public List<MemberFavoriteDTO> findFavoriteById(String user_id) {
+
+		return memberMapper.findFavoriteById(user_id);
+
+	}
+
+	public List<BoardWithLikeReplyDTO> findBoardLikeReplyById(String user_id) {
+
+		return memberMapper.findBoardLikeReplyById(user_id);
+
+	}
+
+	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByLikeId(String user_id) {
+
+		return memberMapper.findBoardLikeReplyByLikeId(user_id);
+
+	}
+
+	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByReplyId(String user_id) {
+
+		return memberMapper.findBoardLikeReplyByReplyId(user_id);
+
+	}
+
+	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByFavoriteId(String user_id) {
+
+		return memberMapper.findBoardLikeReplyByFavoriteId(user_id);
+
+	}
+
+	public boolean registerMember(MemberDTO user) {
+		if (memberMapper.findByEmail(user.getUser_email()) != null) {
+			return false;
+		}
+		if (memberMapper.findByNickname(user.getUser_nickname()) != null) {
+			return false;
+		}
+		int result = memberMapper.insertMember(user);
+		return result > 0;
+	}
+
+	public MemberDTO findByEmail(String email) {
+		return memberMapper.findByEmail(email);
+	}
+
+	public MemberDTO findByNickname(String nickname) {
+		return memberMapper.findByNickname(nickname);
+	}
+
+	public void updateProfileImage(String userId, String profileImage) {
+		memberMapper.updateProfileImage(userId, profileImage);
+	}
+
+	public void updateMemberIntro(MemberDTO dto) {
+		System.out.println("➡️ 자기소개 업데이트 시도: user_id = " + dto.getUser_id() + ", user_intro = " + dto.getUser_intro());
+		memberMapper.updateUserIntro(dto);
+	}
+
 }
