@@ -1,4 +1,4 @@
-package com.ini.member.controller;
+	package com.ini.member.controller;
 
 import com.ini.member.service.MemberService;
 import com.ini.member.vo.MemberDTO;
