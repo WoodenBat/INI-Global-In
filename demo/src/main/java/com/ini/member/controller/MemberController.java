@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Map;
+
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,21 +29,23 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MemberController {
 
-	private final MemberService memberservice;
+	private final MemberService memberService;
 	private final String uploadDir = "C:/upload/profile";
 
 	@Autowired
 	private MemberMapper memberMapper;
 
 	@GetMapping("myPage")
-	public String myPageTest(Model model) {
+	public String myPageTest(Model model, HttpSession session) {
 
-		model.addAttribute("member_info", memberservice.findMemberById("test"));
-		model.addAttribute("member_follow", memberservice.findFollowById("test"));
-		model.addAttribute("member_board", memberservice.findBoardLikeReplyById("test"));
-		model.addAttribute("member_like", memberservice.findBoardLikeReplyByLikeId("test"));
-		model.addAttribute("member_reply", memberservice.findBoardLikeReplyByReplyId("test"));
-		model.addAttribute("member_favorite", memberservice.findBoardLikeReplyByFavoriteId("test"));
+		System.out.println("sessionid ==========================================" + session.getAttribute("user_id"));
+		String session_id = String.valueOf(session.getAttribute("user_id"));
+		model.addAttribute("member_info", memberService.findMemberById(session_id));
+		model.addAttribute("member_follow", memberService.findFollowById(session_id));
+		model.addAttribute("member_board", memberService.findBoardLikeReplyById(session_id));
+		model.addAttribute("member_like", memberService.findBoardLikeReplyByLikeId(session_id));
+		model.addAttribute("member_reply", memberService.findBoardLikeReplyByReplyId(session_id));
+		model.addAttribute("member_favorite", memberService.findBoardLikeReplyByFavoriteId(session_id));
 
 		return "/member/MemberMyPage";
 	}
