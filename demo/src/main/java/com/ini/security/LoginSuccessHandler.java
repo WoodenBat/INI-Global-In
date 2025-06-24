@@ -20,20 +20,20 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final MemberService memberService;
+	private final MemberService memberService;
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
 
-        String userId = authentication.getName(); // username 값
-        MemberDTO member = memberService.findMemberById(userId);
+		String userId = authentication.getName(); // username 값
+		MemberDTO member = memberService.findMemberById(userId);
 
-        if (member != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("nickname", member.getUser_nickname());
-        }
+		if (member != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("nickname", member.getUser_nickname());
+		}
 
-        response.sendRedirect("/home"); // 로그인 성공 후 홈으로 이동
-    }
+		response.sendRedirect("/loginsuccess"); // 로그인 성공 후 홈으로 이동
+	}
 }

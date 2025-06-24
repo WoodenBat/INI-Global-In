@@ -4,64 +4,71 @@
 <meta charset="UTF-8" />
 <title>이메일 전송 완료</title>
 <style>
-  @font-face {
-    font-family: 'Ownglyph_PDH';
-    src: url('../fonts/Ownglyph_PDH.ttf') format('truetype');
-  }
-  body {
-    font-family: 'Ownglyph_PDH', sans-serif;
-    max-width: 1440px;
-    width: 100%;
-    margin: 0 auto;
-    background-color: #ffffff;
-  }
-  .result-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 120px;
-  }
-  .result-box {
-    background-color: #fdf3e6;
-    padding: 30px 40px;
-    border-radius: 12px;
-    text-align: center;
-    width: 400px;
-  }
-  .result-box h2 {
-    color: #d06d00;
-    margin-bottom: 20px;
-  }
-  .result-box p {
-    font-size: 16px;
-    margin-bottom: 20px;
-  }
-  .result-box a {
-    text-decoration: none;
-    color: #ffffff;
-    background-color: #a42c2c;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: bold;
-  }
-  .result-box a:hover {
-    background-color: #922323;
-  }
+@font-face {
+	font-family: 'Ownglyph_PDH';
+	src: url('../fonts/Ownglyph_PDH.ttf') format('truetype');
+}
+
+body {
+	font-family: 'Ownglyph_PDH', sans-serif;
+	max-width: 1440px;
+	width: 100%;
+	margin: 0 auto;
+	background-color: #ffffff;
+}
+
+.result-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 120px;
+}
+
+.result-box {
+	background-color: #fdf3e6;
+	padding: 30px 40px;
+	border-radius: 12px;
+	text-align: center;
+	width: 400px;
+}
+
+.result-box h2 {
+	color: #d06d00;
+	margin-bottom: 20px;
+}
+
+.result-box p {
+	font-size: 16px;
+	margin-bottom: 20px;
+}
+
+.result-box a {
+	text-decoration: none;
+	color: #ffffff;
+	background-color: #a42c2c;
+	padding: 10px 20px;
+	border-radius: 8px;
+	font-weight: bold;
+}
+
+.result-box a:hover {
+	background-color: #922323;
+}
 </style>
 </head>
 <body>
 
-  <!-- 공통 헤더 추가 -->
-  <th:block th:replace="member/header :: header"></th:block>
+	<!-- 공통 헤더 추가 -->
+	<th:block th:replace="member/header :: header"></th:block>
 
-  <!-- 결과 박스 -->
-  <div class="result-container">
-    <div class="result-box">
-      <h2>이메일 전송 완료</h2>
-      <p>입력하신 이메일로 비밀번호를 확인해주세요.</p>
-      <a href="/login">로그인 페이지로 이동</a>
-    </div>
-  </div>
+	<!-- 결과 박스 -->
+	<div class="result-container">
+		<div class="result-box">
+			<h2>이메일 전송 완료</h2>
+			<p>입력하신 이메일로 비밀번호를 확인해주세요.</p>
+			<a href="/login">로그인 페이지로 이동</a>
+		</div>
+	</div>
 
 </body>
 </html>

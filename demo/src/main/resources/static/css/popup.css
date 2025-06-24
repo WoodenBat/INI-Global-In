@@ -1,0 +1,25 @@
+.floating-window {
+  position: fixed;
+  top: 120px;
+  left: 120px;
+  width: 300px;
+  background: white;
+  border: 2px solid #444;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  z-index: 1000;
+  font-size: 14px;
+  padding: 10px;
+}
+.floating-window .header {
+  background: #eee;
+  padding: 5px;
+  font-weight: bold;
+  cursor: move;
+  display: flex;
+  justify-content: space-between;
+}
+.floating-window .header button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}

@@ -1,6 +1,6 @@
 package com.ini.security;
 
-import com.ini.security.LoginSuccessHandler;  // LoginSuccessHandler import 추가
+import com.ini.security.LoginSuccessHandler; // LoginSuccessHandler import 추가
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,43 +14,30 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final LoginSuccessHandler loginSuccessHandler;  // LoginSuccessHandler 주입
+	private final CustomOAuth2UserService customOAuth2UserService;
+	private final LoginSuccessHandler loginSuccessHandler; // LoginSuccessHandler 주입
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .authorizeHttpRequests(auth -> auth
-            		.requestMatchers(
-            			    "/", "/login", "/login/**", "/oauth2/**",
-            			    "/finding-password", "/find-by-id", "/find-by-email",
-            			    "/finding-password/by-id", "/finding-password/by-email",
-            			    "/send-password-email", "/css/**", "/js/**", "/images/**", "/fonts/**",
-            			    "/member/signup", "/member/signupsuccess",
-            			    "/member/MemberMyPage", "/member/myPage",
-            			    "/member/checkId", "/member/checkEmail", "/member/checkNickname",
-            			    "/board/list",
-            			    "/post"
-            			)
-                .permitAll()
-                .anyRequest().authenticated())
-            .formLogin(form -> form
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .successHandler(loginSuccessHandler)  // 여기서 LoginSuccessHandler 지정
-                .permitAll())
-            .oauth2Login(oauth2 -> oauth2
-                .loginPage("/login")
-                .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
-                .defaultSuccessUrl("/home", true));
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf().disable()
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/", "/login", "/login/**", "/oauth2/**", "/finding-password", "/find-by-id",
+								"/find-by-email", "/finding-password/by-id", "/finding-password/by-email",
+								"/send-password-email", "/css/**", "/js/**", "/images/**", "/fonts/**",
+								"/member/signup", "/member/checkId", "/member/checkEmail", "/member/checkNickname","/loginsuccess")
+						.permitAll().anyRequest().authenticated())
+				.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login").usernameParameter("username")
+						.passwordParameter("password").successHandler(loginSuccessHandler) // 여기서 LoginSuccessHandler 지정
+						.permitAll())
+				.oauth2Login(oauth2 -> oauth2.loginPage("/login")
+						.userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+						.defaultSuccessUrl("/loginsuccess", true));
 
-        return http.build();
-    }
+		return http.build();	
+	}
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

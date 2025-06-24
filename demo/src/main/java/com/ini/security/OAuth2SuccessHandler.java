@@ -22,7 +22,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
 		if (principal instanceof OAuth2User) {
 			OAuth2User oauthUser = (OAuth2User) principal;
-			
+
 			// 세션에 유저 정보 저장 (필요시)
 			request.getSession().invalidate();
 			request.getSession().setAttribute("user", oauthUser.getAttributes());
