@@ -125,6 +125,7 @@ function getBoardReply(board_id) {
 				}
 				$(".board_reply_wrapper").append(html);
 			});
+			fontFallBack();
 		},
 		error: function(xhr, status, error) {
 			console.error("에러:", error);
@@ -224,13 +225,13 @@ $(document).ready(function() {
 		const container = $(this).closest(".board_reply_container, .board_reply_reReply_container");
 		const inputBox = container.nextAll(".board_reply_update_container").eq(0);
 		let original_reply = container.find(".board_reply_content").text();
-		
-		if(original_reply.includes("(번역)")) {
+
+		if (original_reply.includes("(번역)")) {
 			original_reply = container.find(".board_reply_content_hidden").text();
 		}
-		
+
 		inputBox.find(".board_reply_reReply_insert_form").text(original_reply);
-		
+
 		if (container.hasClass("board_reply_container")) {
 			inputBox.toggle();
 
@@ -297,3 +298,14 @@ $(document).ready(function() {
 	});
 
 })
+function fontFallBack() {
+
+	document.querySelectorAll('.board_reply_content').forEach(elem => {
+		const text = elem.textContent;
+
+		const isJapanese = /[\u3040-\u30FF\u4E00-\u9FFF]/.test(text);
+		if (isJapanese) {
+			elem.classList.add('fallback_font');
+		}
+	});
+}

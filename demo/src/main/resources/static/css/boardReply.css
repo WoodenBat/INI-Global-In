@@ -95,6 +95,10 @@
 	margin-left: 41px;
 }
 
+.fallback_font {
+	font-size: 24px;
+}
+
 .board_reply_button_container {
 	display: grid;
 	grid-template-columns: 100px 100px 100px;

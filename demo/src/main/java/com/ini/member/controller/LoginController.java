@@ -2,8 +2,12 @@ package com.ini.member.controller;
 
 import com.ini.member.service.MemberService;
 import com.ini.member.vo.MemberDTO;
+import com.ini.security.CustomUserDetails;
+
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -76,5 +80,15 @@ public class LoginController {
 			model.addAttribute("error", "이메일이 존재하지 않습니다.");
 			return "member/find-by-email";
 		}
+	}
+
+	@GetMapping("/loginsuccess")
+	public String home(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+		if (userDetails != null) {
+			String userId = userDetails.getUsername(); // 실제로는 userId임
+			MemberDTO member = memberService.findMemberById(userId);
+			model.addAttribute("nickname", member.getUser_nickname());
+		}
+		return "member/loginsuccess"; // templates/member/home.html
 	}
 }

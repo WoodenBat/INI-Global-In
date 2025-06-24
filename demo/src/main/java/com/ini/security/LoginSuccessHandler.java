@@ -35,6 +35,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			session.setAttribute("user_id", member.getUser_id());
 		}
 
-		response.sendRedirect("/home"); // 로그인 성공 후 홈으로 이동
+		response.sendRedirect("/loginsuccess"); // 로그인 성공 후 홈으로 이동
 	}
 }

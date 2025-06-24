@@ -43,7 +43,9 @@ public class MemberController {
 	public String myPageTest(Model model, HttpSession session) {
 
 		System.out.println("sessionid ==========================================" + session.getAttribute("user_id"));
+		
 		String session_id = String.valueOf(session.getAttribute("user_id"));
+		
 		model.addAttribute("member_info", memberService.findMemberById(session_id));
 		model.addAttribute("member_follow", memberService.findFollowById(session_id));
 		model.addAttribute("member_board", memberService.findBoardLikeReplyById(session_id));

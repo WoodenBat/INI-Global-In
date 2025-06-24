@@ -25,7 +25,7 @@ public class TranslateService {
 	
 	public String translateText(String input) {
 		
-		String prompt = "다음을 일본어로 번역해줘:\n" + input;
+		String prompt = "다음을 한글이면 일본어, 일본어면 한글로 번역해주되 번역한 텍스트만 줘:\n" + input;
 		
 		//gpt서버에 HTTP요청보내야함 헤더 생성 및 설정
 		HttpHeaders headers = new HttpHeaders();
