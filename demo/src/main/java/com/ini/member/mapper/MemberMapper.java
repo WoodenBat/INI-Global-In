@@ -49,5 +49,7 @@ public interface MemberMapper {
 	void updateProfileImage(@Param("userId") String userId, @Param("profileImage") String profileImage);
 
 	void updateUserIntro(MemberDTO dto);
+	
+	void updateMemberProfile(MemberDTO memberDTO);
 
 }

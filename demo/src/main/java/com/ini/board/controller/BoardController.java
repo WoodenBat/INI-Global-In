@@ -145,7 +145,7 @@ public class BoardController {
 		dto.setBoard_update_date(new Date());
 		
 		String userId = (String) session.getAttribute("loginUser");
-		dto.setUser_id(userId != null ? userId : "test");
+		dto.setUser_id(userId != null ? userId :String.valueOf(session.getAttribute("user_id")));
 
 		// 게시글 저장 (board_id 생성됨)
 		boardService.savePost(dto);
@@ -231,7 +231,7 @@ public class BoardController {
 
 		// 로그인 사용자가 없을 경우 'test'로 가정
 		String userId = "test";
-		Object loginUser = session.getAttribute("loginUser");
+		Object loginUser = session.getAttribute("user_id");
 		if (loginUser != null && loginUser instanceof String) {
 			userId = (String) loginUser;
 		}
@@ -269,7 +269,7 @@ public class BoardController {
 	public String updatePost(@RequestParam("board_id") Long board_id, @RequestParam("board_title") String board_title,
 			@RequestParam("board_content") String board_content, @RequestParam("board_category") String board_category,
 			@RequestParam("board_tag") String board_tag,
-			@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files, HttpSession session)
+			@RequestParam(value = "upload_files", required = false) MultipartFile[] files, HttpSession session)
 			throws IOException {
 
 		BoardDTO dto = new BoardDTO();
@@ -282,7 +282,6 @@ public class BoardController {
 		dto.setUser_id((String) session.getAttribute("loginUser"));
 
 		List<BoardImageDTO> imageList = new ArrayList<>();
-		System.out.println(files.length);
 		// 이미지 업로드가 있을 경우 추가 저장
 		if (files != null && files.length > 0) {
 			for (MultipartFile file : files) {
@@ -327,7 +326,7 @@ public class BoardController {
 	@PostMapping("/like/{boardId}")
 	@ResponseBody
 	public ResponseEntity<?> toggleLike(@PathVariable("boardId") int boardId, HttpSession session) {
-		String userId = (String) session.getAttribute("loginUser");
+		String userId = (String) session.getAttribute("user_id");
 		if (userId == null) {
 			userId = "test";
 			session.setAttribute("loginUser", userId);

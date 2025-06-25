@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+.member_profile_update_form_wrapper {
+	transform: scale(0.8);
+	display: flex;
+	max-width: 600px;
+	width: auto;
+	margin: 0 auto;
+	justify-content: center;
+	position: relative;
+	top: -50px;
+}
+
+.member_profile_update_form {
+	display: flex;
+	flex-direction: column;
+	width: fit-content;
+	height: fit-content;
+	margin: 0 auto;
+	align-items: center;
+}
+
+.member_profile_img_update_container {
+	margin-top: 20px;
+}
+
+.profile_image_preview {
+	width: 206px;
+	height: 206px;
+	border-radius: 50%;
+	object-fit: cover;
+	cursor: pointer;
+}
+
+.profile_image_preview:hover {
+	width: 206px;
+	height: 206px;
+	border-radius: 50%;
+	object-fit: cover;
+	cursor: pointer;
+	opacity: 50%;
+}
+
+.profile_image_input_btn {
+	display: none;
+}
+
+.profile_grid {
+	display: grid;
+	grid-template-columns: 190px 500px;
+	height: fit-content;;
+	width: 100%;
+	margin-top: 50px;
+}
+
+.profile_grid_check {
+	display: grid;
+	grid-template-columns: 190px 500px 100px;;
+	height: 82px;
+	width: 100%;
+	margin-top: 50px;
+}
+
+.profile_label {
+	font-size: 40px;
+	font-family: "Ownglyph_PDH", sans-serif;
+	align-self: left;
+	margin: auto 0;
+}
+
+.profile_input {
+	font-size: 40px;
+	font-family: "Ownglyph_PDH", sans-serif;
+	width: 475px;
+	height: 82px;
+	border: none;
+	border-radius: 37px;
+	background-color: rgba(248, 242, 222, 0.7);
+	text-align: center;
+}
+
+.check_btn {
+	display: none;
+	align-self: center;
+	height: 46px;
+	font-size: 30px;
+	font-family: "Ownglyph_PDH", sans-serif;
+	text-align: center;
+	padding: 8px 10px;
+	background-color: #ffcc00;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.profile_text_area {
+	width: 455px;
+	padding: 10px;
+	text-align:left;
+	height: 120px;
+	font-size: 30px;
+	resize: none;
+}
+
+.submit_btn {
+	display: inline;
+	margin-top: 50px; 
+}
+
+.password_check_img {
+	display: none;
+	width: 40px;
+	height: 40px;
+	align-self: center;
+}
+
+.readonly {
+	color: rgba(0, 0, 0, 0.5);
+}

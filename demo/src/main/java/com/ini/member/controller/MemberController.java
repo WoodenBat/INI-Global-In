@@ -43,9 +43,9 @@ public class MemberController {
 	public String myPageTest(Model model, HttpSession session) {
 
 		System.out.println("sessionid ==========================================" + session.getAttribute("user_id"));
-		
+
 		String session_id = String.valueOf(session.getAttribute("user_id"));
-		
+
 		model.addAttribute("member_info", memberService.findMemberById(session_id));
 		model.addAttribute("member_follow", memberService.findFollowById(session_id));
 		model.addAttribute("member_board", memberService.findBoardLikeReplyById(session_id));
@@ -161,44 +161,46 @@ public class MemberController {
 	}
 
 	@PostMapping("/memberProfileUpdate")
-	public String updateProfile(@RequestParam(value = "profileImage", required = false) MultipartFile file,
-			@RequestParam("user_intro") String userIntro,
-			@RequestParam(value = "mode", defaultValue = "both") String mode, Principal principal) throws IOException {
-		String userId = principal != null ? principal.getName() : "test";
-		System.out.println("モード：" + mode);
-		System.out.println("入記しれた 自己紹介: " + userIntro);
-		// 먼저 자기소개부터 저장
+	public String updateProfile(@RequestParam(value = "user_profile_img", required = false) MultipartFile file,
+			@RequestParam("user_id") String user_id, @RequestParam("user_nickname") String user_nickname,
+			@RequestParam("user_password") String user_password,
+			@RequestParam("user_phone_number") String user_phone_number, @RequestParam("user_intro") String user_intro)
+			throws IOException {
+
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		// 정보 수정
 		MemberDTO dto = new MemberDTO();
-		dto.setUser_id(userId);
-		dto.setUser_intro(userIntro);
-		memberService.updateMemberIntro(dto);
-
-		// 프로필 이미지가 있을 경우에만 처리
-		if ("both".equals(mode) && file != null && !file.isEmpty()) {
-			String original = file.getOriginalFilename();
-			String ext = original.substring(original.lastIndexOf('.') + 1).toLowerCase();
-
-			if (!List.of("jpg", "jpeg", "png", "gif").contains(ext)) {
-				return "redirect:/member/myPage?error=unsupportedFileType";
-			}
-
-//			Path dir = Paths.get(uploadDir, "profile");
-//			if (!Files.exists(dir))
-//				Files.createDirectories(dir);
-
-//			String newName = UUID.randomUUID() + "." + ext;
-//			file.transferTo(dir.resolve(newName).toFile());
-			
-			String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-			Path path = Paths.get(uploadDir, fileName);
-			Files.createDirectories(path.getParent());
-			file.transferTo(path.toFile());
-			
-			memberService.updateProfileImage(userId, fileName);
+		dto.setUser_id(user_id);
+		dto.setUser_nickname(user_nickname);
+		
+		if (user_password == null) {
+			dto.setUser_password(memberService.findMemberById(user_id).getUser_password());
+		} else {
+			dto.setUser_password(encoder.encode(user_password));
 		}
+		
+		dto.setUser_phone_number(user_phone_number);
+		dto.setUser_intro(user_intro);
+		
+		memberService.updateMemberProfile(dto);
+		
+		// 프로필 이미지 변경
+		String original = file.getOriginalFilename();
+		String ext = original.substring(original.lastIndexOf('.') + 1).toLowerCase();
+
+		if (!List.of("jpg", "jpeg", "png", "gif").contains(ext)) {
+			return "redirect:/member/myPage?error=unsupportedFileType";
+		}
+
+		String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+		Path path = Paths.get(uploadDir, fileName);
+		Files.createDirectories(path.getParent());
+		file.transferTo(path.toFile());
+
+		memberService.updateProfileImage(user_id, fileName);
 
 		// 3. 성공 리다이렉트
 		return "redirect:/member/myPage?success=true";
 	}
-
 }

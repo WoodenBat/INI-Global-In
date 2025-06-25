@@ -4,75 +4,67 @@
 <meta charset="UTF-8">
 <title>프로필 수정</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<link rel="stylesheet" th:href="@{/css/profileUpdate.css}" />
 <th:block th:replace="member/header :: header"></th:block>
 <body>
-	<form id="profileImageForm" th:action="@{/member/memberProfileUpdate}" method="post"
-		enctype="multipart/form-data" onsubmit="return confirmSubmit();">
+	<div class="member_profile_update_form_wrapper">
+		<form class="member_profile_update_form" id="profileUpdateForm" th:action="@{/member/memberProfileUpdate}" method="post"
+			enctype="multipart/form-data">
 
-		<!-- 이미지 업로드 -->
-		<div style="margin-top: 20px;">
-			<label for="profileUploadInput"> <img
-				th:src="@{${member_info.user_profile_img_path != null} 
+			<!-- 이미지 업로드 -->
+			<div class="member_profile_img_update_container">
+				<label for="profileUploadInput"> <img
+					th:src="@{${member_info.user_profile_img_path != null} 
                         ? '/uploads/profile/' + ${member_info.user_profile_img_path} 
                         : '/images/default-profile.png'}"
-				class="profile_image" alt="프로필 사진" />
-			</label>
-			<input id="profileUploadInput" type="file" name="profileImage" accept="image/*" />
-		</div>
+					class="profile_image_preview" alt="프로필 사진" />
+				</label>
+				<input class="profile_image_input_btn" id="profileUploadInput" type="file" name="user_profile_img" accept="image/*" />
+			</div>
 
-		<!-- 자기소개 -->
-		<div class="form-group" style="margin-top: 10px;">
-			<label for="user_intro">자기소개 (최대 100자)</label>
-			<br />
-			<textarea name="user_intro" maxlength="100" rows="3" cols="50" placeholder="한 줄 자기소개를 입력하세요.">[[${member_info.user_intro}]]</textarea>
-			<button type="submit" name="mode" value="intro">상태메시지 수정</button>
-		</div>
+			<div class="member_profile_id_container profile_grid">
+				<span class="profile_label">아이디</span>
+				<input class="profile_input readonly" th:value="${member_info.user_id}" name="user_id" readonly="readonly">
+			</div>
+			
+			<div class="member_profile_email_container profile_grid">
+				<span class="profile_label">이메일</span>
+				<input class="profile_input readonly" th:value="${member_info.user_email}" name="user_email" readonly="readonly">
+			</div>
+			
+			<div class="member_profile_id_container profile_grid_check">
+				<span class="profile_label">닉네임</span>
+				<input class="profile_input" id="user_nickname_input" name="user_nickname" th:value="${member_info.user_nickname}">
+				<button type="button" class="check_btn" id="nickname_check_btn" onclick="checkDuplicate('nickname')">중복확인</button>
+			</div>
+			
+			<div class="member_profile_id_container profile_grid">
+				<span class="profile_label">비밀번호 변경</span>
+				<input type="password" class="profile_input" id="user_password_input" name="user_password" placeholder="*********">
+			</div>
+			
+			<div class="member_profile_id_container profile_grid_check">
+				<span class="profile_label">비밀번호 확인</span>
+				<input type="password" class="profile_input" id="user_password_check_input" placeholder="*********">
+				<img class="password_check_img" id="password_check_img" alt="비밀번호 확인" th:src="@{/img/icon/password_check.png}">
+			</div>
+			
+			<div class="member_profile_id_container profile_grid_check">
+				<span class="profile_label">전화번호</span>
+				<input class="profile_input" name="user_phone_number" th:value="${member_info.user_phone_number}">
+			</div>
 
-		<!-- 제출 버튼 -->
-		<button type="submit" name="mode" value="both">프로필 전체 수정</button>
+			<!-- 자기소개 -->
+			<div class="member_profile_intro_container profile_grid">
+				<span class="profile_label">자기소개</span>
+				<textarea class="profile_input profile_text_area" name="user_intro" maxlength="100" rows="3" cols="50" placeholder="한 줄 자기소개를 입력하세요. (최대 100자)">[[${member_info.user_intro}]]</textarea>
+			</div>
 
-		<!-- 성공 메시지 -->
-		<p th:if="${param.success}" style="color: green;">프로필이 성공적으로 수정되었습니다!</p>
-	</form>
-
-	<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const uploadBtn = document.getElementById('submit_button');
-            const fileInput = document.getElementById('profileUploadInput');
-            const form = document.getElementById('profileImageForm');
-
-            uploadBtn.addEventListener('click', function (event) {
-                // 기본 동작 막기
-                event.preventDefault();
-
-                if (!fileInput.files.length) {
-                    alert("먼저 파일을 선택해주세요.");
-                    return;
-                }
-
-                const confirmed = confirm("선택한 이미지로 프로필 사진을 변경하시겠습니까?");
-                if (confirmed) {
-                    form.submit(); // 수동 제출
-                }
-            });
-        });
-
-        document.getElementById("profileUploadInput")
-                .addEventListener(
-                        "change",
-                        function (e) {
-                            const file = e.target.files[0];
-                            if (!file)
-                                return;
-
-                            const reader = new FileReader();
-                            reader.onload = function (event) {
-                                const imgTag = document
-                                        .querySelector(".profile_image");
-                                imgTag.src = event.target.result;
-                            };
-                            reader.readAsDataURL(file);
-                        });
-    </script>
+			<!-- 제출 버튼 -->
+			<button type="submit" class="check_btn submit_btn" id="submit_btn">프로필 전체 수정</button>
+		</form>
+	</div>
 </body>
+<script th:src="@{/js/profileUpdate.js}"></script>
 </html>

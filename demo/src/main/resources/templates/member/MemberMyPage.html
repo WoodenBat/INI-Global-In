@@ -207,55 +207,6 @@
 			</div>
 		</div>
 
-		<div class="myFavorite_wrapper">
-			<div class="myBoard_text_container">
-				<span class="myBoard_text">찜</span>
-			</div>
-
-			<div class="myBoard_content_wrapper">
-				<div class="myBoard_content_title_container">
-					<span class="myBoard_content_title">찜한 글 목록</span>
-				</div>
-
-				<div class="myBoard_content_container" th:each="mf, stat : ${member_favorite}">
-					<a th:href="@{/board/view/{id}(id=${mf.board_id})}">
-						<div class="myBoard_content">
-							<div class="myBoard_user_nickname_container">
-								<span class="myBoard_user_nickname" th:text="${mf.user_id}"></span>
-							</div>
-
-							<div class="myBoard_category_container">
-								<span class="myBoard_category" th:text="${mf.board_category}"></span>
-							</div>
-
-							<div class="myBoard_title_container">
-								<span class="myBoard_title" th:text="${mf.board_title}"></span>
-							</div>
-
-							<div class="myBoard_views_container">
-								<img class="myBoard_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
-								<div class="myBoard_views_cnt_container">
-									<span class="myBoard_views_cnt" th:text="${mf.board_views}"></span>
-								</div>
-							</div>
-							<div class="myBoard_like_container">
-								<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
-								<div class="mtBoard_like_cnt_container">
-									<span class="myBoard_like_cnt" th:text="${mf.board_like_cnt}"></span>
-								</div>
-							</div>
-							<div class="myBoard_reply_container">
-								<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
-								<div class="mtBoard_reply_cnt_container">
-									<span class="myBoard_reply_cnt" th:text="${mf.board_reply_cnt}"></span>
-								</div>
-							</div>
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
-
 		<div class="myFollower_wrapper">
 			<div class="myBoard_text_container">
 				<span class="myBoard_text">팔로우</span>

@@ -118,8 +118,7 @@ function showPopup(translated) { //팝업
     <div class="header">번역결과 <button onclick="this.parentNode.parentNode.remove()">✖</button></div>
     <div class="body">
       <strong>번역:</strong><p>${translated}</p>
-    </div>
-  `;
+    </div>`;
 	document.body.appendChild(popup);
 
 	// 드래그 이동 기능
