@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ini.board.vo.BoardReplyDTO;
+import com.ini.board.vo.BoardReplyReportDTO;
 import com.ini.board.vo.BoardReplyWithUserDTO;
 
 @Mapper
@@ -23,4 +24,6 @@ public interface BoardReplyMapper {
 	public List<BoardReplyDTO> findBoardReplyByReplyId(String reply_id);
 	
 	public void updateBoardReplyByReplyId(BoardReplyDTO boardReplyDTO);
+	
+	public boolean insertBoardReplyReport(BoardReplyReportDTO boardReplyReportDTO);
 }

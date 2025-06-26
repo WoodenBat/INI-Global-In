@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.ini.board.mapper.BoardMapper;
 import com.ini.board.mapper.BoardReplyMapper;
 import com.ini.board.vo.BoardReplyDTO;
+import com.ini.board.vo.BoardReplyReportDTO;
 import com.ini.board.vo.BoardReplyWithUserDTO;
 
 import lombok.AllArgsConstructor;
@@ -103,6 +104,12 @@ public class BoardReplyService {
 
 	public void insertReply(BoardReplyDTO reply) {
 		boardMapper.insertReply(reply);
+	}
+	
+	public boolean insertBoardReplyReport(BoardReplyReportDTO boardReplyReportDTO) {
+		
+		return boardReplyMapper.insertBoardReplyReport(boardReplyReportDTO);
+		
 	}
 	
 }

@@ -97,19 +97,19 @@ public class BoardService {
 	}
 
 	// 단순 게시글 DTO만 조회
-	public BoardDetailDTO getBoardById(int board_id, String user_id) {
-		BoardDetailDTO detail = boardMapper.selectPostById(board_id);
+	public BoardDetailDTO getBoardById(int boardId, String userId) {
+		BoardDetailDTO detail = boardMapper.selectPostById(boardId);
 		if (detail == null)
 			return null;
 
-		int likeCount = boardMapper.getLikeCount((long) board_id);
+		int likeCount = boardMapper.getLikeCount((long) boardId);
 		detail.setLike_count(likeCount);
 
-		boolean liked = boardMapper.hasUserLiked(board_id, user_id) != null;
+		boolean liked = boardMapper.hasUserLiked(boardId, userId) != null;
 		detail.setLiked(liked);
 
 		// 📌 이미지 목록 추가
-		List<BoardImageDTO> images = boardMapper.selectImageList(board_id);
+		List<BoardImageDTO> images = boardMapper.selectImageList(boardId);
 		detail.setImageList(images);
 
 		return detail;
@@ -130,49 +130,49 @@ public class BoardService {
 	}
 
 	// 게시글 삭제 처리 (좋아요, 댓글, 이미지 포함)
-	public void deletePost(int board_id) {
-		boardMapper.deleteLikesByBoardId(board_id);
-		boardMapper.deleteCommentsByBoardId(board_id);
-		boardMapper.deleteImagesByBoardId(board_id);
-		boardMapper.deletePost(board_id);
+	public void deletePost(int boardId) {
+		boardMapper.deleteLikesByBoardId(boardId);
+		boardMapper.deleteCommentsByBoardId(boardId);
+		boardMapper.deleteImagesByBoardId(boardId);
+		boardMapper.deletePost(boardId);
 	}
 
 	// 조회수 증가
-	public void incrementViews(int board_id) {
-		boardMapper.updateViewCount(board_id);
+	public void incrementViews(int boardId) {
+		boardMapper.updateViewCount(boardId);
 	}
 
 	/**
 	 * 좋아요 토글 기능 이미 눌렀으면 취소, 아니면 좋아요 등록 결과적으로 현재 좋아요 수 반환
 	 */
-	public int toggleLike(int board_id, String user_id) {
-		boolean hasLiked = hasUserLiked(board_id, user_id);
+	public int toggleLike(int boardId, String userId) {
+		boolean hasLiked = hasUserLiked(boardId, userId);
 		if (hasLiked) {
-			boardMapper.deleteLike(board_id, user_id);
+			boardMapper.deleteLike(boardId, userId);
 		} else {
-			BoardLikeDTO like = new BoardLikeDTO(board_id, user_id);
+			BoardLikeDTO like = new BoardLikeDTO(boardId, userId);
 			boardMapper.insertLike(like);
 		}
-		return boardMapper.countLikes(board_id);
+		return boardMapper.countLikes(boardId);
 	}
 
 	// 좋아요 수 반환
-	public int getLikeCount(int board_id) {
-		return boardMapper.countLikes(board_id);
+	public int getLikeCount(int boardId) {
+		return boardMapper.countLikes(boardId);
 	}
 
 	// 특정 유저가 특정 게시글에 좋아요 눌렀는지 확인
-	public boolean hasUserLiked(int board_id, String user_id) {
-		if (user_id == null || user_id.trim().isEmpty()) {
-			user_id = "test"; // 로그인 안 된 경우 대비 기본값
+	public boolean hasUserLiked(int boardId, String userId) {
+		if (userId == null || userId.trim().isEmpty()) {
+			userId = "test"; // 로그인 안 된 경우 대비 기본값
 		}
-		Integer count = boardMapper.hasUserLiked(board_id, user_id);
+		Integer count = boardMapper.hasUserLiked(boardId, userId);
 		return count != null && count > 0;
 	}
 
 	// 특정 게시글의 이미지 목록 조회
-	public List<BoardImageDTO> getBoardImages(int board_id) {
-		return boardMapper.selectImageList(board_id);
+	public List<BoardImageDTO> getBoardImages(int boardId) {
+		return boardMapper.selectImageList(boardId);
 	}
 
 	// ✅ 단독 이미지 저장용 메서드 (예: 작성 후 저장 or 수정 시 추가 저장)
@@ -184,15 +184,15 @@ public class BoardService {
 		}
 	}
 
-	public BoardDetailDTO getBoardById(int board_id) {
-		return getBoardById(board_id, "test");
+	public BoardDetailDTO getBoardById(int boardId) {
+		return getBoardById(boardId, "test");
 	}
 
-	public void deleteImagesByBoardId(int board_id) {
-		List<BoardImageDTO> images = boardMapper.selectImageList(board_id);
+	public void deleteImagesByBoardId(int boardId) {
+		List<BoardImageDTO> images = boardMapper.selectImageList(boardId);
 
 		for (BoardImageDTO img : images) {
-			File file = new File(uploadPath, img.getImagePath());
+			File file = new File(uploadPath, img.getImage_path());
 			if (file.exists()) {
 				boolean deleted = file.delete();
 				if (!deleted) {
@@ -201,7 +201,7 @@ public class BoardService {
 				}
 			}
 		}
-		boardMapper.deleteImagesByBoardId(board_id);
+		boardMapper.deleteImagesByBoardId(boardId);
 	}
 
 	// 신고 등록
@@ -216,7 +216,7 @@ public class BoardService {
 	}
 
 	// 게시글 신고 횟수 조회
-	public int getReportCount(int board_id) {
-		return boardMapper.countReportsByBoard(board_id);
+	public int getReportCount(int boardId) {
+		return boardMapper.countReportsByBoard(boardId);
 	}
 }

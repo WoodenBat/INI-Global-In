@@ -12,7 +12,16 @@
 
 	<!-- ID로 회원 조회 -->
 	<select id="findMemberById" parameterType="string" resultType="com.ini.member.vo.MemberDTO">
-		SELECT * FROM ini_user WHERE user_id = #{user_id}
+		SELECT
+		user_id,
+		user_password,
+		user_nickname,
+		user_email,
+		user_phone_number,
+		user_profile_img as user_profile_img_path,
+		user_intro		
+		FROM ini_user 
+		WHERE user_id = #{user_id}
 	</select>
 
 	<!-- 팔로우 정보 -->
@@ -128,7 +137,7 @@
 		left join board_like bl on b.board_id = bl.board_id
 		left join board_reply br on b.board_id = br.board_id
 		where
-		b.board_id = (select board_id from user_favorite where user_id = 'test')
+		b.board_id in (select board_id from user_favorite where user_id = 'test')
 		group by b.board_id
 		, b.board_title
 		, b.user_id
@@ -173,8 +182,21 @@
 		jdbcType=VARCHAR},
 		#{user_email, jdbcType=VARCHAR},
 		#{user_phone_number, jdbcType=VARCHAR},
-		#{user_profile_img_path, jdbcType=VARCHAR}
+		#{user_profile_img_path,
+		jdbcType=VARCHAR}
 		)
 	</insert>
+
+	<update id="updateProfileImage">
+		UPDATE INI_USER
+		SET USER_PROFILE_IMG = #{profileImage}
+		WHERE user_id = #{userId}
+	</update>
+	
+	<update id="updateUserIntro" parameterType="com.ini.member.vo.MemberDTO">
+		UPDATE INI_USER
+		SET USER_INTRO = #{user_intro}
+		WHERE USER_ID = #{user_id}
+	</update>
 
 </mapper>

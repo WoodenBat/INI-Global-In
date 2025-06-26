@@ -1,4 +1,4 @@
-	package com.ini.member.controller;
+package com.ini.member.controller;
 
 import com.ini.member.service.MemberService;
 import com.ini.member.vo.MemberDTO;
@@ -81,7 +81,7 @@ public class LoginController {
 			return "member/find-by-email";
 		}
 	}
-	
+
 	@GetMapping("/loginsuccess")
 	public String home(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
 		if (userDetails != null) {
@@ -91,5 +91,4 @@ public class LoginController {
 		}
 		return "member/loginsuccess"; // templates/member/home.html
 	}
-	
 }

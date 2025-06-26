@@ -19,91 +19,100 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class MemberService {
 
-	private final MemberMapper membermapper;
+	private final MemberMapper memberMapper;
 
 	public List<MemberDTO> findAllMember() {
 
-		return membermapper.findAllMember();
+		return memberMapper.findAllMember();
 
 	}
 
 	public List<MemberFollowDTO> findFollowById(String user_id) {
 
-		return membermapper.findFollowById(user_id);
+		return memberMapper.findFollowById(user_id);
 
 	}
 
 	public MemberDTO findMemberById(String user_id) {
 
-		return membermapper.findMemberById(user_id);
+		return memberMapper.findMemberById(user_id);
 
 	}
 
 	public List<BoardDTO> findBoardById(String user_id) {
 
-		return membermapper.findBoardById(user_id);
+		return memberMapper.findBoardById(user_id);
 
 	}
 
 	public List<BoardLikeDTO> findLikeById(String user_id) {
 
-		return membermapper.findLikeById(user_id);
+		return memberMapper.findLikeById(user_id);
 
 	}
 
 	public List<BoardReplyDTO> findReplyById(String user_id) {
 
-		return membermapper.findReplyById(user_id);
+		return memberMapper.findReplyById(user_id);
 
 	}
 
 	public List<MemberFavoriteDTO> findFavoriteById(String user_id) {
 
-		return membermapper.findFavoriteById(user_id);
+		return memberMapper.findFavoriteById(user_id);
 
 	}
 
 	public List<BoardWithLikeReplyDTO> findBoardLikeReplyById(String user_id) {
 
-		return membermapper.findBoardLikeReplyById(user_id);
+		return memberMapper.findBoardLikeReplyById(user_id);
 
 	}
 
 	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByLikeId(String user_id) {
 
-		return membermapper.findBoardLikeReplyByLikeId(user_id);
+		return memberMapper.findBoardLikeReplyByLikeId(user_id);
 
 	}
 
 	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByReplyId(String user_id) {
 
-		return membermapper.findBoardLikeReplyByLikeId(user_id);
+		return memberMapper.findBoardLikeReplyByReplyId(user_id);
 
 	}
 
 	public List<BoardWithLikeReplyDTO> findBoardLikeReplyByFavoriteId(String user_id) {
 
-		return membermapper.findBoardLikeReplyByLikeId(user_id);
+		return memberMapper.findBoardLikeReplyByFavoriteId(user_id);
 
 	}
 
 	public boolean registerMember(MemberDTO user) {
-		if (membermapper.findByEmail(user.getUser_email()) != null) {
+		if (memberMapper.findByEmail(user.getUser_email()) != null) {
 			return false;
 		}
-		if (membermapper.findByNickname(user.getUser_nickname()) != null) {
+		if (memberMapper.findByNickname(user.getUser_nickname()) != null) {
 			return false;
 		}
-		int result = membermapper.insertMember(user);
+		int result = memberMapper.insertMember(user);
 		return result > 0;
 	}
 
 	public MemberDTO findByEmail(String email) {
-		return membermapper.findByEmail(email);
+		return memberMapper.findByEmail(email);
 	}
 
 	public MemberDTO findByNickname(String nickname) {
-		return membermapper.findByNickname(nickname);
+		return memberMapper.findByNickname(nickname);
+	}
+
+	public void updateProfileImage(String userId, String profileImage) {
+		memberMapper.updateProfileImage(userId, profileImage);
+	}
+
+	public void updateMemberIntro(MemberDTO dto) {
+		System.out.println("➡️ 자기소개 업데이트 시도: user_id = " + dto.getUser_id() + ", user_intro = " + dto.getUser_intro());
+		memberMapper.updateUserIntro(dto);
 	}
 
 }

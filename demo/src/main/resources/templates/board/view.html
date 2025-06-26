@@ -12,9 +12,9 @@
 	let board_id = '[[${board.board_id}]]'; 
 </script>
 <body>
-	<span id="localeClass" th:text="${#locale}" style="display:none;"></span>
+	<span id="localeClass" th:text="${#locale}" style="display: none;"></span>
 	<h1 th:text="${board.board_title}">제목</h1>
-	
+
 	<!-- 게시글 정보 -->
 	<div>
 		<p>
@@ -31,8 +31,7 @@
 		</p>
 		<p>
 			<strong>작성일:</strong>
-			<span
-				th:text="${#dates.format(board.board_write_date, 'yyyy-MM-dd HH:mm')}"></span>
+			<span th:text="${#dates.format(board.board_write_date, 'yyyy-MM-dd HH:mm')}"></span>
 		</p>
 		<p>
 			<strong>조회수:</strong>
@@ -45,8 +44,8 @@
 	<!-- 게시글 본문 + 이미지 -->
 	<div class="reply-block">
 		<!-- 본문 -->
-		<div class="reply-text" th:utext="${board.board_content}">본문</div>
-		<div class="board_content_hidden" style="display: none;"></div>
+		<div class="reply-text" th:text="${board.board_content}" style="white-space: pre-line;"></div>
+
 
 		<!-- 번역 버튼 -->
 		<button type="button" class="translate_board-btn">번역하기</button>
@@ -54,10 +53,8 @@
 		<!-- 이미지 -->
 		<div th:if="${imageList != null and !#lists.isEmpty(imageList)}">
 			<div th:each="image : ${imageList}">
-				<img
-					th:if="${image.imagePath != null and !#strings.isEmpty(image.imagePath)}"
-					th:src="@{'/uploads/' + ${image.imagePath}}"
-					th:alt="${image.originalName}"
+				<img th:if="${image.image_path != null and !#strings.isEmpty(image.image_path)}"
+					th:src="@{'/uploads/board/' + ${image.image_path}}" th:alt="${image.original_name}"
 					style="max-width: 100%; height: auto; margin-top: 10px;" />
 			</div>
 		</div>
@@ -71,13 +68,11 @@
 			<button type="submit" style="margin-right: 10px;">목록</button>
 		</form>
 
-		<form th:action="@{'/board/edit/' + ${board.board_id}}" method="get"
-			style="display: inline;">
+		<form th:action="@{'/board/edit/' + ${board.board_id}}" method="get" style="display: inline;">
 			<button type="submit" style="margin-right: 10px;">수정</button>
 		</form>
 
-		<form th:action="@{'/board/delete/' + ${board.board_id}}"
-			method="post" style="display: inline;">
+		<form th:action="@{'/board/delete/' + ${board.board_id}}" method="post" style="display: inline;">
 			<button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</button>
 		</form>
 	</div>
@@ -92,20 +87,20 @@
 
 	<!-- 좋아요 JS -->
 	<script>
-let isProcessing = false;
-document.getElementById("likeBtn").addEventListener("click", function () {
-    if (isProcessing) return;
-    isProcessing = true;
-    const board_id = '[[${board.board_id}]]';
-    fetch(`/board/like/${board_id}`, { method: 'POST' })
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("likeIcon").textContent = data.liked ? '❤️' : '🤍';
-            document.getElementById("likeCount").textContent = data.likeCount;
-        })
-        .finally(() => isProcessing = false);
-});
-</script>
+		let isProcessing = false;
+		document.getElementById("likeBtn").addEventListener("click", function () {
+		    if (isProcessing) return;
+		    isProcessing = true;
+		    const boardId = '[[${board.board_id}]]';
+		    fetch(`/board/like/${boardId}`, { method: 'POST' })
+		        .then(res => res.json())
+		        .then(data => {
+		            document.getElementById("likeIcon").textContent = data.liked ? '❤️' : '🤍';
+		            document.getElementById("likeCount").textContent = data.likeCount;
+		        })
+		        .finally(() => isProcessing = false);
+		});
+	</script>
 
 	<!-- 신고하기 -->
 	<button id="reportBtn">신고하기</button>
@@ -124,42 +119,44 @@ document.getElementById("likeBtn").addEventListener("click", function () {
 			<button type="button" id="closeModal">취소</button>
 		</form>
 	</div>
+
 	<th:block th:replace="board/boardReplyTest :: boardReply"></th:block>
+
 	<script>
-	document.getElementById('reportBtn').addEventListener('click', () => {
-	    document.getElementById('reportModal').style.display = 'block';
-	});
-	document.getElementById('closeModal').addEventListener('click', () => {
-	    document.getElementById('reportModal').style.display = 'none';
-	});
-	document.getElementById('reportForm').addEventListener('submit', async (e) => {
-	    e.preventDefault();
-    const form = e.target;
-    const data = {
-        board_id: '[[${board.board_id}]]',
-        report_category: form.report_category.value,
-        report_content: form.report_content.value
-    };
-
-    try {
-        const response = await fetch('/board/report', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-            alert('신고가 접수되었습니다.');
-            document.getElementById('reportModal').style.display = 'none';
-        } else {
-            const errorText = await response.text();
-            alert(errorText);
-        }
-    } catch (err) {
-        alert('오류가 발생했습니다.');
-    }
-});
-</script>
+		document.getElementById('reportBtn').addEventListener('click', () => {
+		    document.getElementById('reportModal').style.display = 'block';
+		});
+		document.getElementById('closeModal').addEventListener('click', () => {
+		    document.getElementById('reportModal').style.display = 'none';
+		});
+		document.getElementById('reportForm').addEventListener('submit', async (e) => {
+		    e.preventDefault();
+		    const form = e.target;
+		    const data = {
+		        board_id: '[[${board.board_id}]]',
+		        report_category: form.report_category.value,
+		        report_content: form.report_content.value
+		    };
+		
+		    try {
+		        const response = await fetch('/board/report', {
+		            method: 'POST',
+		            headers: {'Content-Type': 'application/json'},
+		            body: JSON.stringify(data)
+		        });
+		
+		        if (response.ok) {
+		            alert('신고가 접수되었습니다.');
+		            document.getElementById('reportModal').style.display = 'none';
+		        } else {
+		            const errorText = await response.text();
+		            alert(errorText);
+		        }
+		    } catch (err) {
+		        alert('오류가 발생했습니다.');
+		    }
+		});
+	</script>
 
 	<script th:src="@{/js/TranslateRequest.js}"></script>
 </body>

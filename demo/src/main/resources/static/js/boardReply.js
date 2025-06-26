@@ -12,7 +12,7 @@ window.onload = function() {
 };
 
 function getBoardReply(board_id) {
-	const sessionNickname = $("#session_nickname").text();
+	const session_user_id = $("#session_user_id").text();
 	$.ajax({
 		type: "GET",
 		url: "/board/reply/boardReply",
@@ -46,7 +46,7 @@ function getBoardReply(board_id) {
                                 <div class="board_reply_content_hidden" style="display: none;"></div>
                             </div>
                                 `;
-					if (br.reply_writer === sessionNickname) {
+					if (br.reply_writer === session_user_id) {
 						html += `
                         	<div class="board_reply_button_container">
        		                  	<button id="replyUpdate" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reply_update_button").text() + `</button>
@@ -95,7 +95,7 @@ function getBoardReply(board_id) {
 	                                    <div class="board_reply_content_hidden" style="display: none;"></div>
 	                                </div>
 	                                `;
-					if (br.reply_writer === sessionNickname) {
+					if (br.reply_writer === session_user_id) {
 						html += `
                                 	<div class="board_reply_button_container">
 										<button id="replyUpdate" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reply_update_button").text() + `</button>
@@ -125,6 +125,7 @@ function getBoardReply(board_id) {
 				}
 				$(".board_reply_wrapper").append(html);
 			});
+			fontFallBack();
 		},
 		error: function(xhr, status, error) {
 			console.error("에러:", error);
@@ -150,14 +151,14 @@ function getBoardReply(board_id) {
 
 $(document).ready(function() {
 	$("#reply_insert_btn").click(function() {
-		const sessionNickname = $("#session_nickname").text();
-		console.log(sessionNickname);
+		const session_user_id = $("#session_user_id").text();
+		console.log(session_user_id);
 		$.ajax({
 			type: "POST",
 			url: "/board/reply/boardReplyInsert",
 			data: {
 				reply_content: $("#reply_insert_form").val(),
-				reply_writer: sessionNickname,
+				reply_writer: session_user_id,
 				board_id: board_id,
 			},
 			success: function() {
@@ -224,13 +225,13 @@ $(document).ready(function() {
 		const container = $(this).closest(".board_reply_container, .board_reply_reReply_container");
 		const inputBox = container.nextAll(".board_reply_update_container").eq(0);
 		let original_reply = container.find(".board_reply_content").text();
-		
-		if(original_reply.includes("(번역)")) {
+
+		if (original_reply.includes("(번역)")) {
 			original_reply = container.find(".board_reply_content_hidden").text();
 		}
-		
+
 		inputBox.find(".board_reply_reReply_insert_form").text(original_reply);
-		
+
 		if (container.hasClass("board_reply_container")) {
 			inputBox.toggle();
 
@@ -243,7 +244,7 @@ $(document).ready(function() {
 	});
 
 	$(document).on("click", "#reReplyInsertBtn", function() {
-		const sessionNickname = $("#session_nickname").text();
+		const session_user_id = $("#session_user_id").text();
 		const container = $(this).closest(".board_reply_reReply_insert_container").prev();
 		const reply_id = container.find("span#reply_id").text().trim();
 		const reply_content = $(this).siblings("#reReplyInsertForm").val();
@@ -254,7 +255,7 @@ $(document).ready(function() {
 			url: "/board/reply/boardRereplyInsert",
 			data: {
 				reply_content: reply_content,
-				reply_writer: sessionNickname,
+				reply_writer: session_user_id,
 				reply_id: reply_id,
 				board_id: board_id,
 			},
@@ -274,7 +275,7 @@ $(document).ready(function() {
 		const reply_status = container.find("span#reply_status").text().trim();
 		const reply_content = $(this).siblings("#replyUpdateForm").val();
 		container.find(".board_reply_content_hidden").text("");
-		Object.keys(translationCache).forEach(key => delete translationCache[key]);
+		Object.keys(translationCache_reply).forEach(key => delete translationCache_reply[key]);
 		console.log(reply_id);
 		console.log(reply_status);
 
@@ -297,3 +298,14 @@ $(document).ready(function() {
 	});
 
 })
+function fontFallBack() {
+
+	document.querySelectorAll('.board_reply_content').forEach(elem => {
+		const text = elem.textContent;
+
+		const isJapanese = /[\u3040-\u30FF\u4E00-\u9FFF]/.test(text);
+		if (isJapanese) {
+			elem.classList.add('fallback_font');
+		}
+	});
+}

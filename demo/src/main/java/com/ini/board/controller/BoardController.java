@@ -21,15 +21,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ini.board.mapper.BoardMapper;
-import com.ini.board.service.BoardCategoryService;
-import com.ini.board.service.BoardReplyService;
 import com.ini.board.service.BoardService;
-import com.ini.board.service.BoardTagService;
+import com.ini.board.vo.BoardCategoryVO;
 import com.ini.board.vo.BoardDTO;
 import com.ini.board.vo.BoardDetailDTO;
 import com.ini.board.vo.BoardImageDTO;
 import com.ini.board.vo.BoardListDTO;
 import com.ini.board.vo.BoardReportDTO;
+import com.ini.board.vo.BoardTagVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -47,8 +46,7 @@ public class BoardController {
 	private final BoardMapper boardMapper;
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-	@Value("${file.upload-path}")
-	private String uploadPath;
+	private String uploadPath = "C:/upload/board";
 
 //	@GetMapping("/list")
 //	public String boardList(@RequestParam(defaultValue = "1") int page, @RequestParam(required = false) String keyword,
@@ -145,9 +143,9 @@ public class BoardController {
 		dto.setBoard_views(0);
 		dto.setBoard_write_date(new Date());
 		dto.setBoard_update_date(new Date());
-
-		String user_id = (String) session.getAttribute("loginUser");
-		dto.setUser_id(user_id != null ? user_id : "test");
+		
+		String userId = (String) session.getAttribute("loginUser");
+		dto.setUser_id(userId != null ? userId : "test");
 
 		// 게시글 저장 (board_id 생성됨)
 		boardService.savePost(dto);
@@ -166,9 +164,9 @@ public class BoardController {
 					BoardImageDTO imageDTO = new BoardImageDTO();
 					imageDTO.setBoard_id(dto.getBoard_id());
 					// DB에는 파일명만 저장 (상대경로 X)
-					imageDTO.setImagePath(fileName);
-					imageDTO.setOriginalName(imageFile.getOriginalFilename());
-					imageDTO.setUploadDate(new Date());
+					imageDTO.setImage_path(fileName);
+					imageDTO.setOriginal_name(imageFile.getOriginalFilename());
+					imageDTO.setUpload_date(new Date());
 
 					imageList.add(imageDTO);
 				}
@@ -217,29 +215,29 @@ public class BoardController {
 
 	// 게시글 상세 보기 (이미지 포함)
 	@GetMapping("/view/{id}")
-	public String viewBoard(@PathVariable("id") int board_id, Model model, HttpSession session) {
-		boardService.incrementViews(board_id);
-		BoardDetailDTO board = boardService.getPostById(board_id);
+	public String viewBoard(@PathVariable("id") int boardId, Model model, HttpSession session) {
+		boardService.incrementViews(boardId);
+		BoardDetailDTO board = boardService.getPostById(boardId);
 
 		if (board == null)
 			return "redirect:/board/list";
 
 		// 이미지 목록 조회
-		List<BoardImageDTO> images = boardService.getBoardImages(board_id);
+		List<BoardImageDTO> images = boardService.getBoardImages(boardId);
 		logger.info("▶ 이미지 개수: {}", images.size()); // 이거 반드시 추가
 		for (BoardImageDTO img : images) {
-			logger.info("▶ imagePath: {}", img.getImagePath());
+			logger.info("▶ imagePath: {}", img.getImage_path());
 		}
 
 		// 로그인 사용자가 없을 경우 'test'로 가정
-		String user_id = "test";
+		String userId = "test";
 		Object loginUser = session.getAttribute("loginUser");
 		if (loginUser != null && loginUser instanceof String) {
-			user_id = (String) loginUser;
+			userId = (String) loginUser;
 		}
 
-		boolean liked = boardService.hasUserLiked(board_id, user_id);
-		int likeCount = boardService.getLikeCount(board_id);
+		boolean liked = boardService.hasUserLiked(boardId, userId);
+		int likeCount = boardService.getLikeCount(boardId);
 
 		model.addAttribute("board", board);
 		model.addAttribute("liked", liked);
@@ -251,31 +249,40 @@ public class BoardController {
 	// 수정 폼
 	@GetMapping("/edit/{id}")
 	public String showEditForm(@PathVariable("id") int id, Model model) {
-		model.addAttribute("post", boardService.getPostById(id));
-		model.addAttribute("tags", boardMapper.selectAllBoardTags());
-		model.addAttribute("categories", boardMapper.selectAllBoardCategories());
+		BoardDetailDTO post = boardService.getPostById(id);
+		if (post == null) {
+			return "redirect:/board/list";
+		}
+		model.addAttribute("post", post);
+
+		List<BoardTagVO> tags = boardMapper.selectAllBoardTags();
+		model.addAttribute("tags", tags);
+
+		List<BoardCategoryVO> categories = boardMapper.selectAllBoardCategories();
+		model.addAttribute("categories", categories);
+
 		return "board/edit";
 	}
 
 	// 수정 처리
 	@PostMapping("/edit")
-	public String updatePost(@RequestParam("board_id") Long board_id, @RequestParam("board_title") String boardTitle,
-			@RequestParam("board_content") String boardContent, @RequestParam("board_category") String boardCategory,
-			@RequestParam("board_tag") String boardTag,
+	public String updatePost(@RequestParam("board_id") Long board_id, @RequestParam("board_title") String board_title,
+			@RequestParam("board_content") String board_content, @RequestParam("board_category") String board_category,
+			@RequestParam("board_tag") String board_tag,
 			@RequestParam(value = "uploadFiles", required = false) MultipartFile[] files, HttpSession session)
 			throws IOException {
 
 		BoardDTO dto = new BoardDTO();
 		dto.setBoard_id(board_id.intValue());
-		dto.setBoard_title(boardTitle);
-		dto.setBoard_category(boardCategory);
-		dto.setBoard_tag(boardTag);
-		dto.setBoard_content(boardContent);
+		dto.setBoard_title(board_title);
+		dto.setBoard_category(board_category);
+		dto.setBoard_tag(board_tag);
+		dto.setBoard_content(board_content);
 		dto.setBoard_update_date(new Date());
 		dto.setUser_id((String) session.getAttribute("loginUser"));
 
 		List<BoardImageDTO> imageList = new ArrayList<>();
-
+		System.out.println(files.length);
 		// 이미지 업로드가 있을 경우 추가 저장
 		if (files != null && files.length > 0) {
 			for (MultipartFile file : files) {
@@ -287,9 +294,9 @@ public class BoardController {
 
 					BoardImageDTO image = new BoardImageDTO();
 					image.setBoard_id(dto.getBoard_id());
-					image.setImagePath(fileName);
-					image.setOriginalName(file.getOriginalFilename());
-					image.setUploadDate(new Date());
+					image.setImage_path(fileName);
+					image.setOriginal_name(file.getOriginalFilename());
+					image.setUpload_date(new Date());
 
 					imageList.add(image);
 				}
@@ -305,40 +312,40 @@ public class BoardController {
 
 	// 삭제
 	@PostMapping("/delete/{id}")
-	public String deletePost(@PathVariable("id") int board_id, HttpSession session) {
-		String user_id = (String) session.getAttribute("loginUser");
-		BoardDetailDTO post = boardService.getBoardById(board_id, user_id);
-		if (post == null || (user_id != null && !user_id.equals(post.getUser_id()))) {
+	public String deletePost(@PathVariable("id") int boardId, HttpSession session) {
+		String userId = (String) session.getAttribute("loginUser");
+		BoardDetailDTO post = boardService.getBoardById(boardId, userId);
+		if (post == null || (userId != null && !userId.equals(post.getUser_id()))) {
 			return "redirect:/board/list";
 		}
 
-		boardService.deletePost(board_id);
+		boardService.deletePost(boardId);
 		return "redirect:/board/list";
 	}
 
 	// 좋아요 토글
-	@PostMapping("/like/{board_id}")
+	@PostMapping("/like/{boardId}")
 	@ResponseBody
-	public ResponseEntity<?> toggleLike(@PathVariable("board_id") int board_id, HttpSession session) {
-		String user_id = (String) session.getAttribute("loginUser");
-		if (user_id == null) {
-			user_id = "test";
-			session.setAttribute("loginUser", user_id);
+	public ResponseEntity<?> toggleLike(@PathVariable("boardId") int boardId, HttpSession session) {
+		String userId = (String) session.getAttribute("loginUser");
+		if (userId == null) {
+			userId = "test";
+			session.setAttribute("loginUser", userId);
 		}
 
-		int likeCount = boardService.toggleLike(board_id, user_id);
-		boolean liked = boardService.hasUserLiked(board_id, user_id);
+		int likeCount = boardService.toggleLike(boardId, userId);
+		boolean liked = boardService.hasUserLiked(boardId, userId);
 
 		return ResponseEntity.ok().body(Map.of("likeCount", likeCount, "liked", liked));
 	}
 
 	@PostMapping("/report")
 	public ResponseEntity<?> reportPost(@RequestBody BoardReportDTO report, HttpSession session) {
-		String user_id = (String) session.getAttribute("loginUser");
-		if (user_id == null) {
-			user_id = "test"; // 비로그인 시 기본값 처리
+		String userId = (String) session.getAttribute("loginUser");
+		if (userId == null) {
+			userId = "test"; // 비로그인 시 기본값 처리
 		}
-		report.setReport_user(user_id);
+		report.setReport_user(userId);
 
 		boolean success = boardService.addReport(report);
 		if (success) {

@@ -4,109 +4,39 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ini.board.mapper.BoardMapper">
-	<!--
-	<select id="selectBoardList"
-		resultType="com.ini.board.vo.BoardDTO">
-		SELECT
-		board_id, board_title, board_category, board_write_date,
-		board_tag, image_yn
-		FROM board
-		WHERE 1 = 1
-		<if test="keyword != null and keyword != ''">
-			AND (board_title LIKE CONCAT('%', #{keyword}, '%')
-			OR
-			board_content LIKE CONCAT('%', #{keyword}, '%'))
-		</if>
-		<if test="category != null and category != '' and category != '전체'">
-			AND board_category = #{category}
-		</if>
-		ORDER BY board_write_date DESC
-		LIMIT #{startRow}, #{pageSize}
-	</select>
-
-	<select id="countBoardList" resultType="int">
-		SELECT COUNT(*) FROM board
-		WHERE 1 = 1
-		<if test="keyword != null and keyword != ''">
-			AND (board_title LIKE CONCAT('%', #{keyword}, '%')
-			OR
-			board_content LIKE CONCAT('%', #{keyword}, '%'))
-		</if>
-		<if test="category != null and category != '' and category != '전체'">
-			AND board_category = #{category}
-		</if>
-	</select>
-
-	<select id="getAllBoardCategoriesKr"
-		resultType="com.ini.board.vo.BoardCategoryVO">
-		SELECT BOARD_CATEGORY AS "categoryName" FROM BOARD_CATEGORY
-	</select>
-
-	<select id="getAllBoardCategoriesJp"
-		resultType="com.ini.board.vo.BoardCategoryVO">
-		SELECT BOARD_CATEGORY_JP AS "categoryName" FROM
-		BOARD_CATEGORY
-	</select>
-
-	<select id="getAllBoardTagsKr"
-		resultType="com.ini.board.vo.BoardTagVO">
-		SELECT BOARD_TAG AS "tagName" FROM BOARD_TAG
-	</select>
-
-	<select id="getAllBoardTagsJp"
-		resultType="com.ini.board.vo.BoardTagVO">
-		SELECT BOARD_TAG_JP AS "tagName" FROM BOARD_TAG
-	</select>
-
-	<insert id="insertBoard"
-		parameterType="com.ini.board.vo.BoardDTO">
-		<selectKey keyProperty="board_id" resultType="int"
-			order="BEFORE">
-			SELECT BOARD_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
-		INSERT INTO INI_BOARD (
-		BOARD_ID,
-		BOARD_TITLE, BOARD_CONTENT, USER_ID,
-		BOARD_VIEWS, BOARD_CATEGORY, BOARD_WRITE_DATE,
-		BOARD_UPDATE_DATE,
-		BOARD_TAG
-		) VALUES (
-		#{board_id},
-		#{board_title}, #{board_content},
-		#{user_id},
-		0, #{board_category}, SYSDATE, SYSDATE, #{board_tag}
-		)
-	</insert>
-
-	<select id="getBoardById" parameterType="int"
-		resultType="com.ini.board.vo.BoardDTO">
-		SELECT board_id, board_title, board_content, user_id,
-		board_views,
-		board_category,board_write_date,board_update_date,board_tag
-		FROM
-		ini_board
-		WHERE board_id = #{board_id}
-	</select>
-
-	<select id="getRepliesByBoardId"
-		resultType="com.ini.board.vo.BoardReplyDTO" parameterType="int">
-		SELECT *
-		FROM BOARD_REPLY WHERE board_id = #{board_id} ORDER BY
-		REPLY_WRITE_DATE ASC
-	</select>
-
-	<insert id="insertReply"
-		parameterType="com.ini.board.vo.BoardReplyDTO">
-		INSERT INTO BOARD_REPLY(
-		REPLY_ID, REPLY_CONTENT,
-		REPLY_WRITER, REPLY_WRITE_DATE, REPLY_UPDATE_DATE, REPLY_STATUS,
-		BOARD_ID
-		) VALUES (
-		REPLY_SEQ.NEXTVAL, #{reply_content},
-		#{reply_writer}, SYSDATE, SYSDATE, 0, #{board_id}
-		)
-	</insert>
-	-->
+	<!-- <select id="selectBoardList" resultType="com.ini.board.vo.BoardDTO"> 
+		SELECT board_id, board_title, board_category, board_write_date, board_tag, 
+		image_yn FROM board WHERE 1 = 1 <if test="keyword != null and keyword != 
+		''"> AND (board_title LIKE CONCAT('%', #{keyword}, '%') OR board_content 
+		LIKE CONCAT('%', #{keyword}, '%')) </if> <if test="category != null and category 
+		!= '' and category != '전체'"> AND board_category = #{category} </if> ORDER 
+		BY board_write_date DESC LIMIT #{startRow}, #{pageSize} </select> <select 
+		id="countBoardList" resultType="int"> SELECT COUNT(*) FROM board WHERE 1 
+		= 1 <if test="keyword != null and keyword != ''"> AND (board_title LIKE CONCAT('%', 
+		#{keyword}, '%') OR board_content LIKE CONCAT('%', #{keyword}, '%')) </if> 
+		<if test="category != null and category != '' and category != '전체'"> AND 
+		board_category = #{category} </if> </select> <select id="getAllBoardCategoriesKr" 
+		resultType="com.ini.board.vo.BoardCategoryVO"> SELECT BOARD_CATEGORY AS "categoryName" 
+		FROM BOARD_CATEGORY </select> <select id="getAllBoardCategoriesJp" resultType="com.ini.board.vo.BoardCategoryVO"> 
+		SELECT BOARD_CATEGORY_JP AS "categoryName" FROM BOARD_CATEGORY </select> 
+		<select id="getAllBoardTagsKr" resultType="com.ini.board.vo.BoardTagVO"> 
+		SELECT BOARD_TAG AS "tagName" FROM BOARD_TAG </select> <select id="getAllBoardTagsJp" 
+		resultType="com.ini.board.vo.BoardTagVO"> SELECT BOARD_TAG_JP AS "tagName" 
+		FROM BOARD_TAG </select> <insert id="insertBoard" parameterType="com.ini.board.vo.BoardDTO"> 
+		<selectKey keyProperty="board_id" resultType="int" order="BEFORE"> SELECT 
+		BOARD_SEQ.NEXTVAL FROM DUAL </selectKey> INSERT INTO INI_BOARD ( BOARD_ID, 
+		BOARD_TITLE, BOARD_CONTENT, USER_ID, BOARD_VIEWS, BOARD_CATEGORY, BOARD_WRITE_DATE, 
+		BOARD_UPDATE_DATE, BOARD_TAG ) VALUES ( #{board_id}, #{board_title}, #{board_content}, 
+		#{user_id}, 0, #{board_category}, SYSDATE, SYSDATE, #{board_tag} ) </insert> 
+		<select id="getBoardById" parameterType="int" resultType="com.ini.board.vo.BoardDTO"> 
+		SELECT board_id, board_title, board_content, user_id, board_views, board_category,board_write_date,board_update_date,board_tag 
+		FROM ini_board WHERE board_id = #{board_id} </select> <select id="getRepliesByBoardId" 
+		resultType="com.ini.board.vo.BoardReplyDTO" parameterType="int"> SELECT * 
+		FROM BOARD_REPLY WHERE board_id = #{board_id} ORDER BY REPLY_WRITE_DATE ASC 
+		</select> <insert id="insertReply" parameterType="com.ini.board.vo.BoardReplyDTO"> 
+		INSERT INTO BOARD_REPLY( REPLY_ID, REPLY_CONTENT, REPLY_WRITER, REPLY_WRITE_DATE, 
+		REPLY_UPDATE_DATE, REPLY_STATUS, BOARD_ID ) VALUES ( REPLY_SEQ.NEXTVAL, #{reply_content}, 
+		#{reply_writer}, SYSDATE, SYSDATE, 0, #{board_id} ) </insert> -->
 	<!-- 게시글 등록 -->
 	<insert id="insertPost"
 		parameterType="com.ini.board.vo.BoardDTO">
@@ -129,7 +59,6 @@
 		SYSDATE
 		)
 	</insert>
-
 
 	<!-- 게시글 수정 -->
 	<update id="updatePost"
@@ -264,16 +193,16 @@
 	<select id="selectAllBoardTags"
 		resultType="com.ini.board.vo.BoardTagVO">
 		SELECT
-		BOARD_TAG AS boardTag,
-		BOARD_TAG_JP AS boardTagJp
+		BOARD_TAG AS board_tag,
+		BOARD_TAG_JP AS board_tag_jp
 		FROM BOARD_TAG
 	</select>
 
 	<select id="selectAllBoardCategories"
 		resultType="com.ini.board.vo.BoardCategoryVO">
 		SELECT
-		BOARD_CATEGORY AS boardCategory,
-		BOARD_CATEGORY_JP AS boardCategoryJp
+		BOARD_CATEGORY AS board_category,
+		BOARD_CATEGORY_JP AS board_category_jp
 		FROM BOARD_CATEGORY
 	</select>
 
@@ -312,18 +241,18 @@
 		parameterType="com.ini.board.vo.BoardImageDTO">
 		INSERT INTO BOARD_IMAGE (ID, BOARD_ID, IMAGE_PATH, ORIGINAL_NAME,
 		UPLOAD_DATE)
-		VALUES (BOARD_IMAGE_SEQ.NEXTVAL, #{board_id}, #{imagePath}, #{originalName},
-		SYSDATE)
+		VALUES (BOARD_IMAGE_SEQ.NEXTVAL, #{board_id}, #{image_path},
+		#{original_name}, SYSDATE)
 	</insert>
 
 	<select id="selectImageList"
 		resultType="com.ini.board.vo.BoardImageDTO">
 		SELECT
 		ID AS id,
-		BOARD_ID AS boardId,
-		IMAGE_PATH AS imagePath,
-		ORIGINAL_NAME AS originalName,
-		UPLOAD_DATE AS uploadDate
+		BOARD_ID AS board_id,
+		IMAGE_PATH AS image_path,
+		ORIGINAL_NAME AS original_name,
+		UPLOAD_DATE AS upload_date
 		FROM BOARD_IMAGE
 		WHERE BOARD_ID = #{board_id}
 	</select>

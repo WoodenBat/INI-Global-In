@@ -49,6 +49,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 		// ✅ 세션에 닉네임 저장
 		session.invalidate();
 		session.setAttribute("nickname", member.getUser_nickname());
+		session.setAttribute("user_id", member.getUser_id());
 
 		// ROLE_USER 권한으로 사용자 반환 (식별자는 email)
 		return new DefaultOAuth2User(Collections.singleton(() -> "ROLE_USER"), attributes, "email" // 사용자 식별 키

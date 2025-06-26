@@ -2,17 +2,21 @@ package com.ini.board.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ini.board.service.BoardReplyService;
 import com.ini.board.vo.BoardReplyDTO;
+import com.ini.board.vo.BoardReplyReportDTO;
 import com.ini.board.vo.BoardReplyWithUserDTO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 
 @Controller
@@ -92,6 +96,22 @@ public class BoardReplyController {
 		boardReplyDTO.setReply_status(reply_status);
 
 		boardReplyService.updateBoardReplyByReplyId(boardReplyDTO);
+	}
+	
+	@PostMapping("/report")
+	public ResponseEntity<?> reportPostReply(@RequestBody BoardReplyReportDTO report, HttpSession session) {
+		String user_id = (String) session.getAttribute("loginUser");
+		if (user_id == null) {
+			user_id = "test"; // 비로그인 시 기본값 처리
+		}
+		report.setReport_user(user_id);
+
+		boolean success = boardReplyService.insertBoardReplyReport(report);
+		if (success) {
+			return ResponseEntity.ok().body("신고가 접수되었습니다.");
+		} else {
+			return ResponseEntity.badRequest().body("이미 신고한 게시글입니다.");
+		}
 	}
 	
 }
