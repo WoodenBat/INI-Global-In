@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>관리자 대시보드</title>
+  <style>
+  
+   @font-face {
+            font-family: 'Ownglyph_PDH';
+            src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
+            margin: 2;
+            
+        }
+        body {
+            margin: 2;
+            font-family: 'Ownglyph_PDH', sans-serif;
+            background: #fff;
+            font-size: 30px;
+        }
+
+    .dashboard {
+      max-width: 800px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .dashboard h1 {
+      margin-bottom: 30px;
+    }
+
+    .nav-button {
+      display: inline-block;
+      width: 200px;
+      margin: 10px;
+      padding: 15px 0;
+      background-color: #F8F2DE;
+      color: black;
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background-color 0.3s;
+      font-size : 30px;
+    }
+
+    .nav-button:hover {
+      background-color: #F8F2DE;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <h1>👩‍💻 관리자 대시보드</h1>
+    <a class="nav-button" href="/admin/users">회원 관리</a>
+    <a class="nav-button" href="/admin/reports">신고 게시글</a>
+    <a class="nav-button" href="/admin/emoticons">이모티콘 관리</a>
+  </div>
+</body>
+</html>

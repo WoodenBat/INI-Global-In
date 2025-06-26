@@ -5,6 +5,7 @@
 
 <mapper namespace="com.ini.board.mapper.BoardMapper">
 
+
  <resultMap id="BoardResultMap" type="com.ini.board.vo.BoardDTO">
     <id property="board_id" column="board_id"/>
     <result property="board_title" column="board_title"/>
@@ -84,5 +85,24 @@
     FROM ini_board
     WHERE board_title = #{boardtitle}
   </select>
+ 
+<select id="selectReportedBoards" resultType="com.ini.admin.vo.AdminReportDTO">
+  SELECT DISTINCT
+    r.report_id,
+    r.report_content,
+    r.report_user,
+    r.report_date,
+    r.report_category,
+    r.board_id
+  FROM board_report r
+  JOIN ini_board b ON b.board_id = r.board_id
+</select>
 
+  <delete id="deleteBoardById" parameterType="string">
+    DELETE FROM INI_BOARD WHERE board_id = #{board_id}
+  </delete>
+  
+<delete id="deleteBoardByUserId" parameterType="string">
+  DELETE FROM INI_BOARD WHERE user_id = #{id}
+</delete>
 </mapper>
