@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,9 +33,6 @@ import com.ini.board.vo.BoardTagVO;
 
 import jakarta.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -46,7 +42,6 @@ public class BoardController {
 
 	private final BoardService boardService;
 	private final BoardMapper boardMapper;
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 	private String uploadPath = "C:/upload/board";
 
