@@ -22,7 +22,7 @@
     table {
       border-collapse: collapse;
       width: 90%;
-      margin: 0 auto;
+      margin: 30px auto;
       background-color: #fff;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
@@ -66,6 +66,7 @@
         <th>신고 사유</th>
         <th>신고자</th>
         <th>신고일</th>
+        <th>신고 내용</th>
         <th>삭제</th>
       </tr>
     </thead>
@@ -74,8 +75,23 @@
     </tbody>
   </table>
 
+  <h1>🚨 신고당한 회원 목록</h1>
+
+  <table id="reportedUsersTable">
+    <thead>
+      <tr>
+        <th>회원 ID</th>
+        <th>닉네임</th>
+        <th>신고 횟수</th>
+      </tr>
+    </thead>
+    <tbody id="reportedUsersBody">
+      <!-- JavaScript로 채워질 부분 -->
+    </tbody>
+  </table>
+
   <script>
-    // ✅ 데이터 불러오기
+    // ✅ 게시글 신고 리스트
     fetch('/admin/reports/list')
       .then(res => res.json())
       .then(data => {
@@ -86,7 +102,7 @@
             <td>${report.report_id}</td>
             <td>${report.board_id}</td>
             <td>${report.report_category}</td>
-            <td>${report.reportU_user}</td>
+            <td>${report.report_user}</td>
             <td>${report.report_date}</td>
             <td>${report.report_content}</td>
             <td><button onclick="deleteBoard('${report.board_id}')">삭제</button></td>
@@ -95,13 +111,12 @@
         });
       });
 
-    // 🗑️ 게시글 삭제 함수
+    // 🗑️ 게시글 삭제
     function deleteBoard(board_id) {
       if (confirm('정말로 해당 게시글과 신고 내역을 삭제하시겠습니까?')) {
         fetch(`/admin/boards/${board_id}`, {
           method: 'DELETE'
-        })
-        .then(res => {
+        }).then(res => {
           if (res.ok) {
             alert('삭제되었습니다!');
             location.reload();
@@ -111,6 +126,26 @@
         });
       }
     }
+
+    // ✅ 신고당한 회원 리스트
+	fetch('/admin/reported_users')
+  .then(res => res.json())
+  .then(users => {
+    console.log('✅ 응답 확인:', users);
+    const tbody = document.getElementById('reportedUsersBody');
+    users.forEach(user => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${user.user_id}</td>
+        <td>${user.user_nickname}</td>
+        <td>${user.report_count}회</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  })
+  .catch(err => {
+    console.error('🚨 오류 발생:', err.message);
+  });
   </script>
 </body>
 </html>

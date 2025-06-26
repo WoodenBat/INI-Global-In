@@ -79,4 +79,15 @@ public class AdminController {
 
         return ResponseEntity.ok("게시글 및 신고 삭제 완료");
     }
+    @PostMapping("/users/{id}/report")
+    public ResponseEntity<String> report(@PathVariable("id") String user_id) {
+        adminService.reportUser(user_id);
+        return ResponseEntity.ok("신고 완료되었습니다");
+    }
+    @GetMapping("/reported_users")
+    @ResponseBody
+    public List<AdminUserDTO> reportedUsers() {
+        return adminService.getReportedUsers();
+    }
+
 }

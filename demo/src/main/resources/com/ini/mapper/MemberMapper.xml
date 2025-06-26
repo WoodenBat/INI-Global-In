@@ -38,5 +38,17 @@
             #{user_id}, #{user_password}, #{user_nickname}, #{user_email}, #{user_phone_number}, #{user_profile_img_path}
         )
     </insert>
+    
+<select id="selectReportedUsers" resultType="com.ini.admin.vo.AdminUserDTO">
+  SELECT
+    a.user_id           AS user_id,
+    p.user_nickname     AS user_nickname,
+    p.user_email        AS user_email,
+    a.report_count      AS report_count
+  FROM USER_AUTHENTICATION a
+  JOIN INI_USER p ON a.user_id = p.user_id
+  WHERE a.report_count > 0
+  ORDER BY a.report_count DESC
+</select>
 
 </mapper>
