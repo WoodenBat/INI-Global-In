@@ -1,0 +1,210 @@
+@charset "UTF-8";
+
+a {
+	text-decoration: none;
+	color: inherit;
+	display: block;
+}
+
+@font-face {
+	font-family: 'Ownglyph_PDH';
+	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.home_recent_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px;
+}
+
+.home_text_container {
+	align-self: flex-start;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #ffffff;
+	width: 194px;
+	height: 70px;
+	border-radius: 30px;
+	position: static;
+	display: flex;
+	align-self: center;
+}
+
+.home_text {
+	font-size: 50px;
+	width: 113px;
+	height: 45px;
+	text-align: center;
+	margin: 0;
+	font-family: "Ownglyph_PDH", sans-serif;
+	line-height: 1;
+}
+
+.home_content_wrapper {
+	align-self: flex-start;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 1324px;
+	height: fit-content;
+	background-color: #ffffff;
+	border-radius: 50px;
+	display: flex;
+	padding-bottom: 30px;
+}
+
+.home_content_title_container {
+	align-self: flex-start;
+	width: fit-content;
+	height: 52px;
+	justify-content: center;
+	margin-top: 30px;
+	margin-left: 33px;
+}
+
+.home_content_title {
+	font-size: 50px;
+	font-family: "Ownglyph_PDH", sans-serif;
+}
+
+.home_content_container {
+	align-self: flex-start;
+	width: 1259px;
+	height: 63px;
+	display: flex;
+	flex-direction: row;
+	background-color: #d9d9d94d;
+	margin-top: 27px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.board_wrapper {
+	margin: 0 63px;
+}
+
+.home_content {
+	display: grid;
+	grid-template-columns: 150px 300px 475px 110px 110px 110px;
+	align-items: center;
+	height: 63px;
+}
+
+.home_user_nickname_container {
+	width: 67px;
+	height: 32px;
+	margin-left: 32px;
+}
+
+.home_user_nickname {
+	font-size: 30px;
+	font-family: "Ownglyph_PDH", sans-serif;
+}
+
+.home_category_container {
+	width: fit-content;
+	height: 32px;
+	border-radius: 20px;
+	margin-left: 14px;
+	background-color: #c06dff4d;
+	padding: 0 18px;
+	white-space: nowrap;
+}
+
+.home_category {
+	font-size: 30px;
+	font-family: "Ownglyph_PDH", sans-serif;
+}
+
+.home_title_container {
+	width: fit-content;
+	display: flex;
+	justify-content: center;
+	white-space: nowrap;
+}
+
+.home_title {
+	font-size: 30px;
+	font-family: "Ownglyph_PDH", sans-serif;
+}
+
+.home_views_container {
+	display: grid;
+	grid-template-columns: 55px 90px;
+	align-items: center;
+}
+
+.home_views_icon {
+	position: relative;
+	margin: -20px;
+	object-fit: cover;
+}
+
+.home_views_cnt_container {
+	width: fit-content;
+	display: flex;
+	justify-content: center;
+	white-space: nowrap;
+}
+
+.home_views_cnt {
+	font-size: 30px;
+	font-family: "Ownglyph_PDH", sans-serif;
+}
+
+.home_like_container {
+	display: grid;
+	grid-template-columns: 55px 90px;
+	align-items: center;
+}
+
+.home_like_icon {
+	position: relative;
+	object-fit: cover;
+}
+
+.home_like_cnt_container {
+	width: fit-content;
+	display: flex;
+	justify-content: center;
+	white-space: nowrap;
+}
+
+.home_like_cnt {
+	font-size: 30px;
+	font-family: "Ownglyph_PDH", sans-serif;
+}
+
+.home_reply_container {
+	display: grid;
+	grid-template-columns: 55px 90px;
+	align-items: center;
+}
+
+.home_reply_icon {
+	position: relative;
+	object-fit: cover;
+}
+
+.home_reply_cnt_container {
+	width: fit-content;
+	display: flex;
+	justify-content: center;
+	white-space: nowrap;
+}
+
+.home_reply_cnt {
+	font-size: 30px;
+	font-family: "Ownglyph_PDH", sans-serif;
+}
+
+.home_image_container {
+	width: fit-content;
+	height: fit-content;
+	margin: 0 auto;
+	margin-top: 50px;
+}

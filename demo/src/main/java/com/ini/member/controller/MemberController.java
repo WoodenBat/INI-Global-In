@@ -174,9 +174,10 @@ public class MemberController {
 		dto.setUser_id(user_id);
 		dto.setUser_nickname(user_nickname);
 		
-		if (user_password == null) {
-			dto.setUser_password(memberService.findMemberById(user_id).getUser_password());
+		if (user_password.equals(null) || user_password.equals("")) {
+			System.out.println("user_password : null");
 		} else {
+			System.out.println("user_password : " + user_password);
 			dto.setUser_password(encoder.encode(user_password));
 		}
 		

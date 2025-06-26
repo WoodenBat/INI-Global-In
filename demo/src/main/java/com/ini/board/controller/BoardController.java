@@ -145,7 +145,7 @@ public class BoardController {
 		dto.setBoard_update_date(new Date());
 		
 		String userId = (String) session.getAttribute("loginUser");
-		dto.setUser_id(userId != null ? userId :String.valueOf(session.getAttribute("user_id")));
+		dto.setUser_id(userId != null ? userId : String.valueOf(session.getAttribute("user_id")));
 
 		// 게시글 저장 (board_id 생성됨)
 		boardService.savePost(dto);

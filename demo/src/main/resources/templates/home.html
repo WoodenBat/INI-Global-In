@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>INI 홈페이지 입니다.</title>
+<link rel="stylesheet" th:href="@{/css/home.css}" />
+</head>
+<th:block th:replace="member/header :: header"></th:block>
+<body>
+
+	<div th:text="${nickname}"></div>
+	<div th:text="${boardRecent}"></div>
+	<div th:text="${boardViews}"></div>
+
+	<div class="home_image_container">
+		<img class="home_iamge" alt="홈 이미지" th:src="@{img/icon/main.png}">
+	</div>
+
+	<div class="board_wrapper">
+		<div class="home_recent_wrapper">
+			<div class="home_text_container">
+				<span class="home_text">인기글</span>
+			</div>
+
+			<div class="home_content_wrapper">
+
+				<div class="home_content_container" th:each="br, stat : ${board_recent}">
+					<a th:href="@{/board/view/{id}(id=${br.board_id})}">
+						<div class="home_content">
+							<div class="home_user_nickname_container">
+								<span class="home_user_nickname" th:text="${br.user_id}"></span>
+							</div>
+
+							<div class="home_category_container">
+								<span class="home_category" th:text="${br.board_category}"></span>
+							</div>
+
+							<div class="home_title_container">
+								<span class="home_title" th:text="${br.board_title}"></span>
+							</div>
+
+							<div class="home_views_container">
+								<img class="home_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
+								<div class="home_views_cnt_container">
+									<span class="home_views_cnt" th:text="${br.board_views}"></span>
+								</div>
+							</div>
+							<div class="home_like_container">
+								<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
+								<div class="mtBoard_like_cnt_container">
+									<span class="home_like_cnt" th:text="${br.board_like_cnt}"></span>
+								</div>
+							</div>
+							<div class="home_reply_container">
+								<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
+								<div class="mtBoard_reply_cnt_container">
+									<span class="home_reply_cnt" th:text="${br.board_reply_cnt}"></span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
