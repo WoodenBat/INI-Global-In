@@ -13,6 +13,20 @@ a {
 	font-style: normal;
 }
 
+.board_wrapper {
+	scale: 0.8;
+	margin: 0 auto;
+	width: fit-content;
+	height: fit-content;
+}
+
+.home_views_wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px;
+}
+
 .home_recent_wrapper {
 	display: flex;
 	flex-direction: column;
@@ -83,13 +97,9 @@ a {
 	margin-right: auto;
 }
 
-.board_wrapper {
-	margin: 0 63px;
-}
-
 .home_content {
 	display: grid;
-	grid-template-columns: 150px 300px 475px 110px 110px 110px;
+	grid-template-columns: 150px 250px 50px 475px 110px 110px 110px;
 	align-items: center;
 	height: 63px;
 }
@@ -207,4 +217,51 @@ a {
 	height: fit-content;
 	margin: 0 auto;
 	margin-top: 50px;
+}
+
+.home_image {
+	width: 400px;
+	height: 400px;
+}
+
+.home_has_image_container {
+	width: fit-content;
+	display: flex;
+	justify-content: center;
+	white-space: nowrap;
+}
+
+.home_has_image {
+	width: 33px;
+	height: 33px;
+}
+
+.tag-box.Java {
+	background-color: #f2b6b6;
+	color: #4a0000;
+}
+
+.tag-box.DB {
+	background-color: #ffe08c;
+	color: #664d00;
+}
+
+.tag-box.JSP {
+	background-color: #ffb37a;
+	color: #663500;
+}
+
+.tag-box.Spring {
+	background-color: #b5e3b5;
+	color: #1e401e;
+}
+
+.tag-box.Python {
+	background-color: #b3e5f2;
+	color: #004d66;
+}
+
+.tag-box.일본어 {
+	background-color: #dab6ff;
+	color: #3e1f66;
 }

@@ -33,10 +33,6 @@
 		GROUP BY board_id
 		) br ON
 		b.board_id = br.board_id
-		INNER JOIN (
-		SELECT DISTINCT board_id
-		FROM board_reply
-		) r_filter ON b.board_id = r_filter.board_id
 		ORDER BY
 		b.board_write_date DESC
 		)
@@ -67,10 +63,6 @@
 		FROM board_reply
 		GROUP BY board_id
 		) br ON b.board_id = br.board_id
-		INNER JOIN (
-		SELECT DISTINCT board_id
-		FROM board_reply
-		) r_filter ON b.board_id = r_filter.board_id
 		ORDER BY b.board_views DESC
 		)
 		WHERE ROWNUM &lt;= 4

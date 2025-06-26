@@ -71,6 +71,7 @@ $(document).on("click", ".translate-btn", function() {
 	}
 });
 
+/*
 $(document).on("click", ".translate_board-btn", function() {
 	const btn = $(this);
 	console.log(btn);
@@ -109,7 +110,8 @@ $(document).on("click", ".translate_board-btn", function() {
 		unTransText.text("");
 		textElem.css('font-size', '15px');
 	}
-});
+}); 
+*/
 
 function showPopup(translated) { //팝업
 	const popup = document.createElement("div");

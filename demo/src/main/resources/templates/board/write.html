@@ -1,78 +1,218 @@
-<!-- templates/board/write.html -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
+<meta charset="UTF-8" />
 <title>게시글 작성</title>
-<meta charset="UTF-8">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" />
+<style>
+@font-face {
+	font-family: 'Ownglyph_PDH';
+	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
+}
+
+body {
+	font-family: 'Ownglyph_PDH', sans-serif;
+}
+
+.tag-box {
+	padding: 6px 18px;
+	border-radius: 9999px;
+	font-weight: 600;
+	font-size: 15px;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	margin-right: 8px;
+}
+
+.tag-box.Java {
+	background-color: #f2b6b6;
+	color: #4a0000;
+}
+
+.tag-box.DB {
+	background-color: #ffe08c;
+	color: #664d00;
+}
+
+.tag-box.JSP {
+	background-color: #ffb37a;
+	color: #663500;
+}
+
+.tag-box.Spring {
+	background-color: #b5e3b5;
+	color: #1e401e;
+}
+
+.tag-box.Python {
+	background-color: #b3e5f2;
+	color: #004d66;
+}
+
+.tag-box.일본어 {
+	background-color: #dab6ff;
+	color: #3e1f66;
+}
+
+.tag-box.selected {
+	outline: 3px solid #ff6961;
+	transform: scale(1.05);
+	box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+input[type="radio"] {
+	display: none;
+}
+</style>
 </head>
-<th:block th:replace="member/header :: header"></th:block>
-<body>
-	<h2>게시글 작성</h2>
+<body class="bg-white min-h-screen p-6 text-gray-800">
+	<th:block th:replace="member/header :: header"></th:block>
+	<div class="max-w-4xl mx-auto">
+		<h2 class="text-2xl font-bold mb-6">게시글 작성</h2>
 
-	<form th:action="@{/board/write}" method="post" enctype="multipart/form-data"
-		onsubmit="return validateForm()" id="writeForm">
-		<label>제목:</label><br> <input type="text" name="board_title" required><br> <br> <label>말머리:</label><br>
-		<select name="board_tag" id="board_tag">
-			<option value="">말머리 선택</option>
-			<option th:each="tag : ${tags}" th:value="${tag.board_tag}" th:text="${tag.board_tag_jp}"></option>
-		</select> <br> <br> <label>카테고리:</label><br> <select name="board_category" id="board_category">
-			<option value="">카테고리 선택</option>
-			<option th:each="category : ${categories}" th:value="${category.board_category}"
-				th:text="${category.board_category_jp}"></option>
-		</select> <br> <br> <label>내용:</label><br>
-		<textarea name="board_content" rows="10" cols="50" required></textarea>
-		<br> <br> <label>이미지 업로드:</label><br> <input type="file" name="uploadFiles" multiple><br>
-		<br>
+		<form th:action="@{/board/write}" method="post" onsubmit="return validate_form()" id="write_form"
+			class="space-y-6">
 
-		<button type="submit">작성</button>
-	</form>
+			<!-- 제목 -->
+			<div>
+				<label class="block mb-1 font-semibold">제목</label>
+				<input type="text" name="board_title" required placeholder="제목을 입력하세요"
+					class="w-full border border-gray-300 rounded-full px-4 py-2 bg-[#f8e3c5]" />
+			</div>
 
+			<!-- 카테고리 -->
+			<div>
+				<label class="block mb-1 font-semibold">카테고리</label>
+				<div class="flex flex-wrap gap-2">
+					<label th:each="cat : ${categories}" th:class="'tag-box ' + ${cat.board_category}"
+						class="tag-box"> <input type="radio" name="board_category"
+							th:id="${cat.board_category}" th:value="${cat.board_category}" /> <span
+							th:text="${cat.board_category_jp}"></span>
+					</label>
+				</div>
+			</div>
+
+			<!-- 분류 -->
+			<div>
+				<label class="block mb-1 font-semibold">분류</label>
+				<select name="board_tag"
+					class="bg-[#f8e3c5] rounded-full px-4 py-2 border border-gray-300 text-gray-800 font-semibold">
+					<option value="" disabled selected>분류를 선택하세요</option>
+					<option th:each="tag : ${tags}" th:value="${tag.board_tag}" th:text="${tag.board_tag_jp}"></option>
+				</select>
+			</div>
+
+			<!-- 본문 -->
+			<div>
+				<label class="block mb-1 font-semibold">본문</label>
+				<textarea id="board_content" name="board_content" class="w-full bg-[#f8e3c5] rounded-lg"></textarea>
+			</div>
+
+			<!-- 작성 버튼 -->
+			<div class="text-center pt-4">
+				<button type="submit" class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600">작성</button>
+			</div>
+		</form>
+	</div>
+
+	<!-- JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js"></script>
 	<script>
-		// 말머리/카테고리 유효성 검사
-		function validateForm() {
-			const tag = document.getElementById("board_tag").value;
-			const category = document.getElementById("board_category").value;
+    $(document).ready(function () {
+      $('#board_content').summernote({
+        placeholder: '내용을 입력하세요',
+        height: 300,
+        lang: 'ko-KR',
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['insert', ['picture', 'link']],
+          ['view', ['fullscreen', 'codeview']]
+        ],
+        callbacks: {
+          onImageUpload: function(files) {
+            Array.from(files).forEach(file => {
+              const formData = new FormData();
+              formData.append("file", file);
+              $.ajax({
+                url: "/board/uploadImage",
+                method: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                  try {
+                    const res = typeof response === 'string' ? JSON.parse(response) : response;
+                    if (res.url) {
+                      $('#board_content').summernote('insertImage', res.url);
+                    } else {
+                      alert("업로드된 이미지 경로가 없습니다.");
+                    }
+                  } catch (e) {
+                    alert("이미지 응답 파싱 오류");
+                  }
+                },
+                error: function() {
+                  alert("이미지 업로드 실패");
+                }
+              });
+            });
+          }
+        }
+      });
 
-			if (!tag) {
-				alert("말머리를 선택해주세요.");
-				return false;
-			}
+      // ✅ 카테고리 선택 시 .selected 클래스 토글
+      document.querySelectorAll("input[name='board_category']").forEach((input) => {
+        input.addEventListener("change", () => {
+          document.querySelectorAll(".tag-box").forEach(el => el.classList.remove("selected"));
+          input.closest(".tag-box").classList.add("selected");
+        });
+      });
 
-			if (!category) {
-				alert("카테고리를 선택해주세요.");
-				return false;
-			}
+      // ✅ 페이지 로드시 초기 선택값 표시
+      const checked = document.querySelector("input[name='board_category']:checked");
+      if (checked) {
+        checked.closest(".tag-box")?.classList.add("selected");
+      }
 
-			return true;
-		}
+      // ✅ 이탈 방지
+      let is_form_dirty = false;
+      document.querySelectorAll("input, textarea, select").forEach((el) => {
+        el.addEventListener("change", () => { is_form_dirty = true; });
+      });
+      window.addEventListener("beforeunload", function (e) {
+        if (is_form_dirty) {
+          e.preventDefault();
+          e.returnValue = "";
+        }
+      });
+      document.getElementById("write_form").addEventListener("submit", () => { is_form_dirty = false; });
+    });
 
-		// 작성 중 페이지 이탈 방지
-		let isFormDirty = false;
-
-		document.addEventListener("DOMContentLoaded",
-				function() {
-					const inputs = document
-							.querySelectorAll("input, textarea, select");
-
-					inputs.forEach(function(input) {
-						input.addEventListener("change", function() {
-							isFormDirty = true;
-						});
-					});
-
-					window.addEventListener("beforeunload", function(e) {
-						if (isFormDirty) {
-							e.preventDefault();
-							e.returnValue = ""; // 일부 브라우저에서는 이게 있어야 동작
-						}
-					});
-
-					document.getElementById("writeForm").addEventListener(
-							"submit", function() {
-								isFormDirty = false;
-							});
-				});
-	</script>
-
+    // 유효성 검사
+    function validate_form() {
+      const selected_category = document.querySelector("input[name='board_category']:checked");
+      const selected_tag = document.querySelector("select[name='board_tag']").value;
+      if (!selected_category) {
+        alert("카테고리를 선택해주세요.");
+        return false;
+      }
+      if (!selected_tag) {
+        alert("분류(말머리)를 선택해주세요.");
+        return false;
+      }
+      return true;
+    }
+  </script>
 </body>
 </html>

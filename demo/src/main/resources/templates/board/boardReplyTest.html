@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<div class="board_reply_body" th:fragment="boardReply">
+<div class="board_reply_body w-full text-left" th:fragment="boardReply">
 	<span id="session_user_id" th:text="${session.user_id}" style="display: none;"></span>
-	<div class="board_reply_title_container">
-		<span class="board_reply_title">댓글</span>
+
+	<!-- 댓글 제목 -->
+	<div class="mt-12 mb-4 ml-0">
+		<span class="inline-block font-bold text-xl bg-[#f8e3c5] px-6 py-1 rounded-full">댓글</span>
 	</div>
-	<div class="board_reply_wrapper"></div>
-	<div class="board_reply_insert_container">
-		<textarea id="reply_insert_form" class="board_reply_insert_form" placeholder="댓글 작성하기"></textarea>
-		<button id="reply_insert_btn" class="board_reply_insert_btn">작성</button>
+
+	<!-- 댓글 리스트 출력 영역 -->
+	<div class="board_reply_wrapper mb-6 ml-0"></div>
+
+	<!-- 댓글 작성 영역 -->
+	<div class="flex w-full rounded-xl overflow-hidden bg-[#e5e5e5] items-stretch">
+		<textarea id="reply_insert_form"
+			class="flex-1 px-4 py-3 text-sm text-gray-700 placeholder:text-gray-500 bg-transparent border-none resize-none focus:outline-none"
+			placeholder="댓글을 작성하세요"></textarea>
+		<button id="reply_insert_btn"
+			class="w-24 bg-[#6c7382] text-white font-semibold text-sm hover:bg-[#5a5f6b] transition">
+			작성</button>
 	</div>
+
 	<span id="msg_reply_update_button" th:text="#{board_reply_update_button}" style="display: none;"></span>
 	<span id="msg_reply_delete_button" th:text="#{board_reply_delete_button}" style="display: none;"></span>
 	<span id="msg_reReply_insert_button" th:text="#{board_reply_reReply_button}" style="display: none;"></span>

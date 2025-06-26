@@ -13,6 +13,6 @@ public class BoardWithLikeReplyDTO {
 	private String board_tag;
 	private String board_like_cnt;
 	private String board_reply_cnt;
-	private String hasImage;
+	private String has_image;
 
 }
