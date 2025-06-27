@@ -117,15 +117,36 @@ public class BoardService {
 
 	// 게시글 수정 처리
 	public void updatePost(BoardDTO dto) {
-		// 게시글 정보 먼저 업데이트
+		// 게시글 본문에 포함된 이미지 파일명 목록 추출
+		List<String> newImageNames = dto.getImageList().stream().map(BoardImageDTO::getImage_path).toList();
+
+		// 기존 이미지 목록 가져오기
+		List<BoardImageDTO> existingImages = boardMapper.selectImageList(dto.getBoard_id());
+
+		// 1. 삭제 대상: 기존에는 있었지만, 이제는 없는 이미지들만 삭제
+		for (BoardImageDTO existing : existingImages) {
+			if (!newImageNames.contains(existing.getImage_path())) {
+				// 파일 삭제
+				File file = new File(uploadPath, existing.getImage_path());
+				if (file.exists()) {
+					file.delete();
+				}
+				// DB 삭제
+				boardMapper.deleteImageByPath(existing.getBoard_id(), existing.getImage_path());
+			}
+		}
+
+		// 2. 게시글 정보 업데이트
 		boardMapper.updatePost(dto);
 
-		// 기존 이미지 모두 삭제 (DB 및 파일)
-		deleteImagesByBoardId(dto.getBoard_id());
+		// 3. DB에는 없는 새 이미지만 insert
+		for (BoardImageDTO image : dto.getImageList()) {
+			boolean alreadyExists = existingImages.stream()
+					.anyMatch(e -> e.getImage_path().equals(image.getImage_path()));
 
-		// 새 이미지 저장
-		if (dto.getImageList() != null && !dto.getImageList().isEmpty()) {
-			saveImages(dto.getImageList());
+			if (!alreadyExists) {
+				boardMapper.insertBoardImage(image);
+			}
 		}
 	}
 

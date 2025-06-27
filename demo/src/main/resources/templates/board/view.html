@@ -90,14 +90,13 @@ body {
 		<div class="mt-6 flex justify-between items-center">
 			<div class="flex gap-3">
 				<form th:action="@{/board/list}" method="get">
-					<button type="submit" class="bg-gray-300 px-4 py-2 rounded">목록</button>
+					<button type="submit" th:class="${'bg-gray-300 px-4 py-2 rounded lang-' + lang}" th:text="#{board_view_list}"></button>
 				</form>
 				<form th:action="@{'/board/edit/' + ${board.board_id}}" method="get">
 					<button type="submit" class="bg-yellow-400 px-4 py-2 rounded">수정</button>
 				</form>
 				<form th:action="@{'/board/delete/' + ${board.board_id}}" method="post">
-					<button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')"
-						class="bg-red-400 px-4 py-2 rounded text-white">삭제</button>
+					<button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')" class="bg-red-400 px-4 py-2 rounded text-white">삭제</button>
 				</form>
 			</div>
 			<div class="flex gap-4 items-center">
@@ -110,8 +109,7 @@ body {
 		</div>
 
 		<!-- 신고 모달 -->
-		<div id="reportModal"
-			class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+		<div id="reportModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
 			<div class="bg-white p-6 rounded shadow-lg w-96">
 				<h3 class="text-lg font-semibold mb-4">신고하기</h3>
 
@@ -132,8 +130,7 @@ body {
 
 					<div>
 						<label class="block font-medium mb-1">상세 내용</label>
-						<textarea id="report_content" class="w-full border px-3 py-2 rounded" rows="4"
-							placeholder="상세 내용을 입력해주세요."></textarea>
+						<textarea id="report_content" class="w-full border px-3 py-2 rounded" rows="4" placeholder="상세 내용을 입력해주세요."></textarea>
 					</div>
 
 					<div class="flex justify-end gap-2">
@@ -214,38 +211,56 @@ body {
 
 		<!-- 번역 JS -->
 		<script>
-	    function stripHtmlTags(html) {
-	      const div = document.createElement("div");
-	      div.innerHTML = html;
-	      return div.textContent || div.innerText || "";
-	    }
-	
-	    $(document).on("click", ".translate_board-btn", function () {
-	      const textElem = $(".reply-text");
-	      const unTransText = $(".board_content_hidden");
-	      const board_id = '[[${board.board_id}]]';
-	
-	      const originalText = stripHtmlTags(textElem.html());
-	      if (unTransText.text() === "") {
-	        fetch("/api/translate", {
-	          method: "POST",
-	          headers: { "Content-Type": "application/json" },
-	          body: JSON.stringify({ input: originalText })
-	        })
-	          .then(res => res.text())
-	          .then(translated => {
-	            unTransText.text(textElem.text());
-	            textElem.text(translated + " (번역)");
-	            textElem.css('font-size', '15px');
-	          })
-	          .catch(() => alert("번역 실패"));
-	      } else {
-	        textElem.text(unTransText.text());
-	        unTransText.text("");
-	        textElem.css('font-size', '15px');
-	      }
-	    });
-	  	</script>
+		  $(document).ready(function () {
+			  function translateText(text) {
+			    return fetch("/api/translate", {
+			      method: "POST",
+			      headers: { "Content-Type": "application/json" },
+			      body: JSON.stringify({ input: text })
+			    }).then(res => {
+			      if (!res.ok) throw new Error("번역 실패");
+			      return res.text();
+			    });
+			  }
+		
+			  // 재귀적으로 텍스트 노드만 번역
+			  async function translateNodes(node) {
+			    const children = [...node.childNodes];
+			    for (let child of children) {
+			      if (child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
+			        const translated = await translateText(child.textContent.trim());
+			        console.log("✅ 번역:", translated);
+			        child.textContent = translated + " (번역)";
+			      } else if (child.nodeType === Node.ELEMENT_NODE) {
+			        await translateNodes(child); // 하위 노드 재귀 처리
+			      }
+			    }
+			  }
+		
+			  $(document).on("click", ".translate_board-btn", async function () {
+			    console.log("✅ 번역 버튼 클릭됨");
+		
+			    const textElem = $(".reply-text")[0];
+			    const backup = $(".board_content_hidden");
+		
+			    if (backup.text().trim() === "") {
+			      backup.html($(textElem).html());
+		
+			      try {
+			        await translateNodes(textElem);
+			        $(textElem).css("font-size", "15px");
+			      } catch (err) {
+			        console.error("❌ 번역 실패:", err);
+			        alert("번역 중 오류 발생");
+			      }
+		
+			    } else {
+			      $(".reply-text").html(backup.html());
+			      backup.text("");
+			    }
+			  });
+			});;
+		</script>
 
 		<script th:src="@{/js/TranslateRequest.js}"></script>
 </body>

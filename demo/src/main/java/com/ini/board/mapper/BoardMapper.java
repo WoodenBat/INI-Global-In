@@ -94,6 +94,8 @@ public interface BoardMapper {
 	List<BoardImageDTO> selectImageList(@Param("board_id") int board_id);
 
 	void deleteImagesByBoardId(@Param("board_id") int board_id);
+	
+	void deleteImageByPath(@Param("board_id") int boardId, @Param("image_path") String imagePath);
 
 	// 댓글 삭제
 	void deleteCommentsByBoardId(int board_id);

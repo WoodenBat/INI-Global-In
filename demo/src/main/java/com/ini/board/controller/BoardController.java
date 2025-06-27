@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,13 +72,13 @@ public class BoardController {
 		dto.setBoard_update_date(new Date());
 
 		String userId = (String) session.getAttribute("loginUser");
-		dto.setUser_id(userId != null ? userId : String.valueOf(session.getAttribute("user_id")));
+		dto.setUser_id(userId != null ? userId : "test");
 
 		boardService.savePost(dto); // board_id 생성됨
 
-		// ✅ summernote 내용에서 <img src="/uploads/board/xxxx"> 태그 추출
+		// ✅ summernote 내용에서 <img src="/uploads/xxxx"> 태그 추출
 		List<BoardImageDTO> imageList = new ArrayList<>();
-		Matcher matcher = Pattern.compile("<img[^>]+src=\"/uploads/board/([^\"]+)\"").matcher(boardContent);
+		Matcher matcher = Pattern.compile("<img[^>]+src=\"/uploads/([^\"]+)\"").matcher(boardContent);
 		while (matcher.find()) {
 			String imageFileName = matcher.group(1); // 실제 파일명만 추출
 			BoardImageDTO imageDTO = new BoardImageDTO();
@@ -211,24 +213,31 @@ public class BoardController {
 		dto.setBoard_tag(board_tag);
 		dto.setBoard_update_date(new Date());
 
-		String userId = (String) session.getAttribute("user_id");
+		String userId = (String) session.getAttribute("loginUser");
 		dto.setUser_id(userId != null ? userId : "test");
 
-		// 이미지 추출 및 DB 저장
+		// ✅ 1. 본문에서 <img src="/uploads/..."> 추출해서 이미지 리스트 구성
 		List<BoardImageDTO> imageList = new ArrayList<>();
-		Matcher matcher = Pattern.compile("<img[^>]+src=\"/uploads/board/([^\"]+)\"").matcher(board_content);
+		Matcher matcher = Pattern.compile("<img[^>]+src=\"/uploads/([^\"]+)\"").matcher(board_content);
+		Set<String> addedPaths = new HashSet<>();
+
 		while (matcher.find()) {
 			String imageFileName = matcher.group(1);
-			BoardImageDTO image = new BoardImageDTO();
-			image.setBoard_id(dto.getBoard_id());
-			image.setImage_path(imageFileName);
-			image.setOriginal_name(imageFileName);
-			image.setUpload_date(new Date());
-			imageList.add(image);
+			if (addedPaths.add(imageFileName)) {
+				BoardImageDTO image = new BoardImageDTO();
+				image.setBoard_id(dto.getBoard_id());
+				image.setImage_path(imageFileName);
+				image.setOriginal_name(imageFileName);
+				image.setUpload_date(new Date());
+
+				imageList.add(image);
+			}
 		}
 
+		// ✅ 2. 무조건 세팅 (본문 내 이미지가 없으면 빈 리스트 저장)
 		dto.setImageList(imageList);
 
+		// ✅ 3. 저장
 		boardService.updatePost(dto);
 
 		return "redirect:/board/view/" + board_id;
@@ -264,8 +273,8 @@ public class BoardController {
 	@PostMapping("/report")
 	@ResponseBody
 	public ResponseEntity<String> reportBoard(@RequestBody BoardReportDTO reportDTO, HttpSession session) {
-		
-		reportDTO.setReport_user((String)session.getAttribute("user_id"));
+
+		reportDTO.setReport_user((String) session.getAttribute("user_id"));
 		int count = boardMapper.countReportsByBoardAndUser(reportDTO.getBoard_id(), reportDTO.getReport_user());
 
 		if (count > 0) {
