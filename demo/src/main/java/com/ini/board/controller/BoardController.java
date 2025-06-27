@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +33,6 @@ import com.ini.board.vo.BoardReportDTO;
 import com.ini.board.vo.BoardTagVO;
 
 import jakarta.servlet.http.HttpSession;
-
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -261,15 +261,19 @@ public class BoardController {
 	}
 
 	// 신고
-    @PostMapping("/report")
-    public ResponseEntity<?> reportPost(@RequestBody BoardReportDTO report, HttpSession session) {
-        String userId = (String) session.getAttribute("user_id");
-        if (userId == null) userId = "test";
-        report.setReport_user(userId);
+	@PostMapping("/report")
+	@ResponseBody
+	public ResponseEntity<String> reportBoard(@RequestBody BoardReportDTO reportDTO, HttpSession session) {
+		
+		reportDTO.setReport_user((String)session.getAttribute("user_id"));
+		int count = boardMapper.countReportsByBoardAndUser(reportDTO.getBoard_id(), reportDTO.getReport_user());
 
-        boolean success = boardService.addReport(report);
-        return success ? ResponseEntity.ok().body("신고가 접수되었습니다.") :
-                         ResponseEntity.badRequest().body("이미 신고한 게시글입니다.");
-    }
+		if (count > 0) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 신고한 게시글입니다.");
+		}
+
+		boardMapper.insertBoardReport(reportDTO);
+		return ResponseEntity.ok("신고가 접수되었습니다.");
+	}
 
 }

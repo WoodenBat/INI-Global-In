@@ -1,32 +1,33 @@
-<header style="
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px 32px;
-    background-color: #A31D1D;
-    color: white;
-    font-family: 'Ownglyph_PDH';
-    src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
-    font-weight: 700;
-    font-size: 2.0rem;
-    height: 36px;
-">
-<link rel="stylesheet" th:href="@{/css/header.css}" />
-  <div style="cursor: pointer;">
-    <a href="/home" style="color: white; text-decoration: none;">INI</a>
-  </div>
-  <nav style="display: flex; gap: 24px; font-weight: 500; font-size: 1rem;">
-    <a href="/board/list" style="color: aqua; text-decoration: none;">ADMIN</a>
-    <a href="/board/list" style="color: white; text-decoration: none;">LIST</a>
-    <a href="/board/write" style="color: white; text-decoration: none;">POST</a>
-    <a href="/member/myPage" style="color: white; text-decoration: none;">MYPAGE</a>
 
-    <!-- 로그인 여부에 따라 LOGIN 또는 LOGOUT 출력 -->
-    <span th:if="${session.nickname == null}">
-      <a href="/login" style="color: white; text-decoration: none;">LOGIN</a>
-    </span>
-    <span th:if="${session.nickname != null}">
-      <a href="/logout" style="color: white; text-decoration: none;">LOGOUT</a>
-    </span>
-  </nav>
+<header>
+	<link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap" rel="stylesheet">
+	<link rel="stylesheet" th:href="@{/css/header.css}" />
+	<div style="cursor: pointer;">
+		<a href="/home" style="color: white; text-decoration: none;">INI</a>
+	</div>
+	<nav style="display: flex; gap: 24px; font-weight: 500; font-size: 1rem; text-align: center; align-items: center;">
+		<a href="/admin/dashboard" style="color: aqua; text-decoration: none; margin-bottom: -1px;">ADMIN</a>
+		<a href="/board/list" style="color: white; text-decoration: none; margin-bottom: -1px;">LIST</a>
+		<a href="/board/write" style="color: white; text-decoration: none; margin-bottom: -1px;">POST</a>
+		<a href="/member/myPage" style="color: white; text-decoration: none; margin-bottom: -1px;">MYPAGE</a>
+
+		<!-- 로그인 여부에 따라 LOGIN 또는 LOGOUT 출력 -->
+		<span th:if="${session.nickname == null}">
+			<a href="/login" style="color: white; text-decoration: none; margin-bottom: -1px;">LOGIN</a>
+		</span>
+		<span th:if="${session.nickname != null}">
+			<a href="/logout" style="color: white; text-decoration: none; margin-bottom: -1px;">LOGOUT</a>
+		</span>
+		<select id="change_language" onchange="changeLang(this.value)" class="header_change_language_comboBox">
+			<option value="ko" th:selected="${lang} == 'ko'">🇰🇷 한국어</option>
+			<option value="ja" th:selected="${lang} == 'ja'">🇯🇵 日本語</option>
+		</select>
+	</nav>
+
+	<script type="text/javascript">
+  	function changeLang(lang) {
+  		fetch('/lang/set?lang=' + lang).then(() => location.reload());
+  	}
+  </script>
 </header>

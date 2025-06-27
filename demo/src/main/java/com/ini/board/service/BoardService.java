@@ -219,4 +219,14 @@ public class BoardService {
 	public int getReportCount(int boardId) {
 		return boardMapper.countReportsByBoard(boardId);
 	}
+
+	// 🔹 end 제거된 메서드
+	public List<BoardDTO> getBoardList2(String keyword, String category, int offset, int limit) {
+		return boardMapper.selectBoardList2(keyword, category, offset, limit);
+	}
+
+	// 🔸 게시글 총 개수 조회
+	public int countBoards(String keyword, String category) {
+		return boardMapper.countBoards(keyword, category);
+	}
 }

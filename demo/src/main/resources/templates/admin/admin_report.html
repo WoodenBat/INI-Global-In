@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>신고 게시글 관리</title>
+<style>
+@font-face {
+	font-family: 'Ownglyph_PDH';
+	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
+}
+
+body {
+	font-family: 'Ownglyph_PDH', sans-serif;
+	background: #fff;
+	font-size: 24px;
+	margin: 2;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 30px;
+	color: #2c3e50;
+}
+
+table {
+	border-collapse: collapse;
+	width: 90%;
+	margin: 30px auto;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+thead {
+	background-color: #A31D1D;
+	color: white;
+}
+
+th, td {
+	padding: 12px;
+	text-align: center;
+	border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+	background-color: #ecf6fd;
+	transition: background-color 0.2s ease;
+}
+
+button {
+	background-color: #e74c3c;
+	color: white;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+button:hover {
+	background-color: #c0392b;
+}
+</style>
+</head>
+<th:block th:replace="member/header :: header"></th:block>
+<body>
+	<h1>🚩 신고된 게시글 목록</h1>
+
+	<table id="reportTable">
+		<thead>
+			<tr>
+				<th>신고 ID</th>
+				<th>게시글 ID</th>
+				<th>신고 사유</th>
+				<th>신고자</th>
+				<th>신고일</th>
+				<th>신고 내용</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody id="reportBody">
+			<!-- JavaScript로 채워질 부분 -->
+		</tbody>
+	</table>
+
+	<h1>🚨 신고당한 회원 목록</h1>
+
+	<table id="reportedUsersTable">
+		<thead>
+			<tr>
+				<th>회원 ID</th>
+				<th>닉네임</th>
+				<th>신고 횟수</th>
+			</tr>
+		</thead>
+		<tbody id="reportedUsersBody">
+			<!-- JavaScript로 채워질 부분 -->
+		</tbody>
+	</table>
+
+	<script>
+    // ✅ 게시글 신고 리스트
+    fetch('/admin/reports/list')
+      .then(res => res.json())
+      .then(data => {
+        const tbody = document.getElementById('reportBody');
+        data.forEach(report => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${report.report_id}</td>
+            <td>${report.board_id}</td>
+            <td>${report.report_category}</td>
+            <td>${report.report_user}</td>
+            <td>${report.report_date}</td>
+            <td>${report.report_content}</td>
+            <td><button onclick="deleteBoard('${report.board_id}')">삭제</button></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+
+    // 🗑️ 게시글 삭제
+    function deleteBoard(board_id) {
+      if (confirm('정말로 해당 게시글과 신고 내역을 삭제하시겠습니까?')) {
+        fetch(`/admin/boards/${board_id}`, {
+          method: 'DELETE'
+        }).then(res => {
+          if (res.ok) {
+            alert('삭제되었습니다!');
+            location.reload();
+          } else {
+            alert('삭제 실패…');
+          }
+        });
+      }
+    }
+
+    // ✅ 신고당한 회원 리스트
+	fetch('/admin/reported_users')
+  .then(res => res.json())
+  .then(users => {
+    console.log('✅ 응답 확인:', users);
+    const tbody = document.getElementById('reportedUsersBody');
+    users.forEach(user => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${user.user_id}</td>
+        <td>${user.user_nickname}</td>
+        <td>${user.report_count}회</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  })
+  .catch(err => {
+    console.error('🚨 오류 발생:', err.message);
+  });
+  </script>
+</body>
+</html>

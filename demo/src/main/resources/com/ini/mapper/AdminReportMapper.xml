@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ini.admin.mapper.AdminReportMapper">
+
+  <!-- 전체 신고 목록 조회 -->
+  <select id="selectAllReports" resultType="com.ini.admin.vo.AdminReportDTO">
+    SELECT 
+      report_id AS report_id,
+      report_content AS report_content,
+      report_user AS report_user,
+      report_date AS report_date,
+      report_category AS report_category,
+      board_id AS boardId
+    FROM BOARD_REPORT
+  </select>
+
+  <delete id="deleteReportByBoardId" parameterType="string">
+    DELETE FROM BOARD_REPORT WHERE board_id = #{board_id}
+  </delete>
+
+</mapper>

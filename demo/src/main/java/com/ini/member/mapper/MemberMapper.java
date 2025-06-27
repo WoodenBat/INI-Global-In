@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ini.admin.vo.AdminUserDTO;
 import com.ini.board.vo.BoardDTO;
 import com.ini.board.vo.BoardLikeDTO;
 import com.ini.board.vo.BoardReplyDTO;
@@ -49,7 +50,14 @@ public interface MemberMapper {
 	void updateProfileImage(@Param("userId") String userId, @Param("profileImage") String profileImage);
 
 	void updateUserIntro(MemberDTO dto);
-	
+
 	void updateMemberProfile(MemberDTO memberDTO);
 
+	void increaseReportCount(@Param("user_id") String user_id);
+
+	int getReportCount(@Param("user_id") String user_id);
+
+	void banUser(@Param("user_id") String user_id);
+
+	List<AdminUserDTO> selectReportedUsers();
 }

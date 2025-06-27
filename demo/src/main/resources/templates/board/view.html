@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="${#locale.language}">
+<html xmlns:th="http://www.thymeleaf.org" lang="${lang}">
+<th:block th:replace="member/header :: header"></th:block>
 <head>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -42,7 +43,6 @@ body {
 }
 </style>
 </head>
-<th:block th:replace="member/header :: header"></th:block>
 <script th:inline="javascript">
 	let board_id = '[[${board.board_id}]]'; 
 </script>
@@ -110,18 +110,38 @@ body {
 		</div>
 
 		<!-- 신고 모달 -->
-		<div id="reportModal" class="mt-6" style="display: none;">
-			<form id="reportForm" class="space-y-2">
-				<div>
-					<label class="font-semibold">신고 내용:</label>
-					<br>
-					<textarea name="report_content" required class="w-full border rounded p-2"></textarea>
-				</div>
-				<div class="flex gap-2 justify-end">
-					<button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">신고 제출</button>
-					<button type="button" id="closeModal" class="bg-gray-400 text-white px-4 py-2 rounded">취소</button>
-				</div>
-			</form>
+		<div id="reportModal"
+			class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+			<div class="bg-white p-6 rounded shadow-lg w-96">
+				<h3 class="text-lg font-semibold mb-4">신고하기</h3>
+
+				<form id="reportForm" class="space-y-4" onkeydown="return event.key !== 'Enter';">
+					<input type="hidden" id="report_board_id" th:value="${board.board_id}" />
+					<input type="hidden" id="report_user" th:value="${session.loginUser}" />
+
+					<div>
+						<label class="block font-medium mb-1">신고 사유</label>
+						<select id="report_category" class="w-full border px-3 py-2 rounded" required>
+							<option value="">선택하세요</option>
+							<option value="욕설">욕설</option>
+							<option value="도배">도배</option>
+							<option value="광고">광고</option>
+							<option value="기타">기타</option>
+						</select>
+					</div>
+
+					<div>
+						<label class="block font-medium mb-1">상세 내용</label>
+						<textarea id="report_content" class="w-full border px-3 py-2 rounded" rows="4"
+							placeholder="상세 내용을 입력해주세요."></textarea>
+					</div>
+
+					<div class="flex justify-end gap-2">
+						<button type="submit" class="bg-red-500 text-white px-4 py-1 rounded">신고 제출</button>
+						<button type="button" id="closeModal" class="bg-gray-300 px-4 py-1 rounded">취소</button>
+					</div>
+				</form>
+			</div>
 		</div>
 
 		<!-- 좋아요 JS -->
@@ -143,36 +163,52 @@ body {
 
 		<!-- 신고 JS -->
 		<script>
-		    document.getElementById('reportBtn').addEventListener('click', () => {
-		      document.getElementById('reportModal').style.display = 'block';
-		    });
-		    document.getElementById('closeModal').addEventListener('click', () => {
-		      document.getElementById('reportModal').style.display = 'none';
-		    });
-		    document.getElementById('reportForm').addEventListener('submit', async (e) => {
-		      e.preventDefault();
-		      const form = e.target;
-		      const data = {
-		        board_id: '[[${board.board_id}]]',
-		        report_content: form.report_content.value
-		      };
-		      try {
-		        const response = await fetch('/board/report', {
-		          method: 'POST',
-		          headers: { 'Content-Type': 'application/json' },
-		          body: JSON.stringify(data)
-		        });
-		        if (response.ok) {
-		          alert('신고가 접수되었습니다.');
-		          document.getElementById('reportModal').style.display = 'none';
-		        } else {
-		          const errorText = await response.text();
-		          alert(errorText);
-		        }
-		      } catch (err) {
-		        alert('오류가 발생했습니다.');
-		      }
-		    });
+		  document.getElementById('reportBtn').addEventListener('click', () => {
+			  document.getElementById('reportModal').style.display = 'flex';
+			});
+		
+			document.getElementById('closeModal').addEventListener('click', () => {
+			  document.getElementById('reportModal').style.display = 'none';
+			});
+		
+			document.getElementById('reportForm').addEventListener('submit', async (e) => {
+			  e.preventDefault();
+		
+			  const data = {
+			    board_id: document.getElementById('report_board_id').value,
+			    report_user: document.getElementById('report_user').value,
+			    report_category: document.getElementById('report_category').value,
+			    report_content: document.getElementById('report_content').value
+			  };
+		
+			  if (!data.report_category) {
+			    alert('신고 사유를 선택해주세요.');
+			    return;
+			  }
+		
+			  try {
+			    const response = await fetch('/board/report', {
+			      method: 'POST',
+			      headers: { 'Content-Type': 'application/json' },
+			      body: JSON.stringify(data)
+			    });
+		
+			    if (response.ok) {
+			      alert('신고가 접수되었습니다.');
+			      document.getElementById('reportModal').style.display = 'none';
+			    } else {
+			      const errorText = await response.text();
+			      alert(errorText);
+			    }
+			  } catch (err) {
+			    alert('오류가 발생했습니다.');
+			    console.error(err);
+			  }
+			  if (data.report_category === "기타" && data.report_content.trim() === "") {
+				  alert("기타 사유는 상세 내용을 입력해주세요.");
+				  return;
+				}
+			});
 	  	</script>
 		<th:block th:replace="board/boardReplyTest :: boardReply"></th:block>
 

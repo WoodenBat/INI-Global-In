@@ -7,13 +7,72 @@
 	font-style: normal;
 }
 
+header {
+	all: initial;
+	overflow: hidden;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-left: 24px;
+	padding-right: 12px;
+	background-color: #A31D1D;
+	color: white;
+	font-family: 'Ownglyph_PDH';
+	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
+	font-weight: 700;
+	font-size: 2.0rem;
+	min-height: 32px;
+}
+
 html {
 	font-display: swap;
 }
 
 body {
 	max-width: 1440px !important;
-	width: 100%!important;
-	margin: 0 auto!important;
+	width: 100% !important;
+	margin: 0 auto !important;
 	padding: 0 !important;
+	font-family: 'Ownglyph_PDH', 'Kosugi Maru' !important;
+}
+
+.lang-ja {
+	font-size: calc(100% - 5px);
+}
+
+h1.lang-ja {
+	font-size: calc(2em - 10px);
+}
+
+.header_change_language_comboBox {
+	scale: 0.8;
+	background-color: #fff;
+	border: 2px solid #a94442;
+	border-radius: 20px;
+	padding: 8px 36px 8px 14px;
+	font-size: 16px;
+	color: #333;
+	font-family: 'Owng', sans-serif;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image:
+		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23444'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 10px 6px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.header_change_language_comboBox:hover {
+	border-color: #d9534f;
+	box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header_change_language_comboBox:focus {
+	outline: none;
+	border-color: #d43f3a;
 }

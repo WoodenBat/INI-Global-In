@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ini.admin.mapper.AdminUserMapper">
+
+	<select id="selectAllUsers"
+		resultType="com.ini.admin.vo.AdminUserDTO">
+		SELECT user_id AS user_id,
+		user_nickname,
+		user_email
+		FROM INI.INI_USER
+	</select>
+
+	<delete id="deleteUserById" parameterType="string">
+		DELETE FROM INI.INI_USER WHERE user_id = #{id}
+	</delete>
+
+	<update id="increaseReportCount" parameterType="string">
+		UPDATE INI_USER
+		SET report_count = report_count + 1
+		WHERE user_id = #{user_id}
+	</update>
+
+	<select id="selectUsersByReportCount"
+		resultType="com.ini.admin.vo.AdminUserDTO">
+		SELECT *
+		FROM INI_USER
+		ORDER BY report_count DESC
+	</select>
+
+</mapper>
