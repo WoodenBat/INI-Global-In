@@ -82,60 +82,61 @@ input {
 <body>
 	<main class="signup-wrapper">
 		<div class="signup-container">
-			<h2>회원가입</h2>
+			<h2 th:class="${'lang-' + lang}" th:text="#{member_signup_signup}">회원가입</h2>
 
-			<form th:action="@{/member/signup}" method="post" th:object="${user}"
-				enctype="multipart/form-data" onsubmit="return validateBeforeSubmit()">
+			<form th:action="@{/member/signup}" method="post" th:object="${user}" enctype="multipart/form-data"
+				onsubmit="return validateBeforeSubmit()">
 
 				<div th:if="${#fields.hasErrors('*')}">
 					<p th:each="err : ${#fields.errors('*')}" th:text="${err}" class="error-message"></p>
 				</div>
 
 				<!-- 아이디 -->
-				<label>아이디</label>
+				<label th:class="${'lang-' + lang}" th:text="#{member_signup_id}">아이디</label>
 				<div style="display: flex;">
 					<input type="text" th:field="*{user_id}" name="user_id" required oninput="checkIdLength(this)">
-					<button type="button" class="check-btn" onclick="checkDuplicate('id')">중복확인</button>
+					<button type="button" th:class="${'check-btn lang-' + lang}" onclick="checkDuplicate('id')"
+						th:text="#{member_signup_checkredundancy}">중복확인</button>
 				</div>
 				<div class="error-message" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}"></div>
 
 				<!-- 닉네임 -->
-				<label>닉네임</label>
+				<label th:class="${'lang-' + lang}" th:text="#{member_signup_nick}">닉네임</label>
 				<div style="display: flex;">
 					<input type="text" th:field="*{user_nickname}" name="user_nickname" required
 						oninput="checkNicknameLength(this)">
-					<button type="button" class="check-btn" onclick="checkDuplicate('nickname')">중복확인</button>
+					<button type="button" th:class="${'check-btn lang-' + lang}" onclick="checkDuplicate('nickname')"
+						th:text="#{member_signup_checkredundancy}">중복확인</button>
 				</div>
-				<div class="error-message" th:if="${#fields.hasErrors('user_nickname')}"
-					th:errors="*{user_nickname}"></div>
+				<div class="error-message" th:if="${#fields.hasErrors('user_nickname')}" th:errors="*{user_nickname}"></div>
 
 				<!-- 이메일 -->
-				<label>이메일</label>
+				<label th:class="${'lang-' + lang}" th:text="#{member_signup_email}">이메일</label>
 				<div style="display: flex;">
 					<input type="text" th:field="*{user_email}" name="user_email" required>
-					<button type="button" class="check-btn" onclick="checkDuplicate('email')">중복확인</button>
+					<button type="button" th:class="${'check-btn lang-' + lang}" onclick="checkDuplicate('email')"
+						th:text="#{member_signup_checkredundancy}">중복확인</button>
 				</div>
 				<div class="error-message" th:if="${#fields.hasErrors('user_email')}" th:errors="*{user_email}"></div>
 
 				<!-- 비밀번호 -->
-				<label>비밀번호</label>
-				<input type="password" th:field="*{user_password}" name="user_password" required>
-				<div class="error-message" th:if="${#fields.hasErrors('user_password')}"
-					th:errors="*{user_password}"></div>
+				<label th:class="${'lang-' + lang}" th:text="#{member_signup_password}">비밀번호</label> <input
+					type="password" th:field="*{user_password}" name="user_password" required>
+				<div class="error-message" th:if="${#fields.hasErrors('user_password')}" th:errors="*{user_password}"></div>
 
 				<!-- 전화번호 -->
-				<label>전화번호</label>
-				<input type="text" th:field="*{user_phone_number}" name="user_phone_number" required>
+				<label th:class="${'lang-' + lang}" th:text="#{member_signup_phonenumber}">전화번호</label> <input type="text"
+					th:field="*{user_phone_number}" name="user_phone_number" required>
 				<div class="error-message" th:if="${#fields.hasErrors('user_phone_number')}"
 					th:errors="*{user_phone_number}"></div>
 
 				<!-- 프로필 이미지 -->
-				<label>프로필 이미지 <span style="color: red">*</span></label>
-				<input type="file" th:field="*{user_profile_img}" required>
+				<label th:class="${'lang-' + lang}" th:text="#{member_signup_profileimage}">프로필 이미지 <span
+						style="color: red">*</span></label> <input type="file" th:field="*{user_profile_img}" required>
 				<div class="error-message" th:if="${errorMessage}" th:text="${errorMessage}"></div>
 
 				<!-- 제출 -->
-				<button type="submit" class="submit-btn">가입하기</button>
+				<button type="submit" th:class="${'submit-btn lang-' + lang}" th:text="#{member_signup_join}">가입하기</button>
 
 			</form>
 		</div>

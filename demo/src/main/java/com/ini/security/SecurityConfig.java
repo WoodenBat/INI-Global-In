@@ -18,15 +18,13 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-				.authorizeHttpRequests(
-						auth -> auth
-								.requestMatchers("/", "/login", "/login/**", "/oauth2/**", "/finding-password",
-										"/find-by-id", "/find-by-email", "/finding-password/by-id",
-										"/finding-password/by-email", "/send-password-email", "/img/**", "/css/**",
-										"/js/**", "/images/**", "/fonts/**", "/member/signup", "/member/checkId",
-										"/member/checkEmail", "/member/checkNickname", "/home", "/lang/set", "/board/list", "/board/view/**")
-								.permitAll().anyRequest().authenticated())
+		http.csrf().disable().authorizeHttpRequests(auth -> auth
+				.requestMatchers("/", "/login", "/login/**", "/oauth2/**", "/finding-password", "/find-by-id",
+						"/find-by-email", "/finding-password/by-id", "/finding-password/by-email",
+						"/send-password-email", "/img/**", "/uploads/**", "/css/**", "/js/**", "/images/**",
+						"/fonts/**", "/member/signup", "/member/checkId", "/member/checkEmail", "/member/checkNickname",
+						"/home", "/lang/set", "/board/list", "/board/view/**", "/board/reply/**")
+				.permitAll().anyRequest().authenticated())
 				.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login").usernameParameter("username")
 						.passwordParameter("password").successHandler(loginSuccessHandler) // 여기서 LoginSuccessHandler 지정
 						.permitAll())

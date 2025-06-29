@@ -64,6 +64,10 @@ button:hover {
 }
 </style>
 <script>
+	function getMsg(id) {
+	  return document.getElementById(id)?.textContent?.trim() || '';
+	}
+	
     // 페이지 로딩 후 서버에서 회원 목록을 가져오는 함수 (Ajax)
     function loadUsers() {
       fetch('/admin/users/list')
@@ -90,7 +94,7 @@ button:hover {
             const actionCell = document.createElement('td');
             const deleteBtn = document.createElement('button');
             deleteBtn.type = 'button';
-            deleteBtn.textContent = "삭제";
+            deleteBtn.textContent = getMsg('msg_admin_users_delete');
             deleteBtn.onclick = function(event) { deleteUser(user.user_id, event); };
             actionCell.appendChild(deleteBtn);
             row.appendChild(actionCell);
@@ -139,5 +143,6 @@ button:hover {
 			<!-- 회원 목록이 JavaScript를 통해 동적으로 채워집니다. -->
 		</tbody>
 	</table>
+	<span id="msg_admin_users_delete" th:text="#{admin_users_delete}" hidden></span>
 </body>
 </html>

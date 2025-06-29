@@ -55,23 +55,23 @@ body {
 		<div class="space-y-2 mb-6">
 			<div class="flex flex-wrap items-center gap-x-6 gap-y-2">
 				<div>
-					<span class="info-label">말머리:</span>
+					<span class="info-label" th:text="#{board_view_subject}">말머리:</span>
 					<span class="badge" th:text="${board.tag_name}"></span>
 				</div>
 				<div>
-					<span class="info-label">카테고리:</span>
+					<span class="info-label" th:text="#{board_view_category}">카테고리:</span>
 					<span class="badge" th:text="${board.category_name}"></span>
 				</div>
 				<div>
-					<span class="info-label">작성자:</span>
+					<span class="info-label" th:text="#{board_list_nick}">작성자:</span>
 					<span th:text="${board.user_nickname}"></span>
 				</div>
 				<div>
-					<span class="info-label">작성일:</span>
+					<span class="info-label" th:text="#{board_view_writedate}">작성일:</span>
 					<span th:text="${#dates.format(board.board_write_date, 'yyyy-MM-dd HH:mm')}"></span>
 				</div>
 				<div>
-					<span class="info-label">조회수:</span>
+					<span class="info-label" th:text="#{board_view_views}">조회수:</span>
 					<span th:text="${board.board_views}"></span>
 				</div>
 			</div>
@@ -84,19 +84,21 @@ body {
 		</div>
 
 		<!-- 번역 버튼 -->
-		<button type="button" class="translate_board-btn mb-4 bg-blue-500 text-white px-4 py-2 rounded">번역하기</button>
+		<button type="button" class="translate_board-btn mb-4 bg-blue-500 text-white px-4 py-2 rounded"
+			th:text="#{board_view_traslate}">번역하기</button>
 
 		<!-- 버튼 영역 -->
 		<div class="mt-6 flex justify-between items-center">
 			<div class="flex gap-3">
 				<form th:action="@{/board/list}" method="get">
-					<button type="submit" th:class="${'bg-gray-300 px-4 py-2 rounded lang-' + lang}" th:text="#{board_view_list}"></button>
+					<button type="submit" class="bg-gray-300 px-4 py-2 rounded" th:text="#{board_view_list}">목록</button>
 				</form>
 				<form th:action="@{'/board/edit/' + ${board.board_id}}" method="get">
-					<button type="submit" class="bg-yellow-400 px-4 py-2 rounded">수정</button>
+					<button type="submit" class="bg-yellow-400 px-4 py-2 rounded" th:text="#{board_view_rewrite}">수정</button>
 				</form>
 				<form th:action="@{'/board/delete/' + ${board.board_id}}" method="post">
-					<button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')" class="bg-red-400 px-4 py-2 rounded text-white">삭제</button>
+					<button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')"
+						class="bg-red-400 px-4 py-2 rounded text-white" th:text="#{board_view_delete}">삭제</button>
 				</form>
 			</div>
 			<div class="flex gap-4 items-center">
@@ -104,22 +106,23 @@ body {
 					<span id="likeIcon" th:text="${liked} ? '❤️' : '🤍'"></span>
 					<span id="likeCount" th:text="${likeCount}">0</span>
 				</button>
-				<button id="reportBtn" class="bg-red-500 text-white px-4 py-2 rounded">신고하기</button>
+				<button id="reportBtn" class="bg-red-500 text-white px-4 py-2 rounded" th:text="#{board_view_report}">신고하기</button>
 			</div>
 		</div>
 
 		<!-- 신고 모달 -->
-		<div id="reportModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
+		<div id="reportModal"
+			class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden z-50">
 			<div class="bg-white p-6 rounded shadow-lg w-96">
-				<h3 class="text-lg font-semibold mb-4">신고하기</h3>
+				<h3 class="text-lg font-semibold mb-4" th:text="#{board_view_report}">신고하기</h3>
 
 				<form id="reportForm" class="space-y-4" onkeydown="return event.key !== 'Enter';">
-					<input type="hidden" id="report_board_id" th:value="${board.board_id}" />
-					<input type="hidden" id="report_user" th:value="${session.loginUser}" />
+					<input type="hidden" id="report_board_id" th:value="${board.board_id}" /> <input type="hidden"
+						id="report_user" th:value="${session.loginUser}" />
 
 					<div>
-						<label class="block font-medium mb-1">신고 사유</label>
-						<select id="report_category" class="w-full border px-3 py-2 rounded" required>
+						<label class="block font-medium mb-1" th:text="#{board_view_reportdetail}">신고 사유</label> <select
+							id="report_category" class="w-full border px-3 py-2 rounded" required>
 							<option value="">선택하세요</option>
 							<option value="욕설">욕설</option>
 							<option value="도배">도배</option>
@@ -129,13 +132,16 @@ body {
 					</div>
 
 					<div>
-						<label class="block font-medium mb-1">상세 내용</label>
-						<textarea id="report_content" class="w-full border px-3 py-2 rounded" rows="4" placeholder="상세 내용을 입력해주세요."></textarea>
+						<label class="block font-medium mb-1" th:text="#{board_view_reportdetail}">상세 내용</label>
+						<textarea id="report_content" class="w-full border px-3 py-2 rounded" rows="4"
+							placeholder="상세 내용을 입력해주세요."></textarea>
 					</div>
 
 					<div class="flex justify-end gap-2">
-						<button type="submit" class="bg-red-500 text-white px-4 py-1 rounded">신고 제출</button>
-						<button type="button" id="closeModal" class="bg-gray-300 px-4 py-1 rounded">취소</button>
+						<button type="submit" class="bg-red-500 text-white px-4 py-1 rounded" th:text="#{board_view_sendreport}">신고
+							제출</button>
+						<button type="button" id="closeModal" class="bg-gray-300 px-4 py-1 rounded"
+							th:text="#{board_view_cancel}">취소</button>
 					</div>
 				</form>
 			</div>

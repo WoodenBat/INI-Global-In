@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
 		if (!path.endsWith("/")) {
 			path += "/";
 		}
-		registry.addResourceHandler("/uploads/**").addResourceLocations("file:" + path);
+		registry.addResourceHandler("/uploads/**").addResourceLocations("file:///" + path);
 	}
 
 	// 기본 Locale 설정 (한국어)

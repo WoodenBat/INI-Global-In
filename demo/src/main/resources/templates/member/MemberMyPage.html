@@ -2,16 +2,16 @@
 <html lang="${lang}" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>마이페이지</title>
+<title th:text="#{member_membermypage_membermypage}">마이페이지</title>
 <link rel="stylesheet" th:href="@{/css/myPage.css}" />
 </head>
 <th:block th:replace="member/header :: header"></th:block>
 <script type="text/javascript">
-    function toggleDarkMode() {
+    /* function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
         const isDark = document.body.classList.contains('dark-mode');
         localStorage.setItem('darkMode', isDark);
-    }
+    } */
     window.onload = function () {
         const isDark = localStorage.getItem('darkMode') === 'true';
 
@@ -28,7 +28,7 @@
     };
 </script>
 <body>
-	<button onclick="toggleDarkMode()">🌙 야간 모드</button>
+	<!-- <button onclick="toggleDarkMode()">🌙 야간 모드</button> -->
 	<div class="profile_wrapper">
 		<div class="profile_container">
 			<a th:href="@{/member/memberProfileUpdateForm}">
@@ -43,7 +43,7 @@
 		</div>
 
 		<div class="profile_update_button_container">
-			<a th:href="@{/member/memberProfileUpdateForm}" class="profile_update_button"> 내 정보 수정 </a>
+			<a th:href="@{/member/memberProfileUpdateForm}" class="profile_update_button" th:text="#{member_membermypage_profileupdate}">내 정보 수정</a>
 		</div>
 
 		<div class="profile_nickname_container">
@@ -62,12 +62,12 @@
 	<div class="board_wrapper">
 		<div class="myBoard_wrapper">
 			<div class="myBoard_text_container">
-				<span class="myBoard_text">게시글</span>
+				<span class="myBoard_text" th:text="#{member_membermypage_title}">게시글</span>
 			</div>
 
 			<div class="myBoard_content_wrapper">
 				<div class="myBoard_content_title_container">
-					<span class="myBoard_content_title">내가 쓴 게시글 목록</span>
+					<span class="myBoard_content_title" th:text="#{member_membermypage_contenttitle}">내가 쓴 게시글 목록</span>
 				</div>
 
 				<div class="myBoard_content_container" th:each="mb, stat : ${member_board}">
@@ -111,12 +111,12 @@
 
 		<div class="myLike_wrapper">
 			<div class="myBoard_text_container">
-				<span class="myBoard_text">좋아요</span>
+				<span class="myBoard_text" th:text="#{member_membermypage_like}">좋아요</span>
 			</div>
 
 			<div class="myBoard_content_wrapper">
 				<div class="myBoard_content_title_container">
-					<span class="myBoard_content_title">좋아요 누른 게시글 목록</span>
+					<span class="myBoard_content_title" th:text="#{member_membermypage_contentlike}">좋아요 누른 게시글 목록</span>
 				</div>
 
 				<div class="myBoard_content_container" th:each="ml, stat : ${member_like}">
@@ -160,12 +160,12 @@
 
 		<div class="myReply_wrapper">
 			<div class="myBoard_text_container">
-				<span class="myBoard_text">댓글</span>
+				<span class="myBoard_text" th:text="#{member_membermypage_comment}">댓글</span>
 			</div>
 
 			<div class="myBoard_content_wrapper">
 				<div class="myBoard_content_title_container">
-					<span class="myBoard_content_title">댓글 쓴 게시글 목록</span>
+					<span class="myBoard_content_title" th:text="#{member_membermypage_contentcomment}">댓글 쓴 게시글 목록</span>
 				</div>
 
 				<div class="myBoard_content_container" th:each="mr, stat : ${member_reply}">
@@ -209,12 +209,12 @@
 
 		<div class="myFollower_wrapper">
 			<div class="myBoard_text_container">
-				<span class="myBoard_text">팔로우</span>
+				<span class="myBoard_text" th:text="#{member_membermypage_following}">팔로우</span>
 			</div>
 
 			<div class="myBoard_content_wrapper">
 				<div class="myBoard_content_title_container">
-					<span class="myBoard_content_title">팔로우 한 유저</span>
+					<span class="myBoard_content_title" th:text="#{member_membermypage_follower}">팔로우 한 유저</span>
 				</div>
 
 				<div class="myFollower_content_container">

@@ -64,9 +64,9 @@ body {
 	<!-- 결과 박스 -->
 	<div class="result-container">
 		<div class="result-box">
-			<h2>이메일 전송 완료</h2>
-			<p>입력하신 이메일로 비밀번호를 확인해주세요.</p>
-			<a href="/login">로그인 페이지로 이동</a>
+			<h2 th:text="#{member_emailsent_mailcomplete}" th:class="'lang-' + ${lang}"></h2>
+			<p th:text="#{member_emailsent_certified}" th:class="'lang-' + ${lang}"></p>
+			<a th:href="@{/login}" th:text="#{member_emailsent_gologinpage}" th:class="'lang-' + ${lang}"></a>
 		</div>
 	</div>
 

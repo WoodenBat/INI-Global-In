@@ -5,8 +5,7 @@
 <meta charset="UTF-8" />
 <title>게시글 목록</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <style>
 @font-face {
 	font-family: 'Ownglyph_PDH';
@@ -160,33 +159,34 @@ tbody td {
 
 	<div class="flex justify-between items-center mb-2 flex-wrap gap-4">
 		<div class="flex items-center gap-2">
-			<h1 id="jp-heading" class="text-3xl font-extrabold text-gray-900">게시글 목록</h1>
+			<h1 id="jp-heading" th:class="${'lang-' + lang}" th:text="#{board_list_list}">게시글 목록</h1>
 			<button type="button" class="jp-btn" onclick="handleTranslateClick(this)" data-title="게시글 목록"
 				data-target="heading">🇯🇵</button>
 		</div>
 	</div>
 
 	<div class="mb-4">
-		<a href="/board/write" class="btn-write">📝 게시글 작성하기</a>
+		<a href="/board/write" class="btn-write" th:text="#{board_list_post}">📝
+			게시글 작성하기</a>
 	</div>
 
 	<div class="flex justify-between items-center mb-6 flex-wrap gap-4">
 		<div class="category-tags flex flex-wrap gap-3">
 			<div class="tag-box" style="background-color: #ffe5e5; color: #000;"
 				th:classappend="${category == null or category == ''} ? ' active' : ''">
-				<a th:href="@{/board/list(keyword=${keyword})}" class="tag">전체</a>
+				<a th:href="@{/board/list(keyword=${keyword})}" class="tag" th:text="#{board_list_all}">전체</a>
 			</div>
 			<div th:each="cat : ${categories}" class="tag-box"
 				th:classappend="|${cat.board_category} ${cat.board_category == category ? 'active' : ''}|">
 				<a th:href="@{/board/list(category=${cat.board_category}, keyword=${keyword})}"
-					th:text="${cat.board_category_jp}"
-					th:class="${cat.board_category == category} ? 'tag active' : 'tag'"> </a>
+					th:text="${cat.board_category_jp}" th:class="${cat.board_category == category} ? 'tag active' : 'tag'">
+				</a>
 			</div>
 		</div>
 
 		<form method="get" th:action="@{/board/list}"
 			class="flex items-center bg-gray-200 rounded-full px-3 py-2 min-w-[250px]">
-			<input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}"
+			<input type="text" name="keyword" th:placeholder="#{board_list_search_placeholder}" th:value="${keyword}"
 				class="bg-transparent flex-grow px-3 py-1 text-sm outline-none" />
 			<button type="submit" aria-label="검색" class="text-gray-600 text-lg">
 				<i class="fas fa-search"></i>
@@ -197,24 +197,23 @@ tbody td {
 	<table>
 		<thead>
 			<tr>
-				<th>번호</th>
-				<th>닉네임</th>
-				<th>카테고리</th>
-				<th>말머리</th>
-				<th>제목</th>
-				<th>작성일</th>
-				<th>조회수</th>
-				<th>좋아요</th>
-				<th>댓글</th>
+				<th th:class="${'lang-' + lang}" th:text="#{board_list_number}">번호</th>
+				<th th:class="${'lang-' + lang}" th:text="#{board_list_nick}">닉네임</th>
+				<th th:class="${'lang-' + lang}" th:text="#{board_list_category}">카테고리</th>
+				<th th:class="${'lang-' + lang}" th:text="#{board_list_subject}">말머리</th>
+				<th th:class="${'lang-' + lang}" th:text="#{board_list_title}">제목</th>
+				<th th:class="${'lang-' + lang}" th:text="#{board_list_writedate}">작성일</th>
+				<th th:class="${'lang-' + lang}" th:text="#{board_list_views}">조회수</th>
+				<th th:class="${'lang-' + lang}" th:text="#{board_list_like}">좋아요</th>
+				<th th:class="${'lang-' + lang}" th:text="#{board_list_comment}">댓글</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr th:if="${#lists.isEmpty(postList)}">
 				<td colspan="9" class="py-16">
 					<div class="flex flex-col items-center justify-center">
-						<p class="text-center text-base font-semibold text-gray-700">
-							<i class="fas fa-exclamation-circle text-red-400 mr-2"></i> 입력하신 단어를 찾을 수 없습니다.
-						</p>
+						<p class="text-center text-base font-semibold text-gray-700" th:text="#{board_list_nopost}">게시글이
+							없습니다.</p>
 					</div>
 				</td>
 			</tr>
@@ -223,21 +222,29 @@ tbody td {
 				<td th:text="${board.user_id}">작성자</td>
 				<td th:text="${board.category_name}">카테고리</td>
 				<td th:text="${board.tag_name}" id="tag-[[${board.board_id}]]">말머리</td>
-				<td><a th:href="@{'/board/view/' + ${board.board_id}}" th:text="${board.board_title}">제목</a>
+				<td>
+					<a th:href="@{'/board/view/' + ${board.board_id}}" th:text="${board.board_title}">제목</a>
 					<span th:if="${board.has_image}" class="ml-1 text-gray-500">
 						<i class="fas fa-image"></i>
 					</span>
 					<button type="button" class="jp-btn"
 						th:attr="data-id=${board.board_id}, data-title=${board.board_title}, data-target='title'"
 						onclick="handleTranslateClick(this)">🇯🇵</button>
-					<div th:attr="id='jp-title-' + ${board.board_id}" class="translated-text"></div></td>
+					<div th:attr="id='jp-title-' + ${board.board_id}" class="translated-text"></div>
+				</td>
 				<td th:text="${#dates.format(board.board_write_date, 'yyyy-MM-dd')}">작성일</td>
-				<td><i class="fas fa-eye text-gray-600 mr-1"></i>
-				<span th:text="${board.board_views}">0</span></td>
-				<td><i class="fas fa-heart text-red-400 mr-1"></i>
-				<span th:text="${board.like_count}">0</span></td>
-				<td><i class="fas fa-comment text-blue-400 mr-1"></i>
-				<span th:text="${board.reply_count}">0</span></td>
+				<td>
+					<i class="fas fa-eye text-gray-600 mr-1"></i>
+					<span th:text="${board.board_views}">0</span>
+				</td>
+				<td>
+					<i class="fas fa-heart text-red-400 mr-1"></i>
+					<span th:text="${board.like_count}">0</span>
+				</td>
+				<td>
+					<i class="fas fa-comment text-blue-400 mr-1"></i>
+					<span th:text="${board.reply_count}">0</span>
+				</td>
 			</tr>
 		</tbody>
 	</table>
@@ -245,8 +252,7 @@ tbody td {
 	<!-- ✅ 페이지네이션 조건 수정 -->
 	<div class="pagination" th:if="${totalCount > 0}">
 		<span th:each="i : ${#numbers.sequence(1, totalPages)}">
-			<a
-				th:href="@{/board/list(page=${i}, pageSize=${pageSize}, category=${category}, keyword=${keyword})}"
+			<a th:href="@{/board/list(page=${i}, pageSize=${pageSize}, category=${category}, keyword=${keyword})}"
 				th:class="${i == currentPage} ? 'current' : ''" th:text="${i}">1</a>
 		</span>
 	</div>

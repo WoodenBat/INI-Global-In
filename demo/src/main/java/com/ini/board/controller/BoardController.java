@@ -71,8 +71,8 @@ public class BoardController {
 		dto.setBoard_write_date(new Date());
 		dto.setBoard_update_date(new Date());
 
-		String userId = (String) session.getAttribute("loginUser");
-		dto.setUser_id(userId != null ? userId : "test");
+		String userId = (String) session.getAttribute("user_id");
+		dto.setUser_id(userId);
 
 		boardService.savePost(dto); // board_id 생성됨
 
@@ -213,8 +213,8 @@ public class BoardController {
 		dto.setBoard_tag(board_tag);
 		dto.setBoard_update_date(new Date());
 
-		String userId = (String) session.getAttribute("loginUser");
-		dto.setUser_id(userId != null ? userId : "test");
+		String userId = (String) session.getAttribute("user_id");
+		dto.setUser_id(userId);
 
 		// ✅ 1. 본문에서 <img src="/uploads/..."> 추출해서 이미지 리스트 구성
 		List<BoardImageDTO> imageList = new ArrayList<>();
@@ -261,7 +261,6 @@ public class BoardController {
 	public ResponseEntity<?> toggleLike(@PathVariable("boardId") int boardId, HttpSession session) {
 		String userId = (String) session.getAttribute("user_id");
 		if (userId == null) {
-			userId = "test";
 			session.setAttribute("loginUser", userId);
 		}
 		int likeCount = boardService.toggleLike(boardId, userId);

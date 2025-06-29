@@ -8,289 +8,161 @@
 }
 
 .board_reply_body {
-	margin-top: 46px;
-}
-
-.board_reply_wrapper {
-	width: 1440px;
-	height: fit-content;
-	margin-top: 0;
-	margin-bottom: 0;
-	margin-left: 100px;
-	scale: 0.8;
-}
-
-.board_reply_container {
-	width: 550px;
-	min-height: 157px;
-	height: fit-content; border-radius : 19px;
-	background-color: #D9D9D94D;
-	display: flex;
-	flex-direction: column;
-	margin-top: 43px;
-	border-color: #000000;
-	border: thin;
-	border-style: solid;
-	border-radius: 19px;
-	position: relative;
-}
-
-.board_reply_info {
-	margin-top: 5px;
-	margin-left: auto;
-	margin-right: auto;
-	width: 520px;
-	height: fit-content;
-	display: flex;
-}
-
-.board_reply_profileImg {
-	width: 61px;
-	height: 61px;
-}
-
-.board_reply_userNickName {
-	margin-left: 10px;
-	align-self: center;
-	height: 33px;
-	width: fit-content;
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 30px;
-	align-self: center;
-}
-
-.board_reply_write_date {
-	margin-left: 20px;
-	align-self: center;
-	height: 17px;
-	width: fit-content;
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 20px;
-	height: 17px;
-	opacity: 0.5;
-	align-self: center;
-}
-
-.board_reply_report_btn {
-	margin-top: 10px;
-	margin-right: 20px;
-	margin-left: auto;
-	align-self: flex-start;
-	width: 22px;
-	height: 22px;
-	cursor: pointer;
-}
-
-.board_reply_content_container {
-	width: fit-content;
-	min-height: 27px;
-	height: fit-content;
-	margin-top: 20px;
-	margin-right: 40px;
-	padding-bottom: 37px;
-}
-
-.board_reply_content {
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 30px;
-	margin-left: 41px;
-}
-
-.fallback_font {
-	font-size: 24px;
-}
-
-.board_reply_button_container {
-	display: grid;
-	grid-template-columns: 100px 100px 100px;
-	height: 17px;
-	width: fit-content;
-	align-self: flex-end;
-	margin-top: 10px;
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
-}
-
-.board_reply_button_container_other {
-	display: grid;
-	grid-template-columns: 100px;
-	height: 17px;
-	width: fit-content;
-	align-self: flex-end;
-	margin-top: 10px;
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
-}
-
-.board_reply_button.ko {
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 20px;
-	opacity: 0.5;
-	border: none;
-	cursor: pointer;
-	background: none;
-}
-
-.board_reply_button.ja {
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 14px;
-	opacity: 0.5;
-	border: none;
-	cursor: pointer;
-	background: none;
-}
-
-.board_reply_reReply_container {
-	width: 550px;
-	min-height: 157px;
-	height: fit-content;
-	border-radius: 19px;
-	background-color: #D9D9D94D;
-	display: flex;
-	flex-direction: column;
-	margin-top: 9px;
-	margin-left: 66px;
-	border-color: #000000;
-	border: thin;
-	border-style: solid;
-	position: relative;
-}
-
-.board_reply_reReply_box {
-	display: flex;
-	flex-direction: row;
-}
-
-.board_reply_reReply_icon_container {
-	display: flex;
-	width: 20px;
-	height: 14px;
-	margin-top: 37px;
-	margin-left: 21px;
-}
-
-.board_reply_reReply_info {
-	margin-top: 5px;
-	margin-left: auto;
-	margin-right: auto;
-	width: 520px;
-	height: fit-content;
-	display: flex;
-}
-
-.board_reply_container_inner {
-	display: flex;
-	flex-direction: column;
-	width: fit-content;
-}
-
-.board_reply_insert_container {
 	max-width: 1440px;
-	width: 100%;
-	height: 106px;
-	background-color: #D9D9D9;
-	bottom: 0px;
-	display: flex;
-	flex-direction: row;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 20px;
-	position: relative;
-	border-radius: 15px 15px 15px 15px;
+	margin: 0 auto;
+	padding: 16px;
+	font-size: 18px;
 }
 
-.board_reply_insert_form {
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 30px;
-	align-self: center;
-	border: none;
-	background-color: #D9D9D9;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	resize: none;
-	padding: 0;
-	border-radius: 15px 0px 0px 15px;
-	margin-left: 10px;
-}
-
-.board_reply_insert_btn {
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 30px;
-	width: 100px;
-	height: 100%;
-	border: none;
-	cursor: pointer;
-	border-radius: 0px 15px 15px 0px;
-}
-
-.board_reply_reReply_insert_container {
-	width: 550px;
-	height: 120px;
-	display: flex;
-	flex-direction: row;
-	margin-top: 5px;
-}
-
-.board_reply_reReply_insert_form {
-	font-family: "Ownglyph_PDH", sans-serif;
+.comment-header {
 	font-size: 20px;
-	width: 85%;
-	border: none;
-	background-color: #D9D9D9;
-	resize: none;
-	border-radius: 15px 0px 0px 15px;
+	font-weight: bold;
+	margin-bottom: 12px;
 }
 
-.board_reply_reReply_insert_btn {
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 30px;
-	width: 15%;
+.comment-total {
+	font-size: 18px;
+	color: #6b7280;
+}
+
+.comment-input-wrapper {
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	padding: 12px;
+	margin-bottom: 24px;
+	background-color: #f9fafb;
+}
+
+.comment-input {
+	width: 100%;
 	border: none;
-	border-radius: 0px 15px 15px 0px;
+	resize: none;
+	height: 70px;
+	font-size: 17px;
+	outline: none;
+	background-color: transparent;
+	padding: 4px;
+}
+
+.comment-input-bottom {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 8px;
+}
+
+.comment-submit-btn {
+	padding: 6px 12px;
+	background-color: rgb(59 130 246/ var(--tw-bg-opacity, 1));
+	color: white;
+	font-size: 16px;
+	border: none;
+	border-radius: 4px;
 	cursor: pointer;
 }
 
-.board_reply_update_container {
-	width: 550px;
-	height: 120px;
+.comment-list {
 	display: flex;
-	flex-direction: row;
-	margin-top: 5px;
+	flex-direction: column;
+	gap: 24px;
 }
 
-.replyUpdateForm {
-	font-family: "Ownglyph_PDH", sans-serif;
+.comment-item {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 16px;
+	border-bottom: 1px solid #eee;
+}
+
+.comment-meta {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 6px;
+	font-size: 14px;
+	color: #6b7280;
+}
+
+.comment-user {
+	font-weight: bold;
+	color: #111827;
+	font-size: 17px;
+}
+
+.comment-date {
+	font-size: 13px;
+	color: #9ca3af;
+}
+
+.comment-content {
 	font-size: 20px;
-	width: 85%;
-	border: none;
-	background-color: #D9D9D9;
-	resize: none;
-	border-radius: 15px 0px 0px 15px;
+	color: #1f2937;
+	margin-bottom: 8px;
+	white-space: pre-line;
+	line-height: 1.6;
 }
 
-.replyUpdateBtn {
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 30px;
-	width: 15%;
+.comment-content.translated-ja {
+	font-size: 18px !important;
+}
+
+.comment-actions {
+	display: flex;
+	gap: 14px;
+	font-size: 15px;
+	color: #4b5563;
+	margin-bottom: 4px;
+}
+
+.comment-actions button {
+	background: none;
 	border: none;
-	border-radius: 0px 15px 15px 0px;
+	cursor: pointer;
+	padding: 2px 4px;
+	color: #2563eb;
+}
+
+.comment-actions button:hover {
+	text-decoration: underline;
+}
+
+.reply-indent {
+	margin-left: 24px;
+}
+
+.comment-update-box, .comment-reply-box, .replies-container {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.update-form, .reply-form {
+	width: 100%;
+	padding: 8px;
+	font-size: 17px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	resize: none;
+}
+
+.replyUpdateConfirmBtn, .replyReplyConfirmBtn {
+	align-self: flex-end;
+	background-color: #4b5563;
+	color: white;
+	border: none;
+	padding: 6px 12px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 15px;
+}
+
+.comment-reply-count {
+	font-size: 14px;
+	color: #9ca3af;
+	margin-left: 6px;
 	cursor: pointer;
 }
 
-.board_reply_title_container {
-	width: 202px;
-	height: 42px;
-	margin-left: 130px;
-	background-color: #ECDCBF;
-	border-radius: 30px;
-	display: flex;
-	justify-content: center;
-}
-
-.board_reply_title {
-	font-family: "Ownglyph_PDH", sans-serif;
-	font-size: 40px;
+.comment-reply-box {
+	margin-top: 8px;
 }

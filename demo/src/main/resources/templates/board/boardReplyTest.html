@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <div class="board_reply_body w-full text-left" th:fragment="boardReply">
-	<span id="session_user_id" th:text="${session.user_id}" style="display: none;"></span>
+	<span id="session_user_id" th:text="${session.user_id}" hidden></span>
 
-	<!-- 댓글 제목 -->
-	<div class="mt-12 mb-4 ml-0">
-		<span class="inline-block font-bold text-xl bg-[#f8e3c5] px-6 py-1 rounded-full">댓글</span>
+	<!-- 댓글 헤더 -->
+	<div class="comment-header">
+		<strong th:text="#{board_reply_title}">댓글</strong>
+		<span class="comment-total" id="comment-total-count">0</span>
+		<span th:text="#{board_reply_count_unit}">개</span>
 	</div>
-
-	<!-- 댓글 리스트 출력 영역 -->
-	<div class="board_reply_wrapper mb-6 ml-0"></div>
 
 	<!-- 댓글 작성 영역 -->
-	<div class="flex w-full rounded-xl overflow-hidden bg-[#e5e5e5] items-stretch">
-		<textarea id="reply_insert_form"
-			class="flex-1 px-4 py-3 text-sm text-gray-700 placeholder:text-gray-500 bg-transparent border-none resize-none focus:outline-none"
-			placeholder="댓글을 작성하세요"></textarea>
-		<button id="reply_insert_btn"
-			class="w-24 bg-[#6c7382] text-white font-semibold text-sm hover:bg-[#5a5f6b] transition">
-			작성</button>
+	<div class="comment-input-wrapper">
+		<textarea id="reply_insert_form" class="comment-input" th:placeholder="#{board_reply_placeholder}"></textarea>
+		<div class="comment-input-bottom">
+			<p id="reply_login_msg"
+				style="display: none; color: #888; font-size: 14px; margin-top: 4px; margin-right: 20px;"
+				th:text="#{board_reply_not_logged_in}">로그인 후 이용해주세요.</p>
+			<button id="reply_insert_btn" class="comment-submit-btn bg-blue-500" th:text="#{board_reply_insert_button}">등록</button>
+		</div>
 	</div>
 
-	<span id="msg_reply_update_button" th:text="#{board_reply_update_button}" style="display: none;"></span>
-	<span id="msg_reply_delete_button" th:text="#{board_reply_delete_button}" style="display: none;"></span>
-	<span id="msg_reReply_insert_button" th:text="#{board_reply_reReply_button}" style="display: none;"></span>
+	<!-- 댓글 리스트 -->
+	<div class="board_reply_wrapper comment-list"></div>
+
+	<!-- 언어 설정 용 -->
+	<span id="msg_reply_update_button" th:text="#{board_reply_update_button}" hidden></span>
+	<span id="msg_reply_delete_button" th:text="#{board_reply_delete_button}" hidden></span>
+	<span id="msg_reReply_button" th:text="#{board_reply_reReply_button}" hidden></span>
+	<span id="msg_reReply_insert_button" th:text="#{board_reply_insert_button}" hidden></span>
+	<span id="msg_translate_button" th:text="#{board_reply_translate_button}" hidden></span>
+	<span id="msg_reply_insert_button" th:text="#{board_reply_insert_button}" hidden></span>
+	<span id="msg_reply_placeholder" th:text="#{board_reply_placeholder}" hidden></span>
+	<span id="msg_reply_time_minutes_ago" th:text="#{board_reply_time_minutes_ago}" hidden></span>
+	<span id="msg_reply_time_hours_ago" th:text="#{board_reply_time_hours_ago}" hidden></span>
+	<span id="msg_reply_time_days_ago" th:text="#{board_reply_time_days_ago}" hidden></span>
+	<span id="msg_reply_title" th:text="#{board_reply_title}" hidden></span>
+	<span id="msg_reply_count_unit" th:text="#{board_reply_count_unit}" hidden></span>
+	<span id="msg_reply_not_logged_in" th:text="#{board_reply_not_logged_in}" hidden></span>
+	<span id="msg_reply_validation_message" th:text="#{board_reply_validation_message}" hidden></span>
+	<span id="msg_reply_delete_confirm" th:text="#{board_reply_delete_confirm}" hidden></span>
 </div>

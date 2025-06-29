@@ -12,7 +12,7 @@
 
 body {
 	font-family: 'Ownglyph_PDH', sans-serif;
-    max-width: 1440px;
+	max-width: 1440px;
 	width: 100%;
 	margin: 0 auto;
 	background-color: #ffffff;
@@ -97,11 +97,12 @@ button:hover {
 
 	<div class="container">
 		<div class="box">
-			<h2>아이디로 비밀번호 찾기</h2>
+			<h2 th:text="#{member_findbyid_findbyid}" th:class="'lang-' + ${lang}"></h2>
 			<form method="post" action="/finding-password/by-id">
 				<div th:if="${error}" class="error" th:text="${error}"></div>
-				<input type="text" name="user_id" placeholder="가입한 아이디 입력" required />
-				<button type="submit">비밀번호 확인</button>
+				<input type="email" name="user_email" th:placeholder="#{member_findbyid_entersignedid}" required
+					th:class="'lang-' + ${lang}" />
+				<button type="submit" th:text="#{member_findbyid_passwordcheck}" th:class="'lang-' + ${lang}"></button>
 			</form>
 		</div>
 	</div>

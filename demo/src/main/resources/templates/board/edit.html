@@ -77,22 +77,22 @@ input[type="radio"] {
 	<th:block th:replace="member/header :: header"></th:block>
 
 	<div class="max-w-4xl mx-auto">
-		<h2 class="text-2xl font-bold mb-6">게시글 수정</h2>
+		<h2 class="text-2xl font-bold mb-6" th:text="#{member_edit_edit}">게시글 수정</h2>
 
 		<form th:action="@{/board/edit}" method="post" id="edit_form" class="space-y-6">
 			<input type="hidden" name="board_id" th:value="${post.board_id}" />
 
 			<!-- 제목 -->
 			<div>
-				<label class="block mb-1 font-semibold">제목</label>
-				<input type="text" name="board_title" required placeholder="제목을 입력하세요"
+				<label class="block mb-1 font-semibold" th:text="#{member_edit_title}">제목</label>
+				<input type="text" name="board_title" required th:placeholder="#{member_edit_title}"
 					th:value="${post.board_title}"
 					class="w-full border border-gray-300 rounded-full px-4 py-2 bg-[#f8e3c5]" />
 			</div>
 
 			<!-- 카테고리 -->
 			<div>
-				<label class="block mb-1 font-semibold">카테고리</label>
+				<label class="block mb-1 font-semibold" th:text="#{board_write_category}">카테고리</label>
 				<div class="flex flex-wrap gap-2">
 					<label th:each="cat : ${categories}"
 						th:class="'tag-box ' + ${cat.board_category} + (${cat.board_category} == ${post.board_category} ? ' selected' : '')">
@@ -105,10 +105,10 @@ input[type="radio"] {
 
 			<!-- 분류 -->
 			<div>
-				<label class="block mb-1 font-semibold">분류</label>
+				<label class="block mb-1 font-semibold" th:text="#{board_write_subject}">분류</label>
 				<select name="board_tag"
 					class="bg-[#f8e3c5] rounded-full px-4 py-2 border border-gray-300 text-gray-800 font-semibold">
-					<option value="" disabled>분류를 선택하세요</option>
+					<option value="" disabled th:text="#{board_write_subject} + ' 선택'">분류를 선택하세요</option>
 					<option th:each="tag : ${tags}" th:value="${tag.board_tag}" th:text="${tag.board_tag_jp}"
 						th:selected="${tag.board_tag == post.board_tag}"></option>
 				</select>
@@ -116,14 +116,14 @@ input[type="radio"] {
 
 			<!-- 본문 -->
 			<div>
-				<label class="block mb-1 font-semibold">본문</label>
+				<label class="block mb-1 font-semibold" th:text="#{board_write_content}">본문</label>
 				<textarea id="board_content" name="board_content" class="w-full bg-[#f8e3c5] rounded-lg"></textarea>
 			</div>
 
 			<!-- 수정 버튼 -->
 			<div class="text-center pt-4">
-				<button type="submit" class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600">수정
-					완료</button>
+				<button type="submit" class="bg-yellow-500 text-white px-6 py-2 rounded-lg hover:bg-yellow-600"
+				        th:text="#{member_edit_submit}">수정 완료</button>
 			</div>
 		</form>
 	</div>

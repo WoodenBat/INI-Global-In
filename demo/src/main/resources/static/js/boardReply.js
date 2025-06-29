@@ -6,306 +6,260 @@ let localeClass = "";
 
 window.onload = function() {
 	localeClass = $("#localeClass").text().trim();
-	console.log("페이지 로딩 끝");
-	console.log(localeClass)
 	getBoardReply(board_id);
+
+	document.getElementById("reply_insert_form").setAttribute("placeholder", getMsg("msg_reply_placeholder"));
+	
+	const session_user_id = $("#session_user_id").text().trim();
+	if (!session_user_id) {
+		$("#reply_insert_form").prop("disabled", true);
+		$("#reply_insert_btn").prop("disabled", true).css("cursor", "not-allowed").css("opacity", 0.5);
+		$("#reply_login_msg").show();
+	}
 };
+
+function getMsg(id) {
+	return document.getElementById(id)?.textContent?.trim() || '';
+}
 
 function getBoardReply(board_id) {
 	const session_user_id = $("#session_user_id").text();
 	$.ajax({
 		type: "GET",
 		url: "/board/reply/boardReply",
-		data: {
-			board_id: board_id
-		},
-		success: function(response) {
-			console.log("성공:", response);
-			console.log(response);
-			$(".board_reply_wrapper").empty();
+		data: { board_id },
+		success: function(res) {
+			const wrapper = $(".board_reply_wrapper");
+			wrapper.empty();
 
-			response.forEach(function(br) {
-				let html = '';
-				console.log(br);
-				if (br.reply_status === 'reply') {
-					html += `
-                        <div class="board_reply_container">
-                    		<span id="reply_id" hidden="true" style="display: none">`+ br.reply_id + `</span>
-                    		<span id="reply_status" hidden="true" style="display: none">`+ br.reply_status + `</span>
-                            <div class="board_reply_info">
-                                <img class="board_reply_profileImg" alt="프로필 사진" src="/images/cat.png">
-                                <span class="board_reply_userNickName">${br.user_nickname}</span>
-                                <span class="board_reply_write_date">${getTimeAgo(br.reply_date_differ)}</span>
-                                <div class="board_reply_report_btn">
-                                    <img alt="신고버튼" src="/img/icon/reply_report_icon.png" />
-                                </div>
-                                <button class="translate-btn">번역 테스트</button>
-                            </div>
-                            <div class="board_reply_content_container">
-                                <div class="board_reply_content">${br.reply_content}</div>
-                                <div class="board_reply_content_hidden" style="display: none;"></div>
-                            </div>
-                                `;
-					if (br.reply_writer === session_user_id) {
-						html += `
-                        	<div class="board_reply_button_container">
-       		                  	<button id="replyUpdate" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reply_update_button").text() + `</button>
-       		                 	<button id="replyDelete" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reply_delete_button").text() + `</button>
-                         	  	<button id="replyRereply" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reReply_insert_button").text() + `</button>
-           		                 `;
-					} else {
-						html += `
-       		               		<div class="board_reply_button_container_other">
-                       	  			<button id="replyRereply" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reReply_insert_button").text() + `</button>
-         		                 `;
-					}
-					html += `
-	                            </div>
-	                        </div>
-                        <div class="board_reply_reReply_insert_container" style="display:none">
-                        	<textarea id="reReplyInsertForm" class="board_reply_reReply_insert_form"></textarea>
-                        	<button id="reReplyInsertBtn" class="board_reply_reReply_insert_btn">작성</button>
-                    	</div>
-                    	<div class="board_reply_update_container" style="display:none">
-                        	<textarea id="replyUpdateForm" class="board_reply_reReply_insert_form"></textarea>
-                        	<button id="replyUpdateBtn" class="board_reply_reReply_insert_btn">수정</button>
-                        </div>
-                    `;
-				} else {
-					html += `
-                        <div class="board_reply_reReply_container">
-                            <span id="reply_id" hidden="true" style="display: none">`+ br.reply_id + `</span>
-                    		<span id="reply_status" hidden="true" style="display: none">`+ br.reply_status + `</span>
-                            <div class="board_reply_reReply_box">
-                            	<div class="board_reply_reReply_icon_container">
-                            		<img alt="대댓글 아이콘" src="/img/icon/reReply_icon.png" />
-                            	</div>
-                            	<div class="board_reply_container_inner">
-	                                <div class="board_reply_reReply_info">
-	                                    <img class="board_reply_profileImg" alt="프로필 사진" src="/images/cat.png">
-	                                    <span class="board_reply_userNickName">${br.user_nickname}</span>
-	                                    <span class="board_reply_write_date">${getTimeAgo(br.reply_date_differ)}</span>
-	                                    <div class="board_reply_report_btn">
-	                                        <img alt="신고버튼" src="/img/icon/reply_report_icon.png" />
-	                                    </div>
-	                                    <button class="translate-btn">번역 테스트</button>
-	                                </div>
-	                                <div class="board_reply_content_container">
-	                                    <div class="board_reply_content">${br.reply_content}</div>
-	                                    <div class="board_reply_content_hidden" style="display: none;"></div>
-	                                </div>
-	                                `;
-					if (br.reply_writer === session_user_id) {
-						html += `
-                                	<div class="board_reply_button_container">
-										<button id="replyUpdate" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reply_update_button").text() + `</button>
-	           		                 	<button id="replyDelete" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reply_delete_button").text() + `</button>
-	                             	  	<button id="replyRereply" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reReply_insert_button").text() + `</button>
-	               		                 `;
-					} else {
-						html += `
-	           		               		<div class="board_reply_button_container_other">
-	                           	  			<button id="replyRereply" type="button" class="board_reply_button ${localeClass}">` + $("#msg_reReply_insert_button").text() + `</button>
-	             		                 `;
-					}
-					html += `
-		                                </div>
-	                                </div>
-	                            </div>
-	                        </div>
-                        <div class="board_reply_reReply_insert_container" style="display:none">
-                        	<textarea id="reReplyInsertForm" class="board_reply_reReply_insert_form"></textarea>
-                        	<button id="reReplyInsertBtn" class="board_reply_reReply_insert_btn">작성</button>
-                        </div>
-                        <div class="board_reply_update_container" style="display:none">
-                        	<textarea id="replyUpdateForm" class="board_reply_reReply_insert_form"></textarea>
-                        	<button id="replyUpdateBtn" class="board_reply_reReply_insert_btn">수정</button>
-                        </div>
-                    `;
-				}
-				$(".board_reply_wrapper").append(html);
+			// 댓글 수 카운트
+			const mainReplies = res.filter(r => r.reply_status === 'reply');
+			$("#comment-total-count").text(mainReplies.length);
+
+			const grouped = {};
+			res.forEach(r => {
+				if (!grouped[r.reply_id]) grouped[r.reply_id] = [];
+				grouped[r.reply_id].push(r);
 			});
-			fontFallBack();
-		},
-		error: function(xhr, status, error) {
-			console.error("에러:", error);
+
+			Object.values(grouped).forEach(group => {
+				const main = group.find(r => r.reply_status === 'reply');
+				if (!main) return;
+
+				const isMine = main.reply_writer === session_user_id;
+				const timeAgo = getTimeAgo(main.reply_date_differ);
+				const replyId = main.reply_id;
+				const rereplyCount = group.filter(r => r.reply_status.startsWith("rereply")).length;
+
+				let html = `
+				<div class="comment-item" data-id="${replyId}" data-status="reply">
+				    <div class="comment-meta">
+				      <span class="comment-user">${main.user_nickname}</span>
+				      <span class="comment-date">${timeAgo}</span>
+				    </div>
+				    <div class="comment-content">${escapeHTML(main.reply_content)}</div>
+				    <div class="original-content" style="display:none;">${escapeHTML(main.reply_content)}</div>
+				    <div class="comment-actions">
+				      ${isMine
+						? `<button class="replyUpdateBtn">${getMsg('msg_reply_update_button')}</button>
+				           <button class="replyDeleteBtn">${getMsg('msg_reply_delete_button')}</button>`
+						: ""}
+				      <button class="replyReplyBtn">${getMsg('msg_reReply_button')} (${rereplyCount})</button>
+				      <button class="translate_reply-btn">${getMsg('msg_translate_button')}</button>
+				    </div>
+				    <div class="comment-update-box" style="display: none;">
+				      <textarea class="update-form" rows="3">${main.reply_content}</textarea>
+				      <button class="replyUpdateConfirmBtn">${getMsg('msg_reply_update_button')}</button>
+				    </div>
+				    <div class="replies-container" style="display: none;"></div>
+				  </div>
+				`;
+
+				wrapper.prepend(html);
+			});
 		}
 	});
-
-	function getTimeAgo(minute) {
-
-		if (minute <= 59) {
-			return minute + "분 전";
-		} else if (minute <= 1440) {
-
-			return Math.trunc(minute / 60) + "시간 전";
-
-		} else {
-
-			return Math.trunc(minute / 60 / 24) + "일 전";
-		}
-
-	}
 }
 
+function getTimeAgo(minute) {
+	if (minute <= 59) return getMsg('msg_time_minutes').replace('{0}', minute);
+	if (minute <= 1440) return getMsg('msg_time_hours').replace('{0}', Math.trunc(minute / 60));
+	return getMsg('msg_time_days').replace('{0}', Math.trunc(minute / 60 / 24));
+}
+
+function escapeHTML(str) {
+	return str.replace(/[&<>'"]/g, tag => ({
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		"'": '&#39;',
+		'"': '&quot;'
+	}[tag]));
+}
 
 $(document).ready(function() {
 	$("#reply_insert_btn").click(function() {
+		const content = $("#reply_insert_form").val().trim();
 		const session_user_id = $("#session_user_id").text();
-		console.log(session_user_id);
-		$.ajax({
-			type: "POST",
-			url: "/board/reply/boardReplyInsert",
-			data: {
-				reply_content: $("#reply_insert_form").val(),
-				reply_writer: session_user_id,
-				board_id: board_id,
-			},
-			success: function() {
-				getBoardReply(board_id);
-			},
-			error: function(xhr, status, error) {
-				console.error("에러:", error);
-			}
-		})
 
-		$("#reply_insert_form").val("");
-	});
+		if (!content) return;
 
-	$(document).on("click", "#replyDelete", function() {
-		const container = $(this).closest(".board_reply_container, .board_reply_reReply_container");
-		const reply_id = container.find("span#reply_id").text().trim();
-		const reply_status = container.find("span#reply_status").text().trim();
-
-		if (confirm("정말 삭제하시겠습니까?")) {
-			$.ajax({
-				type: "POST",
-				url: "/board/reply/boardReplyDelete",
-				data: {
-					reply_id: reply_id,
-					reply_status: reply_status,
-				},
-				success: function() {
-					getBoardReply(board_id);
-				},
-				error: function(xhr, status, error) {
-					console.error("삭제 실패:", error);
-				}
-			});
-
-		} else {
+		if (content.length > 200) {
+			alert(getMsg("msg_reply_validation_message"));
 			return;
 		}
 
+		$.post("/board/reply/boardReplyInsert", {
+			reply_content: content,
+			reply_writer: session_user_id,
+			board_id: board_id,
+		}).done(() => {
+			getBoardReply(board_id);
+			$("#reply_insert_form").val("");
+		});
 	});
 
-	$(document).on("click", "#replyRereply", function() {
+	$(document).on("click", ".replyDeleteBtn", function() {
+		const container = $(this).closest(".comment-item");
+		const reply_id = container.data("id");
+		const reply_status = container.data("status");
 
-		$(".board_reply_reReply_insert_container").hide();
-		$(".board_reply_update_container").hide();
+		if (!confirm(getMsg('msg_reply_delete_confirm'))) return;
 
-		const container = $(this).closest(".board_reply_container, .board_reply_reReply_container");
-		const inputBox = container.next(".board_reply_reReply_insert_container");
-
-		if (container.hasClass("board_reply_container")) {
-			inputBox.toggle();
-
-		} else {
-			inputBox.css("margin-left", "67px");
-			inputBox.toggle();
-
-		}
+		$.post("/board/reply/boardReplyDelete", {
+			reply_id,
+			reply_status,
+		}).done(() => getBoardReply(board_id));
 	});
 
-	$(document).on("click", "#replyUpdate", function() {
-
-		$(".board_reply_reReply_insert_container").hide();
-		$(".board_reply_update_container").hide();
-
-		const container = $(this).closest(".board_reply_container, .board_reply_reReply_container");
-		const inputBox = container.nextAll(".board_reply_update_container").eq(0);
-		let original_reply = container.find(".board_reply_content").text();
-
-		if (original_reply.includes("(번역)")) {
-			original_reply = container.find(".board_reply_content_hidden").text();
-		}
-
-		inputBox.find(".board_reply_reReply_insert_form").text(original_reply);
-
-		if (container.hasClass("board_reply_container")) {
-			inputBox.toggle();
-
-		} else {
-			inputBox.css("margin-left", "67px");
-			inputBox.toggle();
-
-		}
-
+	$(document).on("click", ".replyUpdateBtn", function() {
+		$(".comment-update-box").hide();
+		const box = $(this).closest(".comment-item").find(".comment-update-box");
+		box.show();
 	});
 
-	$(document).on("click", "#reReplyInsertBtn", function() {
+	$(document).on("click", ".replyUpdateConfirmBtn", function() {
+		const container = $(this).closest(".comment-item");
+		const reply_id = container.data("id");
+		const reply_status = container.data("status");
+		const content = container.find(".update-form").val();
+
+		$.post("/board/reply/boardReplyUpdate", {
+			reply_content: content,
+			reply_id,
+			reply_status,
+			board_id,
+		}).done(() => getBoardReply(board_id));
+	});
+
+	$(document).on("click", ".replyReplyBtn", function() {
 		const session_user_id = $("#session_user_id").text();
-		const container = $(this).closest(".board_reply_reReply_insert_container").prev();
-		const reply_id = container.find("span#reply_id").text().trim();
-		const reply_content = $(this).siblings("#reReplyInsertForm").val();
-		console.log(reply_id);
+		const container = $(this).closest(".comment-item");
+		const reply_id = container.data("id");
+		let repliesBox = container.find(".replies-container");
 
-		$.ajax({
-			type: "POST",
-			url: "/board/reply/boardRereplyInsert",
-			data: {
-				reply_content: reply_content,
-				reply_writer: session_user_id,
-				reply_id: reply_id,
-				board_id: board_id,
-			},
-			success: function() {
-				getBoardReply(board_id);
-			},
-			error: function(xhr, status, error) {
-				console.error("에러:", error);
-			}
-		})
+		if (repliesBox.children().length === 0) {
+			$.get("/board/reply/boardReply", { board_id }, function(res) {
+				const replies = res.filter(r => r.reply_id === reply_id && r.reply_status.startsWith("rereply"));
+				replies.sort((a, b) => parseInt(a.reply_status.replace("rereply", "")) - parseInt(b.reply_status.replace("rereply", "")));
 
-	});
+				replies.forEach(rr => {
+					const isMine = rr.reply_writer === session_user_id;
+					const replyStatus = rr.reply_status;
+					const replyId = rr.reply_id;
 
-	$(document).on("click", "#replyUpdateBtn", function() {
-		const container = $(this).closest(".board_reply_update_container").prev().prev();
-		const reply_id = container.find("span#reply_id").text().trim();
-		const reply_status = container.find("span#reply_status").text().trim();
-		const reply_content = $(this).siblings("#replyUpdateForm").val();
-		container.find(".board_reply_content_hidden").text("");
-		Object.keys(translationCache_reply).forEach(key => delete translationCache_reply[key]);
-		console.log(reply_id);
-		console.log(reply_status);
+					repliesBox.append(`
+						  <div class="comment-item reply-indent" data-id="${replyId}" data-status="${replyStatus}">
+						    <div class="comment-meta">
+						      <span class="comment-user">${rr.user_nickname}</span>
+						      <span class="comment-date">${getTimeAgo(rr.reply_date_differ)}</span>
+						    </div>
+						    <div class="comment-content">${escapeHTML(rr.reply_content)}</div>
+						    <div class="original-content" style="display:none;">${escapeHTML(rr.reply_content)}</div>
+						    <div class="comment-actions">
+						      ${isMine
+							? `<button class="replyUpdateBtn">${getMsg('msg_reply_update_button')}</button>
+						           <button class="replyDeleteBtn">${getMsg('msg_reply_delete_button')}</button>`
+							: ""}
+						      <button class="translate_reply-btn">${getMsg('msg_translate_button')}</button>
+						    </div>
+						    <div class="comment-update-box" style="display: none;">
+						      <textarea class="update-form" rows="3">${rr.reply_content}</textarea>
+						      <button class="replyUpdateConfirmBtn">${getMsg('msg_reply_update_button')}</button>
+						    </div>
+						  </div>
+						`);
+				});
+				const isLoggedIn = !!session_user_id;
 
-		$.ajax({
-			type: "POST",
-			url: "/board/reply/boardReplyUpdate",
-			data: {
-				reply_content: reply_content,
-				reply_id: reply_id,
-				reply_status: reply_status,
-				board_id: board_id,
-			},
-			success: function() {
-				getBoardReply(board_id);
-			},
-			error: function(xhr, status, error) {
-				console.error("에러:", error);
-			}
-		})
-	});
+				repliesBox.append(`
+						<div class="comment-reply-box">
+						    <textarea class="reply-form" rows="3" ${!isLoggedIn ? 'disabled' : ''} placeholder="${!isLoggedIn ? getMsg("msg_reply_not_logged_in") : ''}"></textarea>
+							<button class="replyReplyConfirmBtn" ${!isLoggedIn ? 'disabled style="cursor: not-allowed; opacity: 0.5;"' : ''}>
+							  ${getMsg('msg_reply_insert_button')}
+							</button>
+						</div>
+					`);
 
-})
-function fontFallBack() {
-
-	document.querySelectorAll('.board_reply_content').forEach(elem => {
-		const text = elem.textContent;
-
-		const isJapanese = /[\u3040-\u30FF\u4E00-\u9FFF]/.test(text);
-		if (isJapanese) {
-			elem.classList.add('fallback_font');
+				repliesBox.slideDown();
+			});
+		} else {
+			repliesBox.slideToggle();
 		}
 	});
+
+	$(document).on("click", ".replyReplyConfirmBtn", function() {
+		const container = $(this).closest(".comment-item");
+		const reply_id = container.data("id");
+		const content = container.find(".reply-form").val().trim();
+		const session_user_id = $("#session_user_id").text();
+
+		if (!content) return;
+		if (content.length > 200) {
+			alert(getMsg("msg_reply_validation_message"));
+			return;
+		}
+
+		$.post("/board/reply/boardRereplyInsert", {
+			reply_content: content,
+			reply_writer: session_user_id,
+			reply_id,
+			board_id,
+		}).done(() => getBoardReply(board_id));
+	});
+
+	$(document).on("click", ".translate_reply-btn", function() {
+		const replyBlock = $(this).closest(".comment-item");
+		const textElem = replyBlock.find(".comment-content").eq(0);
+		const originalText = replyBlock.find(".original-content").eq(0).text().trim();
+
+		if (!originalText) return;
+
+		if (textElem.hasClass("translated-ja")) {
+			textElem.text(originalText);
+			textElem.removeClass("translated-ja");
+		} else {
+			fetch("/api/translate", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ input: originalText })
+			})
+				.then(res => res.text())
+				.then(translated => {
+					textElem.text(translated + " (" + getMsg("msg_translate_button") + ")");
+					textElem.addClass("translated-ja");
+				});
+		}
+	});
+});
+
+
+function adjustFont(elem) {
+	const txt = elem.text();
+	const isJapanese = /[\u3040-\u30FF\u4E00-\u9FFF]/.test(txt);
+	if (isJapanese) {
+		elem.addClass("translated-ja");
+	} else {
+		elem.css("font-size", "20px");
+	}
 }

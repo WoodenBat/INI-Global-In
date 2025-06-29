@@ -65,38 +65,34 @@ button:hover {
 </head>
 <th:block th:replace="member/header :: header"></th:block>
 <body>
-	<h1>🚩 신고된 게시글 목록</h1>
+	<h1 th:class="${'lang-' + lang}" th:text="#{admin_report_title}">🚩 신고된 게시글 목록</h1>
 
-	<table id="reportTable">
+	<table id="reportTable" th:class="${'lang-' + lang}">
 		<thead>
 			<tr>
-				<th>신고 ID</th>
-				<th>게시글 ID</th>
-				<th>신고 사유</th>
-				<th>신고자</th>
-				<th>신고일</th>
-				<th>신고 내용</th>
-				<th>삭제</th>
+				<th th:text="#{admin_report_id}" th:class="${'lang-' + lang}">신고 ID</th>
+				<th th:text="#{admin_report_board_id}" th:class="${'lang-' + lang}">게시글 ID</th>
+				<th th:text="#{admin_report_category}" th:class="${'lang-' + lang}">신고 사유</th>
+				<th th:text="#{admin_report_reporter}" th:class="${'lang-' + lang}">신고자</th>
+				<th th:text="#{admin_report_date}" th:class="${'lang-' + lang}">신고일</th>
+				<th th:text="#{admin_report_content}" th:class="${'lang-' + lang}">신고 내용</th>
+				<th th:text="#{admin_report_delete}" th:class="${'lang-' + lang}">삭제</th>
 			</tr>
 		</thead>
-		<tbody id="reportBody">
-			<!-- JavaScript로 채워질 부분 -->
-		</tbody>
+		<tbody id="reportBody"></tbody>
 	</table>
 
-	<h1>🚨 신고당한 회원 목록</h1>
+	<h1 th:class="${'lang-' + lang}" th:text="#{admin_report_users_title}">🚨 신고당한 회원 목록</h1>
 
-	<table id="reportedUsersTable">
+	<table id="reportedUsersTable" th:class="${'lang-' + lang}">
 		<thead>
 			<tr>
-				<th>회원 ID</th>
-				<th>닉네임</th>
-				<th>신고 횟수</th>
+				<th th:text="#{admin_report_users_id}" th:class="${'lang-' + lang}">회원 ID</th>
+				<th th:text="#{admin_report_users_nickname}" th:class="${'lang-' + lang}">닉네임</th>
+				<th th:text="#{admin_report_users_count}" th:class="${'lang-' + lang}">신고 횟수</th>
 			</tr>
 		</thead>
-		<tbody id="reportedUsersBody">
-			<!-- JavaScript로 채워질 부분 -->
-		</tbody>
+		<tbody id="reportedUsersBody"></tbody>
 	</table>
 
 	<script>

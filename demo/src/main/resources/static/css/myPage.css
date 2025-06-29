@@ -128,16 +128,17 @@ a {
 	justify-content: center;
 	align-items: center;
 	background-color: #acfb807f;
-	width: 194px;
+	width: fit-content;
 	height: 70px;
 	border-radius: 30px;
 	position: static;
 	display: flex;
+	padding: 0 10px;
 }
 
 .myBoard_text {
 	font-size: 50px;
-	width: 113px;
+	width: fit-content;
 	height: 45px;
 	text-align: center;
 	margin: 0;

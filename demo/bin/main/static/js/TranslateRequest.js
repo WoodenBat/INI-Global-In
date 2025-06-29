@@ -1,7 +1,6 @@
 
 const translationCache_board = {};
-const translationCache_reply = {};  //캐시메모리
-
+const translationCache_reply = new Map();
 //버튼 여러개 인덱스 설정
 /*
 document.querySelectorAll('.translate-btn').forEach((btn, index) => {

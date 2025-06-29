@@ -91,15 +91,15 @@ body {
 		<div class="card">
 			<!-- 이미지 경로 주의 -->
 			<img src="/images/cat.png" alt="고양이 이미지">
-			<p>
-				환영해요.
-				<br>
-				<span
-					th:text="${nickname != null ? nickname : (session.nickname != null ? session.nickname : '회원')}"></span>
-				님!
+			<p th:class="${'lang-' + lang}" th:text="#{member_loginsuccess_welcome}">
+				환영해요. <br>
+				<span th:text="${nickname != null ? nickname : (session.nickname != null ? session.nickname : '회원')}"></span>
+				<span th:class="${'lang-' + lang}" th:text="#{member_loginsuccess_sir}">님!</span>
+				<!-- 민철 span태그 붙임 properties적용하기위해 -->
 			</p>
-			<p>잘 부탁 드려요.</p>
-			<a class="home-link" href="/home">홈 화면으로 돌아가기</a>
+			<p th:class="${'lang-' + lang}" th:text="#{member_loginsuccess_welcom2}">잘 부탁 드려요.</p>
+			<a class="${'home-link lang-' + lang}" href="/home" th:text="#{member_loginsuccess_gobackhome}">홈 화면으로
+				돌아가기</a>
 		</div>
 	</div>
 </body>

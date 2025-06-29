@@ -8,6 +8,7 @@ public class BoardWithLikeReplyDTO {
 	private int board_id;
 	private String board_title;
 	private String user_id;
+	private String user_nickname;
 	private int board_views;
 	private String board_category;
 	private String board_tag;
