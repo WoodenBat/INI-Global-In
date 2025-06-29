@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
 <mapper namespace="com.ini.board.mapper.EmoticonMapper">
 
 	<insert id="insertEmoticon"
@@ -21,5 +21,15 @@
 		#{emoticon_status}
 		)
 	</insert>
+
+	<select id="selectAll" resultType="com.ini.board.vo.BoardEmoticonDTO">
+		SELECT
+		emoticon_name,
+		emoticon_file_name,
+		emoticon_creator,
+		emoticon_create_date,
+		emoticon_status
+		FROM ini_emoticon
+	</select>
 
 </mapper>

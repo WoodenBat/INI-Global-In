@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +25,6 @@ public class EmoticonService {
 
 	@Value("${file.upload-path}")
 	private String uploadPath;
-	
 
 	public void applyEmoticon(String name, MultipartFile file, String userId) {
 		if (file.isEmpty())
@@ -47,5 +48,10 @@ public class EmoticonService {
 		dto.setEmoticon_status("승인보류중");
 
 		emoticonMapper.insertEmoticon(dto);
+	}
+
+	public List<BoardEmoticonDTO> getApprovedEmoticons() {
+		return emoticonMapper.selectAll().stream().filter(e -> "승인됨".equals(e.getEmoticon_status()))
+				.collect(Collectors.toList());
 	}
 }

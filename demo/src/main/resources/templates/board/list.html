@@ -160,8 +160,8 @@ tbody td {
 	<div class="flex justify-between items-center mb-2 flex-wrap gap-4">
 		<div class="flex items-center gap-2">
 			<h1 id="jp-heading" th:class="${'lang-' + lang}" th:text="#{board_list_list}">게시글 목록</h1>
-			<button type="button" class="jp-btn" onclick="handleTranslateClick(this)" data-title="게시글 목록"
-				data-target="heading">🇯🇵</button>
+			<!-- <button type="button" class="jp-btn" onclick="handleTranslateClick(this)" data-title="게시글 목록"
+				data-target="heading">🇯🇵</button> -->
 		</div>
 	</div>
 
@@ -227,9 +227,9 @@ tbody td {
 					<span th:if="${board.has_image}" class="ml-1 text-gray-500">
 						<i class="fas fa-image"></i>
 					</span>
-					<button type="button" class="jp-btn"
+					<!-- <button type="button" class="jp-btn"
 						th:attr="data-id=${board.board_id}, data-title=${board.board_title}, data-target='title'"
-						onclick="handleTranslateClick(this)">🇯🇵</button>
+						onclick="handleTranslateClick(this)">🇯🇵</button> -->
 					<div th:attr="id='jp-title-' + ${board.board_id}" class="translated-text"></div>
 				</td>
 				<td th:text="${#dates.format(board.board_write_date, 'yyyy-MM-dd')}">작성일</td>

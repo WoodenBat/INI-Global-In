@@ -166,3 +166,50 @@
 .comment-reply-box {
 	margin-top: 8px;
 }
+
+.comment-input[contenteditable="true"] {
+	width: 100%;
+	border: none;
+	resize: none;
+	min-height: 70px;
+	font-size: 17px;
+	outline: none;
+	background-color: transparent;
+	padding: 4px;
+	white-space: pre-wrap;
+}
+
+.comment-input[contenteditable="true"]:empty:before {
+	content: attr(data-placeholder);
+	color: #aaa;
+}
+
+.comment-input-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.comment-input[contenteditable="true"] img {
+	display: block;
+	margin: 4px 0;
+}
+
+.reply-emoticon {
+	width: 160px;
+	height: 160px;
+	vertical-align: middle;
+}
+
+#reply_insert_form {
+	max-height: 120px;
+	overflow: auto;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+#reply_insert_form img {
+	max-width: 100%;
+	height: auto;
+	display: inline-block;
+}

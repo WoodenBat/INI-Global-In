@@ -1,124 +1,97 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>INI 홈페이지 입니다.</title>
-<link rel="stylesheet" th:href="@{/css/home.css}" />
+<title>INI 홈</title>
+<link rel="stylesheet" th:href="@{/css/Home.css}" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
-<script th:src="@{/js/Home.js}"></script>
-<th:block th:replace="member/header :: header"></th:block>
 <body>
+	<th:block th:replace="~{member/header :: header}"></th:block>
 
-	<div class="home_image_container">
-		<img class="home_image" alt="홈 이미지" th:src="@{img/icon/main.png}">
-	</div>
+	<div class="home-container">
 
-	<div class="board_wrapper">
-		<div class="home_views_wrapper">
-			<div class="home_text_container">
-				<span class="home_text">인기글</span>
-			</div>
-
-			<div class="home_content_wrapper">
-
-				<div class="home_content_container" th:each="br, stat : ${board_views}">
-					<a th:href="@{/board/view/{id}(id=${br.board_id})}">
-						<div class="home_content"
-							th:style="${br.has_image == '1'} ? 'grid-template-columns : 150px 250px 50px 475px 110px 110px 110px;' : 'grid-template-columns : 150px 300px 475px 110px 110px 110px;'">
-							<div class="home_user_nickname_container">
-								<span class="home_user_nickname" th:text="${br.user_id}"></span>
-							</div>
-
-							<div class="home_category_container tag-box" th:classappend="${br.board_category}">
-								<span class="home_category" th:text="${br.board_category}"></span>
-							</div>
-
-							<div class="home_has_image_container"
-								th:style="${br.has_image == '1'} ? 'display : inline;' : 'display : none;'">
-								<img class="home_has_image" alt="이미지" th:src="@{img/icon/has_image.png}">
-							</div>
-
-							<div class="home_title_container">
-								<span class="home_title" th:text="${br.board_title}"></span>
-							</div>
-
-							<div class="home_views_container">
-								<img class="home_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
-								<div class="home_views_cnt_container">
-									<span class="home_views_cnt" th:text="${br.board_views}"></span>
-								</div>
-							</div>
-							<div class="home_like_container">
-								<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
-								<div class="mtBoard_like_cnt_container">
-									<span class="home_like_cnt" th:text="${br.board_like_cnt}"></span>
-								</div>
-							</div>
-							<div class="home_reply_container">
-								<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
-								<div class="mtBoard_reply_cnt_container">
-									<span class="home_reply_cnt" th:text="${br.board_reply_cnt}"></span>
-								</div>
-							</div>
-						</div>
-					</a>
-				</div>
-			</div>
+		<div class="home-banner">
+			<img class="home-banner-img" th:src="@{/img/icon/main.png}" alt="홈 이미지" />
 		</div>
 
-		<div class="home_recent_wrapper">
-			<div class="home_text_container">
-				<span class="home_text">최신글</span>
+		<section class="home-section">
+			<h2 class="home-section-title">
+				<span class="section-icon">★</span>
+				인기글
+			</h2>
+			<div class="home-list" th:each="br : ${board_views}">
+				<a th:href="@{/board/view/{id}(id=${br.board_id})}" class="home-item">
+					<span class="item-nickname" th:text="${br.user_id}"></span>
+					<span class="item-category tag-box" th:classappend="${br.board_category}" th:text="${br.board_category}"></span>
+
+					<span class="item-title">
+						<span th:if="${br.has_image == '1'}" class="item-image-indicator">
+							<img th:src="@{/img/icon/has_image.png}" alt="이미지" />
+						</span>
+						<span th:text="${br.board_title}"></span>
+					</span>
+
+					<!-- 조회수 -->
+					<span class="item-metric">
+						<img th:src="@{/img/icon/views_icon.png}" alt="조회수" />
+						<span th:text="${br.board_views}"></span>
+					</span>
+
+					<!-- 좋아요 -->
+					<span class="item-metric">
+						<img th:src="@{/img/icon/like_icon.png}" alt="좋아요" />
+						<span th:text="${br.board_like_cnt}"></span>
+					</span>
+
+					<!-- 댓글 -->
+					<span class="item-metric">
+						<img th:src="@{/img/icon/reply_icon.png}" alt="댓글" />
+						<span th:text="${br.board_reply_cnt}"></span>
+					</span>
+				</a>
 			</div>
+		</section>
 
-			<div class="home_content_wrapper">
+		<section class="home-section">
+			<h2 class="home-section-title">
+				<span class="section-icon">⏱</span>
+				최신글
+			</h2>
+			<div class="home-list" th:each="br : ${board_recent}">
+				<a th:href="@{/board/view/{id}(id=${br.board_id})}" class="home-item">
+					<span class="item-nickname" th:text="${br.user_id}"></span>
+					<span class="item-category tag-box" th:classappend="${br.board_category}" th:text="${br.board_category}"></span>
 
-				<div class="home_content_container" th:each="br, stat : ${board_recent}">
-					<a th:href="@{/board/view/{id}(id=${br.board_id})}">
-						<div class="home_content"
-							th:style="${br.has_image == '1'} ? 'grid-template-columns : 150px 250px 50px 475px 110px 110px 110px;' : 'grid-template-columns : 150px 300px 475px 110px 110px 110px;'">
-							<div class="home_user_nickname_container">
-								<span class="home_user_nickname" th:text="${br.user_id}"></span>
-							</div>
+					<span class="item-title">
+						<span th:if="${br.has_image == '1'}" class="item-image-indicator">
+							<img th:src="@{/img/icon/has_image.png}" alt="이미지" />
+						</span>
+						<span th:text="${br.board_title}"></span>
+					</span>
 
-							<div class="home_category_container tag-box" th:classappend="${br.board_category}">
-								<span class="home_category" th:text="${br.board_category}"></span>
-							</div>
+					<!-- 조회수 -->
+					<span class="item-metric">
+						<img th:src="@{/img/icon/views_icon.png}" alt="조회수" />
+						<span th:text="${br.board_views}"></span>
+					</span>
 
-							<div class="home_has_image_container"
-								th:style="${br.has_image == '1'} ? 'display : inline;' : 'display : none;'">
-								<img class="home_has_image" alt="이미지" th:src="@{img/icon/has_image.png}">
-							</div>
+					<!-- 좋아요 -->
+					<span class="item-metric">
+						<img th:src="@{/img/icon/like_icon.png}" alt="좋아요" />
+						<span th:text="${br.board_like_cnt}"></span>
+					</span>
 
-							<div class="home_title_container">
-								<span class="home_title" th:text="${br.board_title}"></span>
-							</div>
-
-							<div class="home_views_container">
-								<img class="home_views_icon" alt="조회수 아이콘" th:src="@{/img/icon/views_icon.png}" />
-								<div class="home_views_cnt_container">
-									<span class="home_views_cnt" th:text="${br.board_views}"></span>
-								</div>
-							</div>
-							<div class="home_like_container">
-								<img alt="좋아요아이콘" th:src="@{/img/icon/like_icon.png}" />
-								<div class="mtBoard_like_cnt_container">
-									<span class="home_like_cnt" th:text="${br.board_like_cnt}"></span>
-								</div>
-							</div>
-							<div class="home_reply_container">
-								<img alt="댓글아이콘" th:src="@{/img/icon/reply_icon.png}" />
-								<div class="mtBoard_reply_cnt_container">
-									<span class="home_reply_cnt" th:text="${br.board_reply_cnt}"></span>
-								</div>
-							</div>
-						</div>
-					</a>
-				</div>
+					<!-- 댓글 -->
+					<span class="item-metric">
+						<img th:src="@{/img/icon/reply_icon.png}" alt="댓글" />
+						<span th:text="${br.board_reply_cnt}"></span>
+					</span>
+				</a>
 			</div>
-		</div>
+		</section>
+
 	</div>
-
 </body>
 </html>

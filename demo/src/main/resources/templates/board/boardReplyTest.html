@@ -11,8 +11,10 @@
 
 	<!-- 댓글 작성 영역 -->
 	<div class="comment-input-wrapper">
-		<textarea id="reply_insert_form" class="comment-input" th:placeholder="#{board_reply_placeholder}"></textarea>
+		<div id="reply_insert_form" class="comment-input" contenteditable="true"
+			data-placeholder="[[#{board_reply_placeholder}]]"></div>
 		<div class="comment-input-bottom">
+			<button id="openEmoticonModalBtn" class="comment-submit-btn" style="margin-right: auto;">😊</button>
 			<p id="reply_login_msg"
 				style="display: none; color: #888; font-size: 14px; margin-top: 4px; margin-right: 20px;"
 				th:text="#{board_reply_not_logged_in}">로그인 후 이용해주세요.</p>
@@ -22,6 +24,12 @@
 
 	<!-- 댓글 리스트 -->
 	<div class="board_reply_wrapper comment-list"></div>
+
+	<div id="emoticonModal"
+		style="display: none; position: fixed; top: 20%; left: 50%; transform: translateX(-50%); background: #fff; border: 1px solid #ccc; padding: 16px; z-index: 9999;">
+		<div id="emoticonList"></div>
+		<button onclick="$('#emoticonModal').hide()">닫기</button>
+	</div>
 
 	<!-- 언어 설정 용 -->
 	<span id="msg_reply_update_button" th:text="#{board_reply_update_button}" hidden></span>
