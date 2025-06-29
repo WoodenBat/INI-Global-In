@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.ini.board.mapper.EmoticonMapper">
+
+	<insert id="insertEmoticon"
+		parameterType="com.ini.board.vo.BoardEmoticonDTO">
+		INSERT INTO INI_EMOTICON (
+		EMOTICON_NAME,
+		EMOTICON_FILE_NAME,
+		EMOTICON_CREATOR,
+		EMOTICON_CREATE_DATE,
+		EMOTICON_STATUS
+		) VALUES (
+		#{emoticon_name},
+		#{emoticon_file_name},
+		#{emoticon_creator},
+		#{emoticon_create_date},
+		#{emoticon_status}
+		)
+	</insert>
+
+</mapper>

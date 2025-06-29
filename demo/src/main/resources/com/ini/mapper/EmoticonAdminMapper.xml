@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ini.admin.mapper.EmoticonAdminMapper">
+
+	<select id="selectByStatus" parameterType="String"
+		resultType="com.ini.board.vo.BoardEmoticonDTO">
+		SELECT * FROM ini_emoticon WHERE emoticon_status =
+		#{status} ORDER BY
+		emoticon_create_date DESC
+	</select>
+
+	<update id="updateStatus">
+		UPDATE ini_emoticon
+		SET emoticon_status = #{status}
+		WHERE emoticon_name = #{name}
+	</update>
+
+	<delete id="delete" parameterType="String">
+		DELETE FROM ini_emoticon WHERE
+		emoticon_name = #{name}
+	</delete>
+
+	<select id="selectByName" parameterType="String"
+		resultType="com.ini.board.vo.BoardEmoticonDTO">
+		SELECT * FROM ini_emoticon WHERE emoticon_name = #{name}
+	</select>
+
+</mapper>

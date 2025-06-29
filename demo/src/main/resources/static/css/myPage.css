@@ -1,372 +1,157 @@
-@charset "UTF-8";
-
-:root {
-	--background-color: white;
-	--text-color: black;
-	--table-bg-color: white;
-	--table-text-color: black;
-}
-
-.dark-mode {
-	--background-color: #121212;
-	--text-color: #e0e0e0;
-	--table-bg-color: #333;
-	--table-text-color: #fff;
-}
-
 body {
-	max-width: 1440px;
-	width: 100%;
-	margin: 0 auto;
-	background-color: var(--background-color);
-	color: var(--text-color);
-}
-
-table {
-	background-color: var(--table-bg-color);
-	color: var(--table-text-color);
-}
-
-a {
-	text-decoration: none;
-	color: inherit;
-	display: block;
-}
-
-@font-face {
-	font-family: 'Ownglyph_PDH';
-	src: url('/fonts/Ownglyph_PDH.ttf') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
-
-.profile_container {
-	display: flex;
-	justify-content: center;
-}
-
-.profile_image {
-	width: 206px;
-	height: 206px;
-	border-radius: 50%;
-	object-fit: cover;
-}
-
-.image-link {
-	display: inline-block;
-	cursor: default;
-	display: inline-block;
-}
-
-.image-link img {
-	cursor: pointer;
-}
-
-.profile_update_button_container {
-	display: flex;
-	justify-content: center;
-	margin-top: 10px;
-	background: none;
-}
-
-.profile_update_button {
-/* 	font-size: 24px; */
-	width: 130px;
-	height: 24px;
-	text-align: center;
-	font-family: "Ownglyph_PDH", sans-serif;
-	background: none;
-}
-
-.profile_nickname_container {
-	display: flex;
-	justify-content: center;
-	margin-top: 40px;
-}
-
-.profile_email_container {
-	display: flex;
-	justify-content: center;
-	margin-top: 10px;
-}
-
-.profile_nickname {
-	font-size: 50px;
-	width: fit-content;
-	height: 45px;
-	text-align: center;
-	margin: 0 !important;
-	font-family: "Ownglyph_PDH", sans-serif;
-}
-
-.profile_email {
-	font-size: 40px;
-	width: 400px;
-	height: 38px;
-	text-align: center;
-	margin: 0 !important;
-	font-family: "Ownglyph_PDH", sans-serif;
+	font-family: 'Pretendard', sans-serif;
+	background-color: #f5f7fa;
+	margin: 0;
 }
 
 .profile_wrapper {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: 97px;
-}
-
-.myBoard_wrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: 50px;
-}
-
-.myBoard_text_container {
-	align-self: flex-start;
-	display: flex;
 	justify-content: center;
-	align-items: center;
-	background-color: #acfb807f;
-	width: fit-content;
-	height: 70px;
-	border-radius: 30px;
-	position: static;
-	display: flex;
-	padding: 0 10px;
+	padding: 40px 20px 20px;
 }
 
-.myBoard_text {
-	font-size: 50px;
-	width: fit-content;
-	height: 45px;
-	text-align: center;
+.profile_card {
+	display: flex;
+	align-items: center;
+	padding: 40px;
+	background-color: white;
+	border-radius: 20px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+	gap: 40px;
+	margin-bottom: 40px;
+	position: relative;
+}
+
+.profile_image_container {
+	flex-shrink: 0;
+}
+
+.profile_image {
+	width: 160px;
+	height: 160px;
+	border-radius: 50%;
+	object-fit: cover;
+	box-shadow: 0 0 0 4px white, 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile_info {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+.profile_nickname {
+	font-size: 28px;
+	font-weight: 700;
 	margin: 0;
-	font-family: "Ownglyph_PDH", sans-serif;
-	line-height: 1;
 }
 
-.myBoard_content_wrapper {
-	align-self: flex-start;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 1324px;
-	height: fit-content;
-	background-color: #f8f2deb3;
-	border-radius: 50px;
-	display: flex;
-	padding-bottom: 30px;
+.profile_email {
+	color: #555;
+	font-size: 16px;
 }
 
-.myBoard_content_title_container {
-	align-self: flex-start;
+.profile_intro {
+	font-size: 15px;
+	color: #888;
+}
+
+.btn-edit {
+	margin-top: 14px;
 	width: fit-content;
-	height: 52px;
-	justify-content: center;
-	margin-top: 30px;
-	margin-left: 33px;
+	background-color: #3b82f6;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 12px;
+	font-weight: bold;
+	transition: background-color 0.2s;
+	text-decoration: none;
 }
 
-.myBoard_content_title {
-	font-size: 50px;
-	font-family: "Ownglyph_PDH", sans-serif;
-}
-
-.myBoard_content_container {
-	align-self: flex-start;
-	width: 1259px;
-	height: 63px;
-	display: flex;
-	flex-direction: row;
-	background-color: #d9d9d94d;
-	margin-top: 27px;
-	margin-left: auto;
-	margin-right: auto;
+.btn-edit:hover {
+	background-color: #2563eb;
 }
 
 .board_wrapper {
-	margin: 0 63px;
+	max-width: 800px;
+	margin: 30px auto;
+	padding: 0 20px;
+}
+
+.myBoard_section {
+	margin-top: 40px;
+}
+
+.section_title {
+	font-size: 20px;
+	font-weight: bold;
+	border-left: 5px solid #3b82f6;
+	padding-left: 10px;
+	margin-bottom: 20px;
+}
+
+.myBoard_content_container, .myFollower_content_container {
+	margin-bottom: 15px;
 }
 
 .myBoard_content {
 	display: grid;
-	grid-template-columns: 150px 300px 475px 110px 110px 110px;
+	grid-template-columns: 120px 160px 1fr 80px 80px 80px;
 	align-items: center;
-	height: 63px;
+	background: white;
+	border-radius: 12px;
+	padding: 12px 20px;
+	margin: 10px 0;
+	font-size: 15px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+	gap: 10px;
+	text-decoration: none;
 }
 
-.myBoard_user_nickname_container {
-	width: 67px;
-	height: 32px;
-	margin-left: 32px;
+.myBoard_user_nickname, .myBoard_category, .myBoard_title {
+	margin-right: 10px;
+	font-weight: 500;
 }
 
-.myBoard_user_nickname {
-	font-size: 30px;
-	font-family: "Ownglyph_PDH", sans-serif;
-}
-
-.myBoard_category_container {
-	width: fit-content;
-	height: 32px;
-	border-radius: 20px;
-	margin-left: 14px;
-	background-color: #c06dff4d;
-	padding: 0 18px;
-	white-space: nowrap;
-}
-
-.myBoard_category {
-	font-size: 30px;
-	font-family: "Ownglyph_PDH", sans-serif;
-}
-
-.myBoard_title_container {
-	width: fit-content;
-	display: flex;
-	justify-content: center;
-	white-space: nowrap;
-}
-
-.myBoard_title {
-	font-size: 30px;
-	font-family: "Ownglyph_PDH", sans-serif;
-}
-
-.myBoard_views_container {
-	display: grid;
-	grid-template-columns: 55px 90px;
-	align-items: center;
-}
-
-.myBoard_views_icon {
-	position: relative;
-	margin: -20px;
-	object-fit: cover;
-}
-
-.myBoard_views_cnt_container {
-	width: fit-content;
-	display: flex;
-	justify-content: center;
-	white-space: nowrap;
-}
-
-.myBoard_views_cnt {
-	font-size: 30px;
-	font-family: "Ownglyph_PDH", sans-serif;
-}
-
-.myBoard_like_container {
-	display: grid;
-	grid-template-columns: 55px 90px;
-	align-items: center;
-}
-
-.myBoard_like_icon {
-	position: relative;
-	object-fit: cover;
-}
-
-.myBoard_like_cnt_container {
-	width: fit-content;
-	display: flex;
-	justify-content: center;
-	white-space: nowrap;
-}
-
-.myBoard_like_cnt {
-	font-size: 30px;
-	font-family: "Ownglyph_PDH", sans-serif;
-}
-
-.myBoard_reply_container {
-	display: grid;
-	grid-template-columns: 55px 90px;
-	align-items: center;
-}
-
-.myBoard_reply_icon {
-	position: relative;
-	object-fit: cover;
-}
-
-.myBoard_reply_cnt_container {
-	width: fit-content;
-	display: flex;
-	justify-content: center;
-	white-space: nowrap;
-}
-
-.myBoard_reply_cnt {
-	font-size: 30px;
-	font-family: "Ownglyph_PDH", sans-serif;
-}
-
-.myLike_wrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: 50px;
-}
-
-.myReply_wrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: 50px;
-}
-
-.myFavorite_wrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: 50px;
-}
-
-.myFollower_wrapper {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-top: 50px;
-}
-
-.myFollower_content_container {
-	align-self: flex-start;
-	width: 1259px;
-	height: 63px;
-	display: flex;
-	flex-direction: row;
-	background-color: #ffffff00;
-	margin-top: 27px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.myFollower_content {
-	display: grid;
-	grid-template-columns: 50px 50px 50px 50px 50px;
-	align-items: center;
-	height: 63px;
+.myBoard_views_cnt, .myBoard_like_cnt, .myBoard_reply_cnt {
+	margin-left: 10px;
+	color: #666;
+	font-size: 14px;
 }
 
 .myFollower_follow_container {
-	width: fit-content;
-	height: 75px;
-	white-space: nowrap;
-	background-color: #93c2ff7e;
-	border-radius: 30px;
+	background-color: #fff;
+	padding: 12px 16px;
+	border-radius: 12px;
 	display: flex;
 	align-items: center;
-	padding: 0 20px;
-}
-
-.myFollower_follow {
-	font-size: 50px;
-	font-family: "Ownglyph_PDH", sans-serif;
+	gap: 10px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .myFollower_follow_icon {
-	margin-left: 10px;
+	width: 24px;
+	height: 24px;
+}
+
+.profile_button_group {
+	margin-top: 14px;
+	display: flex;
+	gap: 12px;
+}
+
+.btn-profile-action {
+	background-color: #3b82f6;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 12px;
+	font-weight: bold;
+	text-decoration: none;
+	transition: background-color 0.2s;
+	white-space: nowrap;
+}
+
+.btn-profile-action:hover {
+	background-color: #2563eb;
 }

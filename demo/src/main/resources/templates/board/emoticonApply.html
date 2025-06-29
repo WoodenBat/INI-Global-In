@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>이모티콘 신청</title>
+<link rel="stylesheet" th:href="@{/css/emoticon.css}">
+<link href="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet" />
+<script src="https://unpkg.com/cropperjs@1.5.13/dist/cropper.min.js"></script>
+</head>
+<th:block th:replace="~{member/header :: header}"></th:block>
+<body>
+
+	<div class="emoticon_apply_container">
+		<h2>이모티콘 신청</h2>
+
+		<form th:action="@{/emoticon/apply}" method="post" enctype="multipart/form-data">
+			<div class="form_group">
+				<label for="emoticonName">이모티콘 이름</label> <input type="text" id="emoticonName" name="emoticon_name"
+					required />
+			</div>
+
+			<div class="form_group">
+				<label for="fileInput">이미지 파일 업로드</label> <input type="file" id="fileInput" name="file" accept="image/*"
+					required />
+			</div>
+			<div class="preview_container">
+				<p>미리보기</p>
+				<img id="previewImage" src="#" alt="미리보기 이미지" style="display: none;" />
+			</div>
+
+			<div class="form_group">
+				<button type="submit">신청하기</button>
+			</div>
+		</form>
+	</div>
+
+	<!-- 크로퍼 모달 -->
+	<div class="cropper_modal" id="cropperModal" style="display: none;">
+		<div class="cropper_container">
+			<img id="cropperImage" style="max-width: 100%;" />
+			<div class="cropper_btns">
+				<button type="button" id="cropConfirmBtn">적용</button>
+				<button type="button" id="cropCancelBtn">취소</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- 크롭 작업용 캔버스 -->
+	<canvas id="cropCanvas" style="display: none;"></canvas>
+
+	<script th:src="@{/js/emoticon.js}"></script>
+</body>
+</html>
