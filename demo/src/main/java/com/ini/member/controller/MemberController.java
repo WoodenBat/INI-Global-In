@@ -112,6 +112,7 @@ public class MemberController {
 				model.addAttribute("errorMessage", "회원가입에 실패했습니다.");
 				return "/member/signup";
 			}
+			memberService.insertIntoUserAuthentication(user.getUser_id());
 
 			return "redirect:/member/signupsuccess";
 

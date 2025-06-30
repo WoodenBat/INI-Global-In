@@ -317,10 +317,12 @@
 		)
 		VALUES (
 		board_report_seq.NEXTVAL,
-		NVL(#{report_content, jdbcType=VARCHAR}, ' '),  <!-- 여기가 핵심 -->
+		NVL(#{report_content, jdbcType=VARCHAR}, '
+		'),  <!-- 여기가 핵심 -->
 		#{report_user, jdbcType=VARCHAR},
 		SYSDATE,
-		#{report_category, jdbcType=VARCHAR},
+		#{report_category,
+		jdbcType=VARCHAR},
 		#{board_id, jdbcType=INTEGER}
 		)
 	</insert>
@@ -435,6 +437,10 @@
 	<delete id="deleteBoardByUserId" parameterType="string">
 		DELETE FROM
 		INI_BOARD WHERE user_id = #{id}
+	</delete>
+
+	<delete id="deleteImageByPath" parameterType="String">
+		DELETE FROM BOARD_IMAGE WHERE IMAGE_PATH = #{image_path}
 	</delete>
 
 </mapper>

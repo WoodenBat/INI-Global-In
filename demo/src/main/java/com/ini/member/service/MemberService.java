@@ -9,6 +9,7 @@ import com.ini.board.vo.BoardLikeDTO;
 import com.ini.board.vo.BoardReplyDTO;
 import com.ini.board.vo.BoardWithLikeReplyDTO;
 import com.ini.member.mapper.MemberMapper;
+import com.ini.member.vo.MemberAuthenticationDTO;
 import com.ini.member.vo.MemberDTO;
 import com.ini.member.vo.MemberFavoriteDTO;
 import com.ini.member.vo.MemberFollowDTO;
@@ -119,6 +120,18 @@ public class MemberService {
 	public void updateMemberProfile(MemberDTO memberDTO) {
 		
 		memberMapper.updateMemberProfile(memberDTO);
+		
+	}
+	
+	public MemberAuthenticationDTO findUserAuthByUserId(String user_id) {
+		
+		return memberMapper.findUserAuthByUserId(user_id);
+		
+	}
+	
+	public void insertIntoUserAuthentication(String user_id) {
+		
+		memberMapper.insertIntoUserAuthentication(user_id);
 		
 	}
 

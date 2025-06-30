@@ -284,4 +284,12 @@
 		ORDER BY a.report_count DESC
 	</select>
 	
+	<select id="findUserAuthByUserId" resultType="com.ini.member.vo.MemberAuthenticationDTO">
+		select * from user_authentication where user_id = #{user_id}
+	</select>
+	
+	<insert id="insertIntoUserAuthentication">
+		insert into user_authentication (user_id, user_status, role) values (#{user_id}, 'on', 'user')
+	</insert>
+	
 </mapper>

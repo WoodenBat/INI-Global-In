@@ -10,6 +10,7 @@ import com.ini.board.vo.BoardDTO;
 import com.ini.board.vo.BoardLikeDTO;
 import com.ini.board.vo.BoardReplyDTO;
 import com.ini.board.vo.BoardWithLikeReplyDTO;
+import com.ini.member.vo.MemberAuthenticationDTO;
 import com.ini.member.vo.MemberDTO;
 import com.ini.member.vo.MemberFavoriteDTO;
 import com.ini.member.vo.MemberFollowDTO;
@@ -60,4 +61,8 @@ public interface MemberMapper {
 	void banUser(@Param("user_id") String user_id);
 
 	List<AdminUserDTO> selectReportedUsers();
+	
+	public MemberAuthenticationDTO findUserAuthByUserId(String user_id);
+	
+	public void insertIntoUserAuthentication(String user_id);
 }

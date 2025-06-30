@@ -7,7 +7,9 @@
 		<a href="/home" style="color: white; text-decoration: none;">INI</a>
 	</div>
 	<nav style="display: flex; gap: 24px; font-weight: 500; font-size: 1rem; text-align: center; align-items: center;">
-		<a href="/admin/dashboard" style="color: aqua; text-decoration: none; margin-bottom: -1px;">ADMIN</a>
+		<span th:if="${session.user_role == 'admin'}">
+			<a href="/admin/dashboard" style="color: aqua; text-decoration: none; margin-bottom: -1px;">ADMIN</a>
+		</span>
 		<a href="/board/list" style="color: white; text-decoration: none; margin-bottom: -1px;">LIST</a>
 		<a href="/board/write" style="color: white; text-decoration: none; margin-bottom: -1px;">POST</a>
 		<a href="/member/myPage" style="color: white; text-decoration: none; margin-bottom: -1px;">MYPAGE</a>

@@ -137,6 +137,10 @@ body {
 	border-radius: 12px;
 }
 
+.tag-box {
+	width: fit-content;
+}
+
 .item-image-indicator img {
 	width: 20px;
 	height: 20px;

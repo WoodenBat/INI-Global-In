@@ -114,6 +114,11 @@ function getBoardReply(board_id) {
 							<button class="replyReplyBtn">${getMsg('msg_reReply_button')} (${rereplyCount})</button>
 							${!hasEmoticon ? `<button class="translate_reply-btn">${getMsg('msg_translate_button')}</button>` : ""}
 						</div>
+						${isMine && !isOnlyEmoticon ? `
+						<div class="comment-update-box" style="display:none;">
+							<textarea class="update-form" rows="3">${main.reply_content}</textarea>
+							<button class="replyUpdateConfirmBtn">${getMsg('msg_reply_update_button')}</button>
+						</div>` : ""}
 					</div>
 				`;
 

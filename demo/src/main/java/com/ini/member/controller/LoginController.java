@@ -83,11 +83,13 @@ public class LoginController {
 	}
 
 	@GetMapping("/loginsuccess")
-	public String home(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+	public String home(@AuthenticationPrincipal CustomUserDetails userDetails, Model model, HttpSession session) {
 		if (userDetails != null) {
 			String userId = userDetails.getUsername(); // 실제로는 userId임
 			MemberDTO member = memberService.findMemberById(userId);
+			String role = (String)memberService.findUserAuthByUserId(userId).getRole();
 			model.addAttribute("nickname", member.getUser_nickname());
+			session.setAttribute("user_role", role);
 		}
 		return "member/loginsuccess"; // templates/member/home.html
 	}
