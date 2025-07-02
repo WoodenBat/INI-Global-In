@@ -8,10 +8,10 @@
 <th:block th:replace="~{member/header :: header}"></th:block>
 <body>
 	<div class="admin_container">
-		<h2>이모티콘 관리</h2>
+		<h2 th:text="#{admin_emoticon}">이모티콘 관리</h2>
 
 		<section>
-			<h3>승인을 기다리는 이모티콘</h3>
+			<h3 th:text="#{admin_emoticon_apply}">승인을 기다리는 이모티콘</h3>
 			<div class="emoticon_grid">
 				<div class="emoticon_card" th:each="e : ${pendingList}">
 					<img th:src="@{'/uploads/emoticon/' + ${e.emoticon_file_name}}" th:alt="${e.emoticon_name}"
@@ -26,7 +26,7 @@
 		</section>
 
 		<section>
-			<h3>승인된 이모티콘</h3>
+			<h3 th:text="#{admin_emoticon_applied}">승인된 이모티콘</h3>
 			<div class="emoticon_grid">
 				<div class="emoticon_card" th:each="e : ${approvedList}">
 					<img th:src="@{'/uploads/emoticon/' + ${e.emoticon_file_name}}" th:alt="${e.emoticon_name}"

@@ -11,25 +11,25 @@
 <body>
 
 	<div class="emoticon_apply_container">
-		<h2>이모티콘 신청</h2>
+		<h2 th:text="#{board_emoticon_insert}">이모티콘 신청</h2>
 
 		<form th:action="@{/emoticon/apply}" method="post" enctype="multipart/form-data">
 			<div class="form_group">
-				<label for="emoticonName">이모티콘 이름</label> <input type="text" id="emoticonName" name="emoticon_name"
+				<label for="emoticonName" th:text="#{board_emoticon_name}">이모티콘 이름</label> <input type="text" id="emoticonName" name="emoticon_name"
 					required />
 			</div>
 
 			<div class="form_group">
-				<label for="fileInput">이미지 파일 업로드</label> <input type="file" id="fileInput" name="file" accept="image/*"
+				<label for="fileInput" th:text="#{board_emoticon_upload}">이미지 파일 업로드</label> <input type="file" id="fileInput" name="file" accept="image/*"
 					required />
 			</div>
 			<div class="preview_container">
-				<p>미리보기</p>
+				<p th:text="#{board_emoticon_preview}">미리보기</p>
 				<img id="previewImage" src="#" alt="미리보기 이미지" style="display: none;" />
 			</div>
 
 			<div class="form_group">
-				<button type="submit">신청하기</button>
+				<button type="submit" th:text="#{board_emoticon_submit}">신청하기</button>
 			</div>
 		</form>
 	</div>

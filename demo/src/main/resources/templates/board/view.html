@@ -93,10 +93,10 @@ body {
 				<form th:action="@{/board/list}" method="get">
 					<button type="submit" class="bg-gray-300 px-4 py-2 rounded" th:text="#{board_view_list}">목록</button>
 				</form>
-				<form th:action="@{'/board/edit/' + ${board.board_id}}" method="get">
+				<form th:action="@{'/board/edit/' + ${board.board_id}}" method="get" th:if="${board.user_id == session.user_id}">
 					<button type="submit" class="bg-yellow-400 px-4 py-2 rounded" th:text="#{board_view_rewrite}">수정</button>
 				</form>
-				<form th:action="@{'/board/delete/' + ${board.board_id}}" method="post">
+				<form th:action="@{'/board/delete/' + ${board.board_id}}" method="post" th:if="${board.user_id == session.user_id}">
 					<button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')"
 						class="bg-red-400 px-4 py-2 rounded text-white" th:text="#{board_view_delete}">삭제</button>
 				</form>
@@ -106,7 +106,7 @@ body {
 					<span id="likeIcon" th:text="${liked} ? '❤️' : '🤍'"></span>
 					<span id="likeCount" th:text="${likeCount}">0</span>
 				</button>
-				<button id="reportBtn" class="bg-red-500 text-white px-4 py-2 rounded" th:text="#{board_view_report}">신고하기</button>
+				<button id="reportBtn" class="bg-red-500 text-white px-4 py-2 rounded" th:text="#{board_view_report}" th:if="${board.user_id != session.user_id}">신고하기</button>
 			</div>
 		</div>
 

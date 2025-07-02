@@ -142,6 +142,7 @@ public class BoardController {
 		model.addAttribute("tag", tag);
 		model.addAttribute("tags", boardService.getAllTags());
 		model.addAttribute("categories", boardService.getAllCategories());
+		System.out.println(boardService.getAllCategories());
 
 		return "board/list";
 	}

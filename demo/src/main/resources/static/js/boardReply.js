@@ -160,7 +160,7 @@ $(document).ready(function() {
 				return `<img src="/uploads/emoticon/${e.emoticon_file_name}"
 					alt="${e.emoticon_name}"
 					data-name="${e.emoticon_name}"
-					style="width:40px; cursor:pointer; margin:4px;">`;
+					style="width:100px; cursor:pointer; margin:4px;">`;
 			}).join("");
 			$("#emoticonList").html(html);
 			$("#emoticonModal").show();
